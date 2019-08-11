@@ -1,0 +1,46 @@
+﻿@model Person
+@{
+    ViewData["Title"] = "Search Page";
+}
+
+<style type="text/css">
+    .rounded-0 {
+        border-style: solid;
+        border-color: blue;
+    }
+</style>
+
+<div class="row">
+    <div class="text-center">
+        <h1 class="display-4">@Model.Name</h1>
+        <img src="https://robohash.org/ + @Model.Name + " class="rounded-0" />
+    </div>
+    <!-- Timeline Entries Column -->
+    <div class="col-md-8">
+        <h1 class="my-4">Timeline Posts</h1>
+        <form method="post" asp-controller="User" asp-action="AddTimelinePost">
+            <input type="text" name="n" value=@Model.Name hidden/>
+            <input type="text" name="PersonId" value=@Model.PersonId hidden/>
+            <textarea type="text" name="Description" class="form-control" placeholder="New Post"></textarea><br />
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Add Post</button>
+        </form>
+        <br /><br />
+        <!-- Timeline Post -->
+        @foreach (var post in Model.TimelinePosts)
+        {
+            <div class="card mb-4">
+                <div class="card-body">
+                    <p class="card-text">@post.Description</p>
+                </div>
+                <div class="card-footer text-muted">Posted on @post.DatePosted by @post.PosterName</div>
+                @foreach (var reply in post.Replies)
+                {
+                    <div class="card-body">
+                        <p class="card-text">@reply.Description</p>
+                    </div>
+                    <div class="card-footer text-muted">Posted on @reply.DatePosted by @reply.PosterName</div>
+                }
+            </div>
+        }
+    </div>
+</div>
