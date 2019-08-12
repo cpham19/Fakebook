@@ -49,8 +49,6 @@ namespace Fakebook.Controllers
         {
             tp.PosterName = User.Identity.GetName();
             tp.DatePosted = DateTime.Now;
-            Debug.WriteLine("DOES THIS WORK");
-            Debug.WriteLine(tp.PersonId);
             timelineService.AddTimelinePost(tp);
 
             return RedirectToAction(nameof(ViewUser), new { name = n });

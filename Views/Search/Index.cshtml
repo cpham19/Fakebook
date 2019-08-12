@@ -19,7 +19,7 @@
         @foreach (var person in ViewBag.Persons)
         {
             <div class="col-md-4">
-                <img src="https://robohash.org/+ @person.Name + " class="rounded-0" />
+                <img src="https://robohash.org/@person.Name" class="rounded-0" />
                 <h2 class="text-center">@person.Name</h2>
                 <p>Person's description</p>
                 <form method="GET">
