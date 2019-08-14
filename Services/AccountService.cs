@@ -45,7 +45,9 @@ namespace Fakebook.Services
             {
                 new Claim(PersonClaimTypes.PersonId, person.PersonId.ToString()),
                 new Claim(ClaimTypes.Name, person.Name),
-                new Claim(ClaimTypes.NameIdentifier, person.Username)
+                new Claim(ClaimTypes.NameIdentifier, person.Username),
+                new Claim(PersonClaimTypes.ProfileDescription, person.ProfileDescription),
+                new Claim(PersonClaimTypes.NumberOfFriends, person.Friends.Count().ToString()),
             };
 
             if (person.IsAdmin)

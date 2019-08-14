@@ -21,7 +21,7 @@
             <div class="col-md-4">
                 <img src="https://robohash.org/@person.Name" class="rounded-0" />
                 <h2 class="text-center">@person.Name</h2>
-                <p>Person's description</p>
+                <p>@person.ProfileDescription</p>
                 <form method="GET">
                     <p class="text-center">
                         <button class="btn btn-secondary" type="submit" name="name" asp-controller="User" asp-action="ViewUser" value=@person.Name>View</button>

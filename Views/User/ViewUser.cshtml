@@ -14,14 +14,18 @@
     <div class="text-center">
         <h1 class="display-4">@Model.Name</h1>
         <img src="https://robohash.org/@Model.Name" class="rounded-0" />
+        <p class="text-left">
+            @Model.ProfileDescription<br />
+            <a href="">Friends (@Model.Friends.Count())</a>
+        </p>
     </div>
     <!-- Timeline Entries Column -->
     <div class="col-md-8">
         <h1 class="my-4">Timeline Posts</h1>
         <form method="post" asp-controller="User" asp-action="AddTimelinePost">
-            <input type="text" name="n" value=@Model.Name hidden/>
-            <input type="text" name="PersonId" value=@Model.PersonId hidden/>
-            <textarea type="text" name="Description" class="form-control" placeholder="New Post"></textarea><br />
+            <input type="text" name="n" value=@Model.Name hidden />
+            <input type="text" name="PersonId" value=@Model.PersonId hidden />
+            <textarea type="text" name="Description" class="form-control" placeholder="New Post" required></textarea>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Add Post</button>
         </form>
         <br /><br />
@@ -40,6 +44,12 @@
                     </div>
                     <div class="card-footer text-muted">Posted on @reply.DatePosted by @reply.PosterName</div>
                 }
+                <form method="post" asp-controller="User" asp-action="AddReplyPost">
+                    <textarea type="text" name="Description" class="form-control" placeholder="New Reply" required></textarea>
+                    <input type="text" name="TimelinePostId" class="form-control" value=@post.TimelinePostId hidden />
+                    <input type="text" name="n" value=@Model.Name hidden />
+                    <button class="btn btn-lg btn-primary" type="submit">Add Reply</button>
+                </form>
             </div>
         }
     </div>

@@ -38,6 +38,7 @@ namespace Fakebook
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<TimelineService>();
             services.AddScoped<UserService>();
+            services.AddScoped<IForumService, ForumService>();
             services.AddScoped<AccountService>();
         }
 
@@ -88,6 +89,46 @@ namespace Fakebook
                     name: "user",
                     defaults: new { controller = "User", action = "ViewUser" },
                     template: "User/{**name}");
+
+                routes.MapRoute(
+                    name: "edit",
+                    defaults: new { controller = "Home", action = "Edit" },
+                    template: "Edit/");
+
+                //// Main Page where you see all forums
+                //routes.MapRoute(
+                //    name: "forum",
+                //    template: "{controller=Forum}/{action=Index}/{id?}");
+
+                //// View selected forum and its topics
+                //routes.MapRoute(
+                //    name: "ViewForum",
+                //    defaults: new { controller = "Forum", action = "ViewForum" },
+                //    template: "Forum/{id?}");
+
+                //// View selected topic and its replies
+                //routes.MapRoute(
+                //    name: "ViewTopic",
+                //    defaults: new { controller = "Forum", action = "ViewTopic", },
+                //    template: "Forum/{id?}/{id2?}");
+
+                //// Adding a new forum
+                //routes.MapRoute(
+                //    name: "AddForum",
+                //    defaults: new { controller = "Forum", action = "AddForum" },
+                //    template: "Forum/Add");
+
+                //// Adding a new topic for selected forum
+                //routes.MapRoute(
+                //    name: "AddTopic",
+                //    defaults: new { controller = "Forum", action = "AddTopic" },
+                //    template: "Forum/{id?}/AddTopic");
+
+                //// Adding a new reply for selected topic
+                //routes.MapRoute(
+                //    name: "AddReply",
+                //    defaults: new { controller = "Forum", action = "AddReply" },
+                //    template: "Forum/{id?}/{id2?}/AddReply");
             });
 
             // This suppose to add different environment files for Azure deployment but this doesnt work.

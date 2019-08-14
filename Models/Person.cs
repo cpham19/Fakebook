@@ -9,14 +9,15 @@ namespace Fakebook.Models
     {
         public int PersonId { get; set; }
         public string Name { get; set; }
-		
         [Required]
         public string Username { get; set; }
-
         [Required]
         public string Password { get; set; }
-
         public bool IsAdmin { get; set; } = false;
-        public List<TimelinePost> TimelinePosts { get; set; } = null;
+        public string ProfileDescription { get; set; }
+        [NotMapped]
+        public List<TimelinePost> TimelinePosts { get; set; } = new List<TimelinePost>();
+        [NotMapped]
+        public List<Person> Friends { get; set; } = new List<Person>();
     }
 }

@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Topic";
+}
+@model Topic
+
+<h1>@Model.TopicName</h1>
+<h1>@Model.TopicContent</h1>
+
+
+<a asp-controller="Forum" asp-action="AddReply" asp-route-id="@Model.ForumId" asp-route-id2="@Model.TopicId">Add New Reply</a><br/>
+<a asp-controller="Forum" asp-action="ViewForum" asp-route-id="@Model.ForumId">Back</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Reply Content</th>
+            <th>Poster ID</th>
+            <th>Posted Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reply in Model.Replies)
+        {
+            <tr>
+                <td>@reply.ReplyContent</td>
+                <td>@reply.PosterId</td>
+                <td>@reply.ReplyDate</td>
+            </tr>
+        }
+    </tbody>
+</table>

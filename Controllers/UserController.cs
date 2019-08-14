@@ -54,6 +54,18 @@ namespace Fakebook.Controllers
             return RedirectToAction(nameof(ViewUser), new { name = n });
         }
 
+        // Used for replying to posts
+        [HttpPost]
+        public IActionResult AddReplyPost(string n, ReplyPost rp)
+        {
+            rp.PosterId = User.Identity.GetPersonId();
+            rp.PosterName = User.Identity.GetName();
+            rp.DatePosted = DateTime.Now;
+            timelineService.AddReplyPost(rp);
+
+            return RedirectToAction(nameof(ViewUser), new { name = n });
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

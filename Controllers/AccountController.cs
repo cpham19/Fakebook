@@ -38,11 +38,6 @@ namespace Fakebook.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string username, string password, string returnUrl)
         {
-            if (username == null || password == null)
-            {
-                return RedirectToAction(nameof(Login));
-            }
-
             var identity = accountService.Authenticate(username, password);
             if (identity == null)
                 return RedirectToAction(nameof(Login));

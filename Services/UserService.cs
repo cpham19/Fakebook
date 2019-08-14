@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Fakebook.Models;
 
@@ -19,6 +20,11 @@ namespace Fakebook.Services
             return db.Persons.Where(p => p.Name == name).SingleOrDefault();
         }
 
+        public Person GetPersonBasedOnId(int id)
+        {
+            return db.Persons.Where(p => p.PersonId == id).SingleOrDefault();
+        }
+
         // Getting a list of people excluding user
         public List<Person> GetPersons(int id)
         {
@@ -36,6 +42,16 @@ namespace Fakebook.Services
             {
                 return db.Persons.Where(p => p.Name.ToUpper() == name.ToUpper()).ToList();
             }
+        }
+
+        // Edit stuff for Person
+        public void Edit(Person person)
+        {
+            var p = db.Persons.Where(per => per.PersonId == person.PersonId).SingleOrDefault();
+            p.ProfileDescription = person.ProfileDescription;
+            Debug.WriteLine(p.PersonId);
+            Debug.WriteLine(p.ProfileDescription);
+            db.SaveChanges();
         }
     }
 }

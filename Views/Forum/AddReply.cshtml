@@ -1,0 +1,10 @@
+﻿@{
+    ViewData["Title"] = "AddReply";
+}
+
+<h1>Add New Reply</h1>
+<a asp-controller="Forum" asp-action="ViewTopic" asp-route-id="@ViewBag.id" asp-route-id2="@ViewBag.id2">Back</a>
+<form method="post">
+    Reply Content: <input type="text" name="ReplyContent" required><br>
+    <button>Add</button>
+</form>

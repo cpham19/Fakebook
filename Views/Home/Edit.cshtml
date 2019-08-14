@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Edit Profile Page";
+    var person = (Person)ViewData["Person"];
+}
+@model Person
+@using Fakebook.Models;
+
+
+<h1>Editting Page for @person.Name</h1>
+
+
+<form method="post" asp-controller="Home" asp-action="SubmitEdit">
+    <textarea type="text" name="ProfileDescription" class="form-control" placeholder="Profile Description" required>@person.ProfileDescription</textarea>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Edit</button>
+</form>

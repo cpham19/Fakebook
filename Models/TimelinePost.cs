@@ -11,7 +11,7 @@ namespace Fakebook.Models
         public string PosterName { get; set; }
         public string Description { get; set; }
         public DateTime DatePosted { get; set; }
-        public int PersonId { get; set; }
+        public int PosterId { get; set; }
         public List<ReplyPost> Replies { get; set; }
     }
 
@@ -22,6 +22,6 @@ namespace Fakebook.Models
         public string Description { get; set; }
         public DateTime DatePosted { get; set; }
         public int TimelinePostId { get; set; }
-        public int PersonId { get; set; }
+        public int PosterId { get; set; }
     }
 }

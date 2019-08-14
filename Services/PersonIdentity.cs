@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
+using Fakebook.Models;
 
 // Used for custom claim types. Easy to use because of extension methods
 namespace Fakebook.Services
@@ -12,6 +13,8 @@ namespace Fakebook.Services
     {
         public const string PersonId = "PersonId";
         public const string Name = "Name";
+        public const string ProfileDescription = "ProfileDescription";
+        public const string NumberOfFriends = "NumberOfFriends"; 
     }
 
     public static class IdentityExtensions
@@ -36,6 +39,28 @@ namespace Fakebook.Services
                 return "";
 
             return claim.Value;
+        }
+
+        public static string GetProfileDescription(this IIdentity identity)
+        {
+            ClaimsIdentity claimsIdentity = identity as ClaimsIdentity;
+            Claim claim = claimsIdentity?.FindFirst(PersonClaimTypes.ProfileDescription);
+
+            if (claim == null)
+                return "";
+
+            return claim.Value;
+        }
+
+        public static int GetNumberOfFriends(this IIdentity identity)
+        {
+            ClaimsIdentity claimsIdentity = identity as ClaimsIdentity;
+            Claim claim = claimsIdentity?.FindFirst(PersonClaimTypes.NumberOfFriends);
+
+            if (claim == null)
+                return 0;
+
+            return int.Parse(claim.Value);
         }
     }
 }

@@ -15,9 +15,11 @@ namespace Fakebook.Controllers
     public class HomeController : Controller
     {
         private readonly TimelineService timelineService;
-        public HomeController(TimelineService timelineService)
+        private readonly UserService userService;
+        public HomeController(TimelineService timelineService, UserService userService)
         {
             this.timelineService = timelineService;
+            this.userService = userService;
         }
 
         // Index Page shows the user's timeline posts
@@ -25,6 +27,8 @@ namespace Fakebook.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
+                Person person = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
+                ViewData["Person"] = person;
                 return View(timelineService.GetTimelinePosts(User.Identity.GetPersonId()));
             }
             else
@@ -35,13 +39,41 @@ namespace Fakebook.Controllers
 
         // Used for adding timeline post
         [HttpPost]
-        public IActionResult Index(TimelinePost tp)
+        public IActionResult AddTimelinePost(TimelinePost tp)
         {
-            tp.PersonId = User.Identity.GetPersonId();
+            tp.PosterId = User.Identity.GetPersonId();
             tp.PosterName = User.Identity.GetName();
             tp.DatePosted = DateTime.Now;
             timelineService.AddTimelinePost(tp);
 
+            return RedirectToAction(nameof(Index));
+        }
+
+        // Used for replying to posts
+        [HttpPost]
+        public IActionResult AddReplyPost(ReplyPost rp)
+        {
+            rp.PosterId = User.Identity.GetPersonId();
+            rp.PosterName = User.Identity.GetName();
+            rp.DatePosted = DateTime.Now;
+            timelineService.AddReplyPost(rp);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Edit()
+        {
+            Person person = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
+            ViewData["Person"] = person;
+            return View();
+            //return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public IActionResult SubmitEdit(Person person)
+        {
+            person.PersonId = User.Identity.GetPersonId();
+            userService.Edit(person);
             return RedirectToAction(nameof(Index));
         }
 
