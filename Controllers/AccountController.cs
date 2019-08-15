@@ -21,12 +21,12 @@ namespace Fakebook.Controllers
         }
 
         // Used for directing to login page
-        [HttpGet]
+        [HttpGet("/Login", Name = "Login")]
         public IActionResult Login()
         {
             if (User.Identity.IsAuthenticated)
             {
-                return Redirect("/");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
@@ -35,7 +35,7 @@ namespace Fakebook.Controllers
         }
 
         // Used for logging into the site
-        [HttpPost]
+        [HttpPost("/Login", Name = "LoginPost")]
         public async Task<IActionResult> Login(string username, string password, string returnUrl)
         {
             var identity = accountService.Authenticate(username, password);
@@ -53,15 +53,16 @@ namespace Fakebook.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(Login));
         }
 
         // Used for directing to register page
+        [HttpGet("/Register", Name = "Register")]
         public IActionResult Register()
         {
             if (User.Identity.IsAuthenticated)
             {
-                return Redirect("/");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
@@ -70,12 +71,12 @@ namespace Fakebook.Controllers
         }
 
         // Used for registering the user and directing to login page afterwards
-        [HttpPost]
+        [HttpPost("/Register", Name = "RegisterPost")]
         public IActionResult Register(Person person)
         {
             if (User.Identity.IsAuthenticated)
             {
-                return Redirect("/");
+                return RedirectToAction("Index", "Home");
             }
             else if (person.Username == null || person.Password == null || person.Name == null)
             {

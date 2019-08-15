@@ -33,7 +33,7 @@ namespace Fakebook.Controllers
             }
             else
             {
-                return Redirect("/Account/Login");
+                return RedirectToAction("Login", "Account");
             }
         }
 
@@ -61,15 +61,14 @@ namespace Fakebook.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost("/Edit", Name = "Edit")]
         public IActionResult Edit()
         {
             Person person = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             ViewData["Person"] = person;
             return View();
-            //return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost]
         public IActionResult SubmitEdit(Person person)
         {
             person.PersonId = User.Identity.GetPersonId();

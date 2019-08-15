@@ -31,6 +31,11 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
+                                <form method="post" asp-controller="Search" asp-action="Index">
+                                    <input type="text" name="name" class="form-control" placeholder="Name of Person" value="@ViewBag.name" required />
+                                </form>
+                            </li>
+                            <li>
                                 <a class="nav-link text-dark" href="/">Home</a>
                             </li>
                             <li class="nav-item">
