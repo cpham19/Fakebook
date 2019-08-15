@@ -14,7 +14,7 @@ namespace Fakebook.Models
         [Required]
         public string Password { get; set; }
         public bool IsAdmin { get; set; } = false;
-        public string ProfileDescription { get; set; }
+        public string ProfileDescription { get; set; } = "Profile Description";
         [NotMapped]
         public List<TimelinePost> TimelinePosts { get; set; } = new List<TimelinePost>();
         [NotMapped]

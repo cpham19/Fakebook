@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Fakebook.Models;
 using Fakebook.Services;
+using System.Collections.Generic;
 
 namespace Fakebook.Controllers
 {
@@ -16,30 +17,51 @@ namespace Fakebook.Controllers
             this.timelineService = timelineService;
         }
 
-        [HttpGet]
+        [HttpGet("/User/{**name}", Name = "ViewUser")]
         public IActionResult ViewUser(string name)
         {
             if (User.Identity.IsAuthenticated)
             {
+                Debug.WriteLine("NAME");
+                Debug.WriteLine("NAME");
+                Debug.WriteLine("NAME");
+                Debug.WriteLine("NAME");
+                Debug.WriteLine(name);
+                Debug.WriteLine(name);
+                Debug.WriteLine(name);
+                Debug.WriteLine(name);
                 if (name == null || name == "")
                 {
                     // Don't View anything because no paramater. Search all people if no parameter
-                    ViewBag.Persons = userService.GetPersons(User.Identity.GetPersonId());
+                    ViewBag.Persons = new List<Person>();
                     return RedirectToAction("Index", "Search");
                 }
                 else
                 {
-                    // Search for person based on given parameter
+                    // Show the user
                     var person = userService.GetPerson(name);
                     person.TimelinePosts = timelineService.GetTimelinePosts(person.PersonId);
-                    ViewBag.Person = person;
-                    //TempData["myModel"] = person;
                     return View(person);
                 }
             }
             else
             {
-                return Redirect("/Account/Login");
+                return RedirectToAction("Login", "Account");
+            }
+        }
+        
+        // Used by clicking the "View" Button in Search results
+        [HttpPost]
+        public IActionResult ViewPerson(string name)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                ViewBag.name = name;
+                return RedirectToAction("ViewUser", new { name = name });
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
             }
         }
 

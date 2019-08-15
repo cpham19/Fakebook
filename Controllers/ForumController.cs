@@ -19,7 +19,7 @@ namespace Fakebook.Controllers
             this.forumService = forumService;
         }
 
-        [HttpGet]
+        [HttpGet("/Forum", Name = "ForumIndex")]
         public IActionResult Index()
         {
             return View(forumService.GetForums());

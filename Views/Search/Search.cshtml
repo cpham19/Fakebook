@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Search Page";
+}
+
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-3">Search for people</h1>
+    </div>
+</div>
+
+<form method="post" asp-controller="Search" asp-action="Index">
+    <input type="text" name="name" class="form-control" placeholder="Name of Person" value="@ViewBag.name" required/> <button class="btn btn-primary" type="submit">Find</button>
+</form>
+<br />
+
+<div class="container">
+    <!-- Example row of columns -->
+    <div class="row">
+        @foreach (var person in ViewBag.Persons)
+        {
+        <div class="col-md-4">
+            <img src="https://robohash.org/@person.Name" class="rounded-0" />
+            <h2 class="text-center">@person.Name</h2>
+            <p>@person.ProfileDescription</p>
+            <form asp-controller="User" asp-action="ViewPerson" asp-route-name="@person.Name">
+                <p class="text-center">
+                    <button type="submit">View</button>
+                </p>
+            </form>
+        </div>
+        }
+    </div>
+    <hr>
+</div> <!-- /container -->

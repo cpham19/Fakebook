@@ -9,27 +9,6 @@
 </div>
 
 <form method="post">
-    <input type="text" name="name" class="form-control" placeholder="Name of Person" value=@ViewBag.name /><button class="btn btn-primary" type="submit">Find</button>
+    <input type="text" name="name" class="form-control" placeholder="Name of Person" required/> <button class="btn btn-primary" type="submit">Find</button>
 </form>
 <br />
-
-<div class="container">
-    <!-- Example row of columns -->
-    <div class="row">
-        @foreach (var person in ViewBag.Persons)
-        {
-            <div class="col-md-4">
-                <img src="https://robohash.org/@person.Name" class="rounded-0" />
-                <h2 class="text-center">@person.Name</h2>
-                <p>@person.ProfileDescription</p>
-                <form method="GET">
-                    <p class="text-center">
-                        <button class="btn btn-secondary" type="submit" name="name" asp-controller="User" asp-action="ViewUser" value=@person.Name>View</button>
-                        <button class="btn btn-secondary">Add Friend</button>
-                    </p>
-                </form>
-            </div>
-        }
-    </div>
-    <hr>
-</div> <!-- /container -->
