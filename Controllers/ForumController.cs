@@ -25,16 +25,20 @@ namespace Fakebook.Controllers
             return View(forumService.GetForums());
         }
 
-        [HttpGet("/Forum/{id}", Name = "ViewForum")]
-        public IActionResult ViewForum(int id)
+        [HttpGet("/Forum/{ForumName}", Name = "ViewForum")]
+        public IActionResult ViewForum(string ForumName)
         {
-            return View(forumService.GetForum(id));
+            string[] words = ForumName.Split("_");
+            string regularName = string.Join(" ", words).ToLower();
+            return View(forumService.GetForumBasedOnName(regularName));
         }
 
-        [HttpGet("/Forum/{id}/{id2}", Name = "ViewTopic")]
-        public IActionResult ViewTopic(int id, int id2)
+        [HttpGet("/Forum/{ForumName}/{TopicId}/{TopicName}", Name = "ViewTopic")]
+        public IActionResult ViewTopic(string ForumName, int TopicId, string TopicName)
         {
-            return View(forumService.GetTopic(id, id2));
+            ViewBag.ForumName = ForumName;
+            ViewBag.PersonId = User.Identity.GetPersonId();
+            return View(forumService.GetTopic(TopicId));
         }
 
         [HttpGet("/Forum/AddForum", Name = "AddForum")]
@@ -51,43 +55,80 @@ namespace Fakebook.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet("/Forum/{id}/AddTopic", Name = "AddTopic")]
-        public IActionResult AddTopic(int id)
+        [HttpGet("/Forum/{ForumName}/AddTopic", Name = "AddTopic")]
+        public IActionResult AddTopic(string ForumName)
         {
-            ViewBag.id = id;
+            ViewBag.ForumName = ForumName;
             return View();
         }
 
 
-        [HttpPost("/Forum/{id}/AddTopic", Name = "AddTopic")]
-        public IActionResult AddTopic(int id, Topic t)
+        [HttpPost("/Forum/{ForumName}/AddTopic", Name = "AddTopic")]
+        public IActionResult AddTopic(string ForumName, Topic t)
         {
-            t.ForumId = id;
+            Forum forum = forumService.GetForumBasedOnName(ForumName);
+            t.ForumId = forum.ForumId;
             t.TopicDate = DateTime.Now;
             t.PosterId = User.Identity.GetPersonId();
-            Debug.WriteLine(t.ForumId);
+            t.PosterName = User.Identity.GetName();
             forumService.AddTopic(t);
-            return RedirectToAction("ViewForum", new { id = id });
+            return RedirectToAction("ViewForum", new { ForumName = ForumName });
         }
 
-        [HttpGet("/Forum/{id}/{id2}/AddReply", Name = "AddReply")]
-        public IActionResult AddReply(int id, int id2)
-        {
-            ViewBag.id = id;
-            ViewBag.id2 = id2;
-            return View();
-        }
-
-        [HttpPost("/Forum/{id}/{id2}/AddReply", Name = "AddReply")]
-        public IActionResult AddReply(int id, int id2, Reply r)
+        [HttpPost("/Forum/{ForumName}/{TopicId}/{TopicName}", Name = "AddReply")]
+        public IActionResult AddReply(string ForumName, int TopicId, string TopicName, Reply r)
         {
             r.ReplyDate = DateTime.Now;
-            r.TopicId = id2;
+            r.TopicId = TopicId;
             r.PosterId = User.Identity.GetPersonId();
+            r.PosterName = User.Identity.GetName();
             forumService.AddReply(r);
-            return RedirectToAction("ViewTopic", new { id = id , id2 = id2});
+            return RedirectToAction("ViewTopic", new { ForumName = ForumName , TopicId = TopicId, TopicName = TopicName});
         }
 
+        public IActionResult ToggleEditTopic(string ForumName, int TopicId, string TopicName)
+        {
+            return RedirectToAction("EditTopic", new { ForumName = ForumName, TopicId = TopicId, TopicName = TopicName});
+        }
+
+        [HttpGet("/Forum/{ForumName}/{TopicId}/{TopicName}/Edit", Name = "EditTopic")]
+        public IActionResult EditTopic(string ForumName, int TopicId, string TopicName)
+        {
+            ViewBag.ForumName = ForumName;
+            ViewBag.TopicName = TopicName;
+            Topic topic = forumService.GetTopic(TopicId);
+            return View(topic);
+        }
+
+        [HttpPost("/Forum/{ForumName}/{TopicId}/{TopicName}/Edit", Name = "SubmitEditTopic")]
+        public IActionResult SubmitEditTopic(string ForumName, int TopicId, string TopicName, Topic t)
+        {
+            t.TopicId = TopicId;
+            forumService.EditTopic(t);
+            return RedirectToAction("ViewTopic", new { ForumName = ForumName, TopicId = TopicId, TopicName = TopicName });
+        }
+
+        public IActionResult ToggleEditReply(string ForumName, int TopicId, string TopicName, int ReplyId)
+        {
+            return RedirectToAction("EditReply", new { ForumName = ForumName, TopicId = TopicId, TopicName = TopicName , ReplyId = ReplyId});
+        }
+
+        [HttpGet("/Forum/{ForumName}/{TopicId}/{TopicName}/{ReplyId}/Edit", Name = "EditReply")]
+        public IActionResult EditReply(string ForumName, int TopicId, string TopicName, int ReplyId)
+        {
+            ViewBag.ForumName = ForumName;
+            ViewBag.TopicName = TopicName;
+            Reply reply = forumService.GetReply(ReplyId);
+            return View(reply);
+        }
+
+        [HttpPost("/Forum/{ForumName}/{TopicId}/{TopicName}/{ReplyId}/Edit", Name = "SubmitEditReply")]
+        public IActionResult SubmitEditReply(string ForumName, int TopicId, string TopicName, int ReplyId, Reply r)
+        {
+            r.ReplyId = ReplyId;
+            forumService.EditReply(r);
+            return RedirectToAction("ViewTopic", new { ForumName = ForumName, TopicId = TopicId, TopicName = TopicName });
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

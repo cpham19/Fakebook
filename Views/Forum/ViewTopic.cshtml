@@ -6,15 +6,18 @@
 <h1>@Model.TopicName</h1>
 <h1>@Model.TopicContent</h1>
 
-
-<a asp-controller="Forum" asp-action="AddReply" asp-route-id="@Model.ForumId" asp-route-id2="@Model.TopicId">Add New Reply</a><br/>
-<a asp-controller="Forum" asp-action="ViewForum" asp-route-id="@Model.ForumId">Back</a>
+@if (@Model.PosterId == ViewBag.PersonId)
+{
+    <a asp-controller="Forum" asp-action="ToggleEditTopic" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()">Edit Topic</a>
+}   <br/>
+<a asp-controller="Forum" asp-action="ViewForum" asp-route-ForumName="@ViewBag.ForumName">Back</a>
 <table class="table">
     <thead>
         <tr>
             <th>Reply Content</th>
-            <th>Poster ID</th>
+            <th>Poster</th>
             <th>Posted Date</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -22,9 +25,20 @@
         {
             <tr>
                 <td>@reply.ReplyContent</td>
-                <td>@reply.PosterId</td>
+                <td>@reply.PosterName</td>
                 <td>@reply.ReplyDate</td>
+                <td>
+                    @if (reply.PosterId == ViewBag.PersonId)
+                    {
+                        <a asp-controller="Forum" asp-action="ToggleEditReply" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()" asp-route-ReplyId="@reply.ReplyId">Edit</a>
+                    }
+                </td>
             </tr>
         }
     </tbody>
 </table>
+
+<form method="post">
+    Reply Content: <input type="text" name="ReplyContent" required><br>
+    <button>Add</button>
+</form>

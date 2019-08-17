@@ -18,10 +18,8 @@
         <h1 class="display-4">@person.Name</h1>
         <img src="https://robohash.org/@person.Name" class="rounded-0" />
         <div class="text-left">
-            @person.ProfileDescription
-            <form asp-controller="Home" asp-action="Edit">
-                <button class="btn btn-sm btn-primary" type="submit">Edit</button><br />
-            </form>
+            @person.ProfileDescription<br/>
+            <a class="btn btn-primary" asp-controller="Home" asp-action="Edit">Edit</a><br/>
             <a href="">Friends (@person.Friends.Count)</a>
         </div>
     </div>

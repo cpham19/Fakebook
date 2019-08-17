@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Edit Topic";
+}
+@model Topic
+
+<h1>Editting Topic #@Model.TopicId</h1>
+
+
+<form method="post" asp-controller="Forum" asp-action="SubmitEdit" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@ViewBag.TopicName">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Topic Name</span>
+        </div>
+        <input type="text" name="TopicName" class="form-control" placeholder="Topic Name" value="@Model.TopicName" required />
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Topic Content</span>
+        </div>
+        <textarea type="text" name="TopicContent" class="form-control" placeholder="Topic Content" required>@Model.TopicContent</textarea>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Edit</button>
+</form>

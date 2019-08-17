@@ -15,13 +15,13 @@ namespace Fakebook
         public string ModifiedForumName()
         {
             string[] names = ForumName.Split(" ");
-            return string.Join("_", names);
+            return string.Join("_", names).ToLower();
         }
- 
-        public override string ToString()
-        {
-            return $"{ForumId}) Forum - {ForumName}";
-        }
+
+        //public override string ToString()
+        //{
+        //    return $"{ForumId}) Forum - {ForumName}";
+        //}
 
         [NotMapped]
         public List<Topic> Topics { get; set; }
@@ -36,11 +36,18 @@ namespace Fakebook
         public string TopicContent { get; set; }
         public virtual int ForumId { get; set; }
         public int PosterId { get; set; }
+        public string PosterName { get; set; }
 
-        public override string ToString()
+        public string ModifiedTopicName()
         {
-            return $"{TopicId}) Topic - {TopicName} (Posted on {TopicDate})";
+            string[] names = TopicName.Split(" ");
+            return string.Join("_", names).ToLower();
         }
+
+        //public override string ToString()
+        //{
+        //    return $"{TopicId}) Topic - {TopicName} (Posted on {TopicDate})";
+        //}
 
         [NotMapped]
         public List<Reply> Replies { get; set; }
@@ -54,11 +61,12 @@ namespace Fakebook
         public DateTime ReplyDate { get; set; }
         public virtual int TopicId { get; set; }
         public int PosterId { get; set; }
+        public string PosterName { get; set; }
 
-        public override string ToString()
-        {
-            return $"Reply ({ReplyDate}): {ReplyContent}";
-        }
+        //public override string ToString()
+        //{
+        //    return $"Reply ({ReplyDate}): {ReplyContent}";
+        //}
     }
 
 }

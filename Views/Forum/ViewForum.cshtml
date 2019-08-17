@@ -5,21 +5,23 @@
 
 <h1>@Model.ForumName</h1>
 
-<a href="@Model.ForumId/AddTopic">Add New Topic</a><br/>
+<a asp-controller="Forum" asp-action="AddTopic" asp-route-Forumname="@Model.ModifiedForumName()">Add New Topic</a><br/>
 <a asp-controller="Forum" asp-action="Index">Back</a>
 <table class="table">
     <thead>
         <tr>
             <th>Topic Name</th>
-            <th>Poster ID</th>
+            <th>Poster</th>
+            <th>Number of Replies</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var topic in Model.Topics)
         {
             <tr>
-                <td><a asp-controller="Forum" asp-action="ViewTopic" asp-route-id=@Model.ForumId asp-route-id2=@topic.TopicId>@topic.TopicName</a></td>
-                <td>@topic.PosterId</td>
+                <td><a asp-controller="Forum" asp-action="ViewTopic" asp-route-ForumName="@Model.ModifiedForumName()" asp-route-TopicId="@topic.TopicId" asp-route-TopicName="@topic.ModifiedTopicName()">@topic.TopicName</a></td>
+                <td>@topic.PosterName</td>
+                <td>@topic.Replies.Count</td>
             </tr>
         }
     </tbody>

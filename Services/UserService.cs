@@ -49,8 +49,6 @@ namespace Fakebook.Services
         {
             var p = db.Persons.Where(per => per.PersonId == person.PersonId).SingleOrDefault();
             p.ProfileDescription = person.ProfileDescription;
-            Debug.WriteLine(p.PersonId);
-            Debug.WriteLine(p.ProfileDescription);
             db.SaveChanges();
         }
     }

@@ -8,10 +8,14 @@ namespace Fakebook.Services
     {
         List<Forum> GetForums();
         Forum GetForum(int id);
-        Topic GetTopic(int ForumId, int TopicId);
+        Forum GetForumBasedOnName(string name);
+        Topic GetTopic(int id);
+        Reply GetReply(int id);
         void AddForum(Forum f);
         void AddTopic(Topic t);
         void AddReply(Reply r);
+        void EditReply(Reply r);
+        void EditTopic(Topic t);
     }
 
     public class ForumService : IForumService
@@ -25,22 +29,59 @@ namespace Fakebook.Services
 
         public List<Forum> GetForums()
         {
-            return db.Forums.OrderBy(f => f.ForumName).ToList();
+            List<Forum> forums = db.Forums.OrderBy(f => f.ForumName).ToList();
+            foreach(var forum in forums)
+            {
+                forum.Topics = db.Topics.Where(t => t.ForumId == forum.ForumId).ToList();
+            }
+            return forums;
         }
+
+        public Forum GetForumBasedOnName(string name)
+        {
+            Forum forum = db.Forums.Where(f => f.ForumName == name).SingleOrDefault();
+            forum.Topics = db.Topics.Where(t => t.ForumId == forum.ForumId).ToList();
+            foreach (var topic in forum.Topics)
+            {
+                topic.Replies = db.Replies.Where(r => r.TopicId == topic.TopicId).ToList();
+            }
+            return forum;
+        }
+
         public Forum GetForum(int id)
         {
             Forum forum = db.Forums.Where(f => f.ForumId == id).SingleOrDefault();
             forum.Topics = db.Topics.Where(t => t.ForumId == id).ToList();
-
             return forum;
         }
 
-        public Topic GetTopic(int id, int id2)
+        public Topic GetTopic(int id)
         {
-            Topic topic = db.Topics.Where(t => t.TopicId == id2).SingleOrDefault();
-            topic.Replies = db.Replies.Where(r => r.TopicId == id2).ToList();
+            Topic topic = db.Topics.Where(t => t.TopicId == id).SingleOrDefault();
+            topic.Replies = db.Replies.Where(r => r.TopicId == id).ToList();
 
             return topic;
+        }
+
+        public void EditTopic(Topic t)
+        {
+            Topic topic = db.Topics.Where(top => top.TopicId == t.TopicId).SingleOrDefault();
+            topic.TopicName = t.TopicName;
+            topic.TopicContent = t.TopicContent;
+            db.SaveChanges();
+        }
+
+        public Reply GetReply(int id)
+        {
+            Reply reply = db.Replies.Where(r => r.ReplyId == id).SingleOrDefault();
+            return reply;
+        }
+
+        public void EditReply(Reply r)
+        {
+            Reply reply = db.Replies.Where(rep => rep.ReplyId == r.ReplyId).SingleOrDefault();
+            reply.ReplyContent = r.ReplyContent;
+            db.SaveChanges();
         }
 
         public void AddForum(Forum f)

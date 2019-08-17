@@ -23,15 +23,15 @@
     <thead>
         <tr>
             <th>Forum Name</th>
-            <th>Poster ID</th>
+            <th>Number of Topics</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var forum in Model)
         {
             <tr>
-                <td><a asp-controller="Forum" asp-action="ViewForum" asp-route-id="@forum.ForumId">@forum.ForumName</a></td>
-                <td>@forum.PosterId</td>
+                <td><a asp-controller="Forum" asp-action="ViewForum" asp-route-ForumName="@forum.ModifiedForumName()">@forum.ForumName</a></td>
+                <td>@forum.Topics.Count</td>
             </tr>
         }
     </tbody>

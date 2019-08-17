@@ -22,14 +22,6 @@ namespace Fakebook.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                Debug.WriteLine("NAME");
-                Debug.WriteLine("NAME");
-                Debug.WriteLine("NAME");
-                Debug.WriteLine("NAME");
-                Debug.WriteLine(name);
-                Debug.WriteLine(name);
-                Debug.WriteLine(name);
-                Debug.WriteLine(name);
                 if (name == null || name == "")
                 {
                     // Don't View anything because no paramater. Search all people if no parameter

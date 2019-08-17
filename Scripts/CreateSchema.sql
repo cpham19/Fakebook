@@ -61,7 +61,8 @@ CREATE TABLE [Topics] (
     [TopicContent] nvarchar(max) NULL,
     [TopicDate] datetime2 NOT NULL,
     [ForumId] int NOT NULL,
-	[PosterID] int NOT NULL,
+	[PosterId] int NOT NULL,
+	[PosterName] nvarchar(max) NOT NULL,
     CONSTRAINT [PK_Topics] PRIMARY KEY ([TopicId]),
 	CONSTRAINT [FK_Topics_Forums_ForumId] FOREIGN KEY ([ForumId]) REFERENCES [Forums] ([ForumId]) ON DELETE CASCADE
 );
@@ -74,6 +75,7 @@ CREATE TABLE [Replies] (
 	[ReplyDate] datetime2 NOT NULL,
     [TopicId] int NOT NULL,
 	[PosterId] int NOT NULL,
+	[PosterName] nvarchar(max) NOT NULL,
     CONSTRAINT [PK_Replies] PRIMARY KEY ([ReplyId]),
     CONSTRAINT [FK_Replies_Topics_TopicId] FOREIGN KEY ([TopicId]) REFERENCES [Topics] ([TopicId]) ON DELETE CASCADE
 );

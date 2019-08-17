@@ -61,7 +61,7 @@ namespace Fakebook.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost("/Edit", Name = "Edit")]
+        [HttpGet("/Edit", Name = "Edit")]
         public IActionResult Edit()
         {
             Person person = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
@@ -69,7 +69,8 @@ namespace Fakebook.Controllers
             return View();
         }
 
-        public IActionResult SubmitEdit(Person person)
+        [HttpPost("/Edit", Name = "SubmitEdit")]
+        public IActionResult Edit(Person person)
         {
             person.PersonId = User.Identity.GetPersonId();
             userService.Edit(person);

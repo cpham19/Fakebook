@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Edit Reply";
+}
+@model Reply
+
+<h1>Editting Reply #@Model.ReplyId</h1>
+
+
+<form method="post" asp-controller="Forum" asp-action="SubmitEditReply" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@ViewBag.TopicName">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Reply Content</span>
+        </div>
+        <textarea type="text" name="ReplyContent" class="form-control" placeholder="Reply Content" required>@Model.ReplyContent</textarea>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Edit</button>
+</form>

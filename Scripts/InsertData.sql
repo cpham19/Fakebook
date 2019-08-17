@@ -30,29 +30,31 @@ SET IDENTITY_INSERT ReplyPosts OFF
 GO
 
 SET IDENTITY_INSERT Forums ON 
-INSERT INTO Forums (ForumId,ForumName, PosterId) VALUES (1, N'CS 4220 Database Systems', 2);
-INSERT INTO Forums (ForumId,ForumName, PosterId) VALUES (2, N'CS 4661 Data Science', 2);
+INSERT INTO Forums (ForumId,ForumName, PosterId) VALUES (1, N'News', 2);
+INSERT INTO Forums (ForumId,ForumName, PosterId) VALUES (2, N'Marketplace', 2);
 SET IDENTITY_INSERT Forums OFF
 GO
 
 SET IDENTITY_INSERT Topics ON 
-INSERT INTO Topics (TopicId, TopicName, TopicContent, TopicDate, ForumId, PosterId) VALUES (1, N'Homework 1', N'Create a database using MYSQL.', '2019-07-03', 1, 2);
-INSERT INTO Topics (TopicId, TopicName, TopicContent, TopicDate, ForumId, PosterId) VALUES (2, N'Lab 1', N'Create a relational schema.', '2019-07-03', 1, 2);
-INSERT INTO Topics (TopicId, TopicName, TopicContent, TopicDate, ForumId, PosterId) VALUES (3, N'Homework 1', N'Implement Decision Tree algorithm.', '2019-07-01', 2, 2);
-INSERT INTO Topics (TopicId, TopicName, TopicContent, TopicDate, ForumId, PosterId) VALUES (4, N'Lab 1', N'Implement Random Forest algorithm.', '2019-07-03', 2, 2);
+INSERT INTO Topics (TopicId, TopicName, TopicContent, TopicDate, ForumId, PosterId, PosterName) VALUES (1, N'Updates involving home pages', N'You can add posts now...', '2019-07-03', 1, 2, N'Calvin');
+INSERT INTO Topics (TopicId, TopicName, TopicContent, TopicDate, ForumId, PosterId, PosterName) VALUES (2, N'Updates involving forum', N'You can look at forums now...', '2019-07-03', 1, 2, N'Calvin');
+INSERT INTO Topics (TopicId, TopicName, TopicContent, TopicDate, ForumId, PosterId, PosterName) VALUES (3, N'Selling dirt', N'Fresh and good quality dirt', '2019-07-01', 2, 2, N'John');
+INSERT INTO Topics (TopicId, TopicName, TopicContent, TopicDate, ForumId, PosterId, PosterName) VALUES (4, N'Selling a car', N'Model Honda, Year 2005, Condition Used', '2019-07-03', 2, 2, N'John');
 SET IDENTITY_INSERT Topics OFF 
 
 GO
 
 SET IDENTITY_INSERT Replies ON
-INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (1, N'How do I do this homework?', '2019-07-03', 1, 2);
-INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (2, N'Look at your book and implement the database.', '2019-07-03', 1, 2);
-INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (3, N'How do I do this lab?', '2019-07-03', 2, 2);
-INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (4, N'By looking at the book for examples.', '2019-07-03', 2, 2);
-INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (5, N'How do I do this homework?', '2019-07-03', 3, 2);
-INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (6, N'Follow the example that Dr.Mo sent us.', '2019-07-03', 3, 2);
-INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (7, N'How do I do this lab?', '2019-07-03', 4, 2);
-INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (8, N'The lab is really close the the example in the powerpoint slides.', '2019-07-03', 4, 2);
+INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId, PosterName) VALUES (1, N'Nice updates...', '2019-07-03', 1, 1, N'John');
+INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId, PosterName) VALUES (2, N'Yes... Very nice updates...', '2019-07-03', 1, 3, N'Jane');
+INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId, PosterName) VALUES (3, N'Keep up on the good updates...', '2019-07-03', 2, 4, N'Bill');
+INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId, PosterName) VALUES (4, N'Great work....', '2019-07-03', 2, 5, N'Louis');
+INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId, PosterName) VALUES (5, N'How much for the dirt?', '2019-07-03', 3, 2, N'Calvin');
+INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId, PosterName) VALUES (6, N'$20', '2019-07-03', 3, 1, N'John');
+INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId, PosterName) VALUES (7, N'Deal....', '2019-07-03', 3, 2, N'Calvin');
+INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId, PosterName) VALUES (8, N'How much for the car??', '2019-07-03', 4, 4, N'Bill');
+INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId, PosterName) VALUES (9, N'For you, $10.', '2019-07-03', 4, 1, N'John');
+INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId, PosterName) VALUES (10, N'Nah, too expensive.', '2019-07-03', 4, 4, N'Bill');
 SET IDENTITY_INSERT Replies OFF
 
 GO
