@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Fakebook.Models;
 using Fakebook.Services;
-using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
-using System.Security.Claims;
-using System.Threading;
 
 namespace Fakebook.Controllers
 {
@@ -22,7 +16,6 @@ namespace Fakebook.Controllers
             this.userService = userService;
         }
 
-        // Index Page shows the user's timeline posts
         public IActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
@@ -42,10 +35,50 @@ namespace Fakebook.Controllers
         public IActionResult AddTimelinePost(TimelinePost tp)
         {
             tp.PosterId = User.Identity.GetPersonId();
+            tp.UserIdOfProfile = User.Identity.GetPersonId();
             tp.PosterName = User.Identity.GetName();
             tp.DatePosted = DateTime.Now;
             timelineService.AddTimelinePost(tp);
+            Debug.WriteLine("HELLO");
+            Debug.WriteLine("HELLO");
+            Debug.WriteLine("HELLO");
+            Debug.WriteLine("HELLO");
+            Debug.WriteLine("HELLO");
 
+            return RedirectToAction(nameof(Index));
+        }
+
+        // USed for editting a timeline post
+        [HttpGet("/EditPost/{TimelinePostId}", Name = "EditTimelinePost")]
+        public IActionResult EditTimelinePost(int TimelinePostId)
+        {
+            TimelinePost tp = timelineService.GetTimelinePost(TimelinePostId);
+            return View(tp);
+        }
+
+        // USed for editting a timeline post
+        [HttpPost("/EditPost/{TimelinePostId}", Name = "SubmitEditTimelinePost")]
+        public IActionResult EditTimelinePost(int TimelinePostId, TimelinePost tp)
+        {
+            tp.TimelinePostId = TimelinePostId;
+            timelineService.EditTimelinePost(tp);
+            return RedirectToAction(nameof(Index));
+        }
+
+        // USed for editting a reply post
+        [HttpGet("/EditReplyPost/{ReplyPostId}", Name = "EditReplyPost")]
+        public IActionResult EditReplyPost(int ReplyPostId)
+        {
+            ReplyPost rp = timelineService.GetReplyPost(ReplyPostId);
+            return View(rp);
+        }
+
+        // USed for editting a reply post
+        [HttpPost("/EditReplyPost/{ReplyPostId}", Name = "SubmitEditReplyPost")]
+        public IActionResult EditReplyPost(int ReplyPostId, ReplyPost rp)
+        {
+            rp.ReplyPostId = ReplyPostId;
+            timelineService.EditReplyPost(rp);
             return RedirectToAction(nameof(Index));
         }
 

@@ -20,9 +20,9 @@
         {
         <div class="card" style="width: 18rem;">
             <img src="https://robohash.org/@person.Name" class="card-img-top" />
-            <h5 class="card-title">@person.Name</h5>
+            <h1 class="text-center">@person.Name</h1>
             <p class="card-text">@person.ProfileDescription</p>
-            <a class="btn btn-primary" asp-controller="User" asp-action="ViewUser" asp-route-name="@person.Name">View</a>
+            <a class="btn btn-primary" asp-controller="User" asp-action="Index" asp-route-name="@person.Name">View</a>
         </div>
         }
     </div>

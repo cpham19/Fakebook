@@ -4,9 +4,8 @@
 @model Reply
 
 <h1>Editting Reply #@Model.ReplyId</h1>
-
-
-<form method="post" asp-controller="Forum" asp-action="SubmitEditReply" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@ViewBag.TopicName">
+<a asp-action="ViewTopic" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@ViewBag.TopicName">Back</a>
+<form method="post" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@ViewBag.TopicName">
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1">Reply Content</span>

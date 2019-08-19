@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Edit Reply Post";
+}
+@model ReplyPost
+
+<h1>Editting Reply #@Model.ReplyPostId</h1>
+<a asp-controller="Home" asp-action="Index">Back</a>
+<form method="post" asp-route-ReplyPostId="@Model.ReplyPostId">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Description</span>
+        </div>
+        <textarea name="Description" class="form-control" placeholder="Description" required>@Model.Description</textarea>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Edit</button>
+</form>

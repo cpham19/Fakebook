@@ -19,10 +19,20 @@ namespace Fakebook.Services
             this.db = db;
         }
 
+        public TimelinePost GetTimelinePost(int id)
+        {
+            return db.TimelinePosts.Where(tp => tp.TimelinePostId == id).SingleOrDefault();
+        }
+
+        public ReplyPost GetReplyPost(int id)
+        {
+            return db.ReplyPosts.Where(rp => rp.ReplyPostId == id).SingleOrDefault();
+        }
+
         // Get user's timeline posts and their replies
         public List<TimelinePost> GetTimelinePosts(int id)
         {
-            List<TimelinePost> timelinePosts = db.TimelinePosts.Where(tp => tp.PosterId == id).OrderByDescending(tp => tp.DatePosted).ToList();
+            List<TimelinePost> timelinePosts = db.TimelinePosts.Where(tp => tp.UserIdOfProfile == id).OrderByDescending(tp => tp.DatePosted).ToList();
             foreach (var tp in timelinePosts) {
                 tp.Replies = db.ReplyPosts.Where(reply => reply.TimelinePostId == tp.TimelinePostId).OrderBy(reply => reply.DatePosted).ToList();
             }
@@ -40,6 +50,22 @@ namespace Fakebook.Services
         public void AddReplyPost(ReplyPost rp)
         {
             db.ReplyPosts.Add(rp);
+            db.SaveChanges();
+        }
+
+        // Editting Timeline Post
+        public void EditTimelinePost(TimelinePost tp)
+        {
+            TimelinePost timelinePost = this.GetTimelinePost(tp.TimelinePostId);
+            timelinePost.Description = tp.Description;
+            db.SaveChanges();
+        }
+
+        // Editting Reply Post
+        public void EditReplyPost(ReplyPost rp)
+        {
+            ReplyPost replyPost = this.GetReplyPost(rp.ReplyPostId);
+            replyPost.Description = rp.Description;
             db.SaveChanges();
         }
     }

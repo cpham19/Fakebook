@@ -3,34 +3,47 @@
 }
 @model Topic
 
-<h1>@Model.TopicName</h1>
-<h1>@Model.TopicContent</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Forum" asp-action="Index">Forums</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Forum" asp-action="ViewForum" asp-route-ForumName="@ViewBag.ForumName">@ViewBag.ForumName</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.TopicName</li>
+    </ol>
+</nav>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">@Model.TopicName</h1>
+        <p class="lead">@Model.TopicContent</p>
+        <hr class="my-4">
+        <p>Posted by <a asp-controller="User" asp-action="ViewUser" asp-route-name="@Model.PosterName">@Model.PosterName</a> (@Model.TopicDate)</p>
+    </div>
+</div>
 
 @if (@Model.PosterId == ViewBag.PersonId)
 {
-    <a asp-controller="Forum" asp-action="ToggleEditTopic" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()">Edit Topic</a>
-}   <br/>
-<a asp-controller="Forum" asp-action="ViewForum" asp-route-ForumName="@ViewBag.ForumName">Back</a>
-<table class="table">
-    <thead>
+    <a asp-controller="Forum" asp-action="EditTopic" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()">Edit Topic</a>
+}
+<table class="table table-striped table-light">
+    <thead class="thead-dark">
         <tr>
-            <th>Reply Content</th>
-            <th>Poster</th>
-            <th>Posted Date</th>
-            <th>Actions</th>
+            <th scope="col">Reply Content</th>
+            <th scope="col">Poster</th>
+            <th scope="col">Posted Date</th>
+            <th scope="col">Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var reply in Model.Replies)
         {
-            <tr>
+            <tr scope="row">
                 <td>@reply.ReplyContent</td>
-                <td>@reply.PosterName</td>
+                <td><a asp-controller="User" asp-action="ViewUser" asp-route-name="@reply.PosterName">@reply.PosterName</a></td>
                 <td>@reply.ReplyDate</td>
                 <td>
                     @if (reply.PosterId == ViewBag.PersonId)
                     {
-                        <a asp-controller="Forum" asp-action="ToggleEditReply" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()" asp-route-ReplyId="@reply.ReplyId">Edit</a>
+                        <a asp-controller="Forum" asp-action="EditReply" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()" asp-route-ReplyId="@reply.ReplyId">Edit</a>
                     }
                 </td>
             </tr>

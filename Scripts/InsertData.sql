@@ -10,12 +10,12 @@ SET IDENTITY_INSERT Persons OFF
 GO
 
 SET IDENTITY_INSERT TimelinePosts ON 
-INSERT INTO TimelinePosts (TimelinePostId, PosterName, Description, DatePosted, PosterId) VALUES (1, N'Calvin', N'I am bored.', '2019-06-19', 2);
-INSERT INTO TimelinePosts (TimelinePostId, PosterName, Description, DatePosted, PosterId) VALUES (2, N'Calvin', N'I am still bored', '2019-06-19', 2);
-INSERT INTO TimelinePosts (TimelinePostId, PosterName, Description, DatePosted, PosterId) VALUES (3, N'John', N'Nice morning.', '2019-06-19', 1);
-INSERT INTO TimelinePosts (TimelinePostId, PosterName, Description, DatePosted, PosterId) VALUES (4, N'John', N'I ate steak this morning!', '2019-06-20', 1);
-INSERT INTO TimelinePosts (TimelinePostId, PosterName, Description, DatePosted, PosterId) VALUES (5, N'Jane', N'Nice night.', '2019-06-19', 3);
-INSERT INTO TimelinePosts (TimelinePostId, PosterName, Description, DatePosted, PosterId) VALUES (6, N'Jane', N'Sleeping... Good night!', '2019-06-19', 3);
+INSERT INTO TimelinePosts (TimelinePostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (1, N'Calvin', N'I am bored.', '2019-06-19', 2, 2);
+INSERT INTO TimelinePosts (TimelinePostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (2, N'Calvin', N'I am still bored', '2019-06-19', 2, 2);
+INSERT INTO TimelinePosts (TimelinePostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (3, N'John', N'Nice morning.', '2019-06-19', 1, 1);
+INSERT INTO TimelinePosts (TimelinePostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (4, N'John', N'I ate steak this morning!', '2019-06-20', 1, 1);
+INSERT INTO TimelinePosts (TimelinePostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (5, N'Jane', N'Nice night.', '2019-06-19', 3, 3);
+INSERT INTO TimelinePosts (TimelinePostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (6, N'Jane', N'Sleeping... Good night!', '2019-06-19', 3, 3);
 SET IDENTITY_INSERT TimelinePosts OFF
 
 GO
@@ -23,8 +23,8 @@ GO
 SET IDENTITY_INSERT ReplyPosts ON 
 INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, TimelinePostId, PosterId) VALUES (1, N'Calvin', N'Are you?.', '2019-06-19', 1, 2);
 INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, TimelinePostId, PosterId) VALUES (2, N'Calvin', N'Yes I am', '2019-06-19', 1, 2);
-INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, TimelinePostId, PosterId) VALUES (3, N'Calvin', N'Good morning to you, John!.', '2019-06-19', 3, 1);
-INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, TimelinePostId, PosterId) VALUES (4, N'Jane', N'Yes, Good morning to you John!', '2019-06-19', 3, 1);
+INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, TimelinePostId, PosterId) VALUES (3, N'Calvin', N'Good morning to you, John!.', '2019-06-19', 3, 2);
+INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, TimelinePostId, PosterId) VALUES (4, N'Jane', N'Yes, Good morning to you John!', '2019-06-19', 3, 3);
 SET IDENTITY_INSERT ReplyPosts OFF
 
 GO

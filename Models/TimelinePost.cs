@@ -12,6 +12,7 @@ namespace Fakebook.Models
         public string Description { get; set; }
         public DateTime DatePosted { get; set; }
         public int PosterId { get; set; }
+        public int UserIdOfProfile { get; set; }
         public List<ReplyPost> Replies { get; set; }
     }
 

@@ -1,10 +1,7 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-    var person = (Person)ViewData["Person"];
-
+﻿@model Person
+@{
+    ViewData["Title"] = "User Page";
 }
-
-@model List<TimelinePost>
 
 <style type="text/css">
     .card-img-top {
@@ -14,27 +11,28 @@
 </style>
 
 <div class="row">
-    <!-- About me-->
+    <!-- About me -->
     <div class="card" style="width: 18rem;">
-        <h1 class="text-center">@person.Name</h1>
-        <img class="card-img-top" src="https://robohash.org/@person.Name" alt="Card image cap">
+        <h1 class="text-center">@Model.Name</h1>
+        <img class="card-img-top" src="https://robohash.org/@Model.Name" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title">About Me</h5>
-            <p class="card-text">@person.ProfileDescription</p>
-            <a class="btn btn-primary" asp-controller="Home" asp-action="Edit">Edit</a><br />
-            <a href="">Friends (@person.Friends.Count)</a>
+            <p class="card-text">@Model.ProfileDescription</p>
+            <a href="">Friends (@Model.Friends.Count)</a>
         </div>
     </div>
     <!-- Timeline Entries Column -->
     <div class="col-md-8">
         <h1 class="my-4">Timeline Posts</h1>
-        <form method="post" asp-controller="Home" asp-action="AddTimelinePost">
+        <form method="post" asp-controller="User" asp-action="AddTimelinePost">
+            <input type="text" name="n" value=@Model.Name hidden />
+            <input type="text" name="UserIdOfProfile" class="form-control" value=@Model.PersonId hidden />
             <textarea type="text" name="Description" class="form-control" placeholder="New Post" required></textarea>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Add Post</button>
         </form>
         <br /><br />
         <!-- Timeline Post -->
-        @foreach (var post in Model)
+        @foreach (var post in Model.TimelinePosts)
         {
             <div class="card mb-4">
                 <div class="card-body">
@@ -44,8 +42,9 @@
                 <div class="card-footer text-muted">
                     Posted on @post.DatePosted by
                     <a asp-controller="User" asp-action="Index" asp-route-name="@post.PosterName">@post.PosterName</a>
-                    @if(person.PersonId == post.PosterId) {
-                        <a asp-controller="Home" asp-action="EditTimelinePost" asp-route-TimelinePostId="@post.TimelinePostId">Edit</a>
+                    @if(ViewBag.PersonId == post.PosterId)
+                    {
+                        <a asp-controller="User" asp-action="EditTimelinePost" asp-route-name="@Model.Name" asp-route-TimelinePostId="@post.TimelinePostId">Edit</a>
                     }
                 </div>
                 <!-- Replies to the Main Posts -->
@@ -57,14 +56,16 @@
                     <div class="card-footer text-muted">
                         Posted on @reply.DatePosted by
                         <a asp-controller="User" asp-action="Index" asp-route-name="@reply.PosterName">@reply.PosterName</a>
-                        @if(person.PersonId == reply.PosterId) {
-                            <a asp-controller="Home" asp-action="EditReplyPost" asp-route-ReplyPostId="@reply.ReplyPostId">Edit</a>
+                        @if(ViewBag.PersonId == reply.PosterId)
+                        {
+                            <a asp-controller="User" asp-action="EditReplyPost" asp-route-name="@Model.Name" asp-route-ReplyPostId="@reply.ReplyPostId">Edit</a>
                         }
                     </div>
                 }
-                <form method="post" asp-controller="Home" asp-action="AddReplyPost">
+                <form method="post" asp-controller="User" asp-action="AddReplyPost">
                     <textarea type="text" name="Description" class="form-control" placeholder="New Reply" required></textarea>
                     <input type="text" name="TimelinePostId" class="form-control" value=@post.TimelinePostId hidden />
+                    <input type="text" name="n" value=@Model.Name hidden />
                     <button class="btn btn-lg btn-primary" type="submit">Add Reply</button>
                 </form>
             </div>

@@ -63,7 +63,7 @@ namespace Fakebook
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}");
             });
 
             // This suppose to add different environment files for Azure deployment but this doesnt work.

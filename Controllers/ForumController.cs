@@ -86,11 +86,6 @@ namespace Fakebook.Controllers
             return RedirectToAction("ViewTopic", new { ForumName = ForumName , TopicId = TopicId, TopicName = TopicName});
         }
 
-        public IActionResult ToggleEditTopic(string ForumName, int TopicId, string TopicName)
-        {
-            return RedirectToAction("EditTopic", new { ForumName = ForumName, TopicId = TopicId, TopicName = TopicName});
-        }
-
         [HttpGet("/Forum/{ForumName}/{TopicId}/{TopicName}/Edit", Name = "EditTopic")]
         public IActionResult EditTopic(string ForumName, int TopicId, string TopicName)
         {
@@ -101,16 +96,11 @@ namespace Fakebook.Controllers
         }
 
         [HttpPost("/Forum/{ForumName}/{TopicId}/{TopicName}/Edit", Name = "SubmitEditTopic")]
-        public IActionResult SubmitEditTopic(string ForumName, int TopicId, string TopicName, Topic t)
+        public IActionResult EditTopic(string ForumName, int TopicId, string TopicName, Topic t)
         {
             t.TopicId = TopicId;
             forumService.EditTopic(t);
             return RedirectToAction("ViewTopic", new { ForumName = ForumName, TopicId = TopicId, TopicName = TopicName });
-        }
-
-        public IActionResult ToggleEditReply(string ForumName, int TopicId, string TopicName, int ReplyId)
-        {
-            return RedirectToAction("EditReply", new { ForumName = ForumName, TopicId = TopicId, TopicName = TopicName , ReplyId = ReplyId});
         }
 
         [HttpGet("/Forum/{ForumName}/{TopicId}/{TopicName}/{ReplyId}/Edit", Name = "EditReply")]
@@ -123,7 +113,7 @@ namespace Fakebook.Controllers
         }
 
         [HttpPost("/Forum/{ForumName}/{TopicId}/{TopicName}/{ReplyId}/Edit", Name = "SubmitEditReply")]
-        public IActionResult SubmitEditReply(string ForumName, int TopicId, string TopicName, int ReplyId, Reply r)
+        public IActionResult EditReply(string ForumName, int TopicId, string TopicName, int ReplyId, Reply r)
         {
             r.ReplyId = ReplyId;
             forumService.EditReply(r);

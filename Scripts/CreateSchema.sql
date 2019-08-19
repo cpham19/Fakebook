@@ -27,8 +27,10 @@ CREATE TABLE [TimelinePosts] (
     [Description] nvarchar(max) NULL,
 	[DatePosted] datetime2 NOT NULL,
 	[PosterId] int NOT NULL,
+	[UserIdOfProfile] int NOT NULL,
     CONSTRAINT [PK_TimelinePosts] PRIMARY KEY ([TimelinePostId]),
-    CONSTRAINT [FK_TimelinePosts_Persons_PosterId] FOREIGN KEY ([PosterId]) REFERENCES [Persons] ([PersonId]) ON DELETE CASCADE
+    CONSTRAINT [FK_TimelinePosts_Persons_PosterId] FOREIGN KEY ([PosterId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION,
+	CONSTRAINT [FK_TimelinePosts_Persons_UserIdOfProfile] FOREIGN KEY ([UserIdOfProfile]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION
 );
 
 GO
@@ -41,16 +43,18 @@ CREATE TABLE [ReplyPosts] (
 	[TimelinePostId] int NOT NULL,
 	[PosterId] int NOT NULL,
     CONSTRAINT [PK_ReplyPosts] PRIMARY KEY ([ReplyPostId]),
-    CONSTRAINT [FK_ReplyPosts_TimelinePosts_TimelinePostId] FOREIGN KEY ([TimelinePostId]) REFERENCES [TimelinePosts] ([TimelinePostId]) ON DELETE CASCADE
+    CONSTRAINT [FK_ReplyPosts_TimelinePosts_TimelinePostId] FOREIGN KEY ([TimelinePostId]) REFERENCES [TimelinePosts] ([TimelinePostId]) ON DELETE NO ACTION,
+	CONSTRAINT [FK_ReplyPosts_Persons_PosterId] FOREIGN KEY ([PosterId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION
 );
 
-GO
+GO	
 
 CREATE TABLE [Forums] (
     [ForumId] int NOT NULL IDENTITY,
     [ForumName] nvarchar(max) NULL,
 	[PosterId] int NOT NULL,
     CONSTRAINT [PK_Forums] PRIMARY KEY ([ForumId]),
+	CONSTRAINT [FK_Forums_Persons_PosterId] FOREIGN KEY ([PosterId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION
 );
 
 GO
@@ -64,7 +68,8 @@ CREATE TABLE [Topics] (
 	[PosterId] int NOT NULL,
 	[PosterName] nvarchar(max) NOT NULL,
     CONSTRAINT [PK_Topics] PRIMARY KEY ([TopicId]),
-	CONSTRAINT [FK_Topics_Forums_ForumId] FOREIGN KEY ([ForumId]) REFERENCES [Forums] ([ForumId]) ON DELETE CASCADE
+	CONSTRAINT [FK_Topics_Forums_ForumId] FOREIGN KEY ([ForumId]) REFERENCES [Forums] ([ForumId]) ON DELETE NO ACTION,
+	CONSTRAINT [FK_Topics_Persons_PosterId] FOREIGN KEY ([PosterId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION
 );
 
 GO
@@ -77,24 +82,29 @@ CREATE TABLE [Replies] (
 	[PosterId] int NOT NULL,
 	[PosterName] nvarchar(max) NOT NULL,
     CONSTRAINT [PK_Replies] PRIMARY KEY ([ReplyId]),
-    CONSTRAINT [FK_Replies_Topics_TopicId] FOREIGN KEY ([TopicId]) REFERENCES [Topics] ([TopicId]) ON DELETE CASCADE
+    CONSTRAINT [FK_Replies_Topics_TopicId] FOREIGN KEY ([TopicId]) REFERENCES [Topics] ([TopicId]) ON DELETE NO ACTION,
+	CONSTRAINT [FK_Replies_Persons_PosterId] FOREIGN KEY ([PosterId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION
 );
 
 GO
 
 CREATE INDEX [IX_FK_TimelinePosts_PosterId] ON [TimelinePosts] ([PosterId]);
+CREATE INDEX [IX_FK_TimelinePosts_UserIdOfProfile] ON [TimelinePosts] ([UserIdOfProfile]);
 
 GO
 
 CREATE INDEX [IX_FK_ReplyPosts_TimelinePostId] ON [ReplyPosts] ([TimelinePostId]);
+CREATE INDEX [IX_FK_ReplyPosts_PosterId] ON [ReplyPosts] ([PosterId]);
 
 GO
 
 CREATE INDEX [IX_FK_Topics_ForumId] ON [Topics] ([ForumId]);
+CREATE INDEX [IX_FK_Topics_PosterId] ON [Topics] ([PosterId]);
 
 GO 
 
 CREATE INDEX [IX_FK_Replies_TopicId] ON [Replies] ([TopicId]);
+CREATE INDEX [IX_FK_Replies_PosterId] ON [Replies] ([PosterId]);
 
 GO
 

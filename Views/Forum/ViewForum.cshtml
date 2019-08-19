@@ -3,24 +3,34 @@
 }
 @model Forum
 
-<h1>@Model.ForumName</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Forum" asp-action="Index">Forums</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.ForumName</li>
+    </ol>
+</nav>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">@Model.ForumName</h1>
+    </div>
+</div>
 
 <a asp-controller="Forum" asp-action="AddTopic" asp-route-Forumname="@Model.ModifiedForumName()">Add New Topic</a><br/>
-<a asp-controller="Forum" asp-action="Index">Back</a>
-<table class="table">
-    <thead>
+<table class="table table-striped table-light">
+    <thead class="thead-dark">
         <tr>
-            <th>Topic Name</th>
-            <th>Poster</th>
-            <th>Number of Replies</th>
+            <th scope="col">Topic Name</th>
+            <th scope="col">Poster</th>
+            <th scope="col">Number of Replies</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var topic in Model.Topics)
         {
-            <tr>
+            <tr scope="row">
                 <td><a asp-controller="Forum" asp-action="ViewTopic" asp-route-ForumName="@Model.ModifiedForumName()" asp-route-TopicId="@topic.TopicId" asp-route-TopicName="@topic.ModifiedTopicName()">@topic.TopicName</a></td>
-                <td>@topic.PosterName</td>
+                <td><a asp-controller="User" asp-action="ViewUser" asp-route-name="@topic.PosterName">@topic.PosterName</a></td>
                 <td>@topic.Replies.Count</td>
             </tr>
         }
