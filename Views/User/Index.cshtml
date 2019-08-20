@@ -42,9 +42,10 @@
                 <div class="card-footer text-muted">
                     Posted on @post.DatePosted by
                     <a asp-controller="User" asp-action="Index" asp-route-name="@post.PosterName">@post.PosterName</a>
-                    @if(ViewBag.PersonId == post.PosterId)
+                    @if (ViewBag.PersonId == post.PosterId)
                     {
                         <a asp-controller="User" asp-action="EditTimelinePost" asp-route-name="@Model.Name" asp-route-TimelinePostId="@post.TimelinePostId">Edit</a>
+                        <a asp-controller="User" asp-action="DeleteTimelinePost" asp-route-n="@Model.Name" asp-route-TimelinePostId="@post.TimelinePostId">Delete</a>
                     }
                 </div>
                 <!-- Replies to the Main Posts -->
@@ -56,9 +57,10 @@
                     <div class="card-footer text-muted">
                         Posted on @reply.DatePosted by
                         <a asp-controller="User" asp-action="Index" asp-route-name="@reply.PosterName">@reply.PosterName</a>
-                        @if(ViewBag.PersonId == reply.PosterId)
+                        @if (ViewBag.PersonId == reply.PosterId)
                         {
                             <a asp-controller="User" asp-action="EditReplyPost" asp-route-name="@Model.Name" asp-route-ReplyPostId="@reply.ReplyPostId">Edit</a>
+                            <a asp-controller="User" asp-action="DeleteReplyPost" asp-route-n="@Model.Name" asp-route-ReplyPostId="@reply.ReplyPostId">Delete</a>
                         }
                     </div>
                 }

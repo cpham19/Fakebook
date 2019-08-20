@@ -46,6 +46,7 @@
                     <a asp-controller="User" asp-action="Index" asp-route-name="@post.PosterName">@post.PosterName</a>
                     @if(person.PersonId == post.PosterId) {
                         <a asp-controller="Home" asp-action="EditTimelinePost" asp-route-TimelinePostId="@post.TimelinePostId">Edit</a>
+                        <a asp-controller="Home" asp-action="DeleteTimelinePost" asp-route-TimelinePostId="@post.TimelinePostId">Delete</a>
                     }
                 </div>
                 <!-- Replies to the Main Posts -->
@@ -57,8 +58,10 @@
                     <div class="card-footer text-muted">
                         Posted on @reply.DatePosted by
                         <a asp-controller="User" asp-action="Index" asp-route-name="@reply.PosterName">@reply.PosterName</a>
-                        @if(person.PersonId == reply.PosterId) {
+                        @if (person.PersonId == reply.PosterId)
+                        {
                             <a asp-controller="Home" asp-action="EditReplyPost" asp-route-ReplyPostId="@reply.ReplyPostId">Edit</a>
+                            <a asp-controller="Home" asp-action="DeleteReplyPost" asp-route-ReplyPostId="@reply.ReplyPostId">Delete</a>
                         }
                     </div>
                 }

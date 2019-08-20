@@ -29,6 +29,11 @@ namespace Fakebook.Services
             return db.ReplyPosts.Where(rp => rp.ReplyPostId == id).SingleOrDefault();
         }
 
+        public List<ReplyPost> GetReplyPostsByTimelinePostId(int id)
+        {
+            return db.ReplyPosts.Where(rp => rp.TimelinePostId == id).ToList();
+        }
+
         // Get user's timeline posts and their replies
         public List<TimelinePost> GetTimelinePosts(int id)
         {
@@ -66,6 +71,26 @@ namespace Fakebook.Services
         {
             ReplyPost replyPost = this.GetReplyPost(rp.ReplyPostId);
             replyPost.Description = rp.Description;
+            db.SaveChanges();
+        }
+
+        public void DeleteTimelinePost(int id)
+        {
+            List<ReplyPost> replies = this.GetReplyPostsByTimelinePostId(id);
+            foreach (var reply in replies)
+            {
+                db.ReplyPosts.Remove(reply);
+            }
+
+            TimelinePost tp = this.GetTimelinePost(id);
+            db.TimelinePosts.Remove(tp);
+            db.SaveChanges();
+        }
+
+        public void DeleteReplyPost(int id)
+        {
+            ReplyPost rp = this.GetReplyPost(id);
+            db.ReplyPosts.Remove(rp);
             db.SaveChanges();
         }
     }

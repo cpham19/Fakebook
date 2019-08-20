@@ -110,6 +110,20 @@ namespace Fakebook.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // Doesn't work if you put a HttpDelete tag on this. Otherwise this works fine
+        public IActionResult DeleteTimelinePost(int TimelinePostId)
+        {
+            timelineService.DeleteTimelinePost(TimelinePostId);
+            return RedirectToAction(nameof(Index));
+        }
+
+        // Doesn't work if you put a HttpDelete tag on this. Otherwise this works fine
+        public IActionResult DeleteReplyPost(int ReplyPostId)
+        {
+            timelineService.DeleteReplyPost(ReplyPostId);
+            return RedirectToAction(nameof(Index));
+        }
+
         public IActionResult Privacy()
         {
             return View();
