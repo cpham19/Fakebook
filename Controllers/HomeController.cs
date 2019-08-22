@@ -3,17 +3,20 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Fakebook.Models;
 using Fakebook.Services;
+using System.Collections.Generic;
 
 namespace Fakebook.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly TimelineService timelineService;
+        private readonly WallService wallService;
         private readonly UserService userService;
-        public HomeController(TimelineService timelineService, UserService userService)
+        private readonly GroupService groupService;
+        public HomeController(WallService wallService, UserService userService, GroupService groupService)
         {
-            this.timelineService = timelineService;
+            this.wallService = wallService;
             this.userService = userService;
+            this.groupService = groupService;
         }
 
         public IActionResult Index()
@@ -22,7 +25,8 @@ namespace Fakebook.Controllers
             {
                 Person person = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
                 ViewData["Person"] = person;
-                return View(timelineService.GetTimelinePosts(User.Identity.GetPersonId()));
+                ViewBag.WallPosts = wallService.GetWallPosts(User.Identity.GetPersonId());
+                return View();
             }
             else
             {
@@ -30,38 +34,33 @@ namespace Fakebook.Controllers
             }
         }
 
-        // Used for adding timeline post
+        // Used for adding wall post
         [HttpPost]
-        public IActionResult AddTimelinePost(TimelinePost tp)
+        public IActionResult AddWallPost(WallPost tp)
         {
             tp.PosterId = User.Identity.GetPersonId();
             tp.UserIdOfProfile = User.Identity.GetPersonId();
             tp.PosterName = User.Identity.GetName();
             tp.DatePosted = DateTime.Now;
-            timelineService.AddTimelinePost(tp);
-            Debug.WriteLine("HELLO");
-            Debug.WriteLine("HELLO");
-            Debug.WriteLine("HELLO");
-            Debug.WriteLine("HELLO");
-            Debug.WriteLine("HELLO");
+            wallService.AddWallPost(tp);
 
             return RedirectToAction(nameof(Index));
         }
 
-        // USed for editting a timeline post
-        [HttpGet("/EditPost/{TimelinePostId}", Name = "EditTimelinePost")]
-        public IActionResult EditTimelinePost(int TimelinePostId)
+        // USed for editting a wall post
+        [HttpGet("/EditPost/{WallPostId}", Name = "EditWallPost")]
+        public IActionResult EditWallPost(int WallPostId)
         {
-            TimelinePost tp = timelineService.GetTimelinePost(TimelinePostId);
+            WallPost tp = wallService.GetWallPost(WallPostId);
             return View(tp);
         }
 
-        // USed for editting a timeline post
-        [HttpPost("/EditPost/{TimelinePostId}", Name = "SubmitEditTimelinePost")]
-        public IActionResult EditTimelinePost(int TimelinePostId, TimelinePost tp)
+        // USed for editting a wall post
+        [HttpPost("/EditPost/{WallPostId}", Name = "SubmitEditWallPost")]
+        public IActionResult EditWallPost(int WallPostId, WallPost tp)
         {
-            tp.TimelinePostId = TimelinePostId;
-            timelineService.EditTimelinePost(tp);
+            tp.WallPostId = WallPostId;
+            wallService.EditWallPost(tp);
             return RedirectToAction(nameof(Index));
         }
 
@@ -69,7 +68,7 @@ namespace Fakebook.Controllers
         [HttpGet("/EditReplyPost/{ReplyPostId}", Name = "EditReplyPost")]
         public IActionResult EditReplyPost(int ReplyPostId)
         {
-            ReplyPost rp = timelineService.GetReplyPost(ReplyPostId);
+            ReplyPost rp = wallService.GetReplyPost(ReplyPostId);
             return View(rp);
         }
 
@@ -78,7 +77,7 @@ namespace Fakebook.Controllers
         public IActionResult EditReplyPost(int ReplyPostId, ReplyPost rp)
         {
             rp.ReplyPostId = ReplyPostId;
-            timelineService.EditReplyPost(rp);
+            wallService.EditReplyPost(rp);
             return RedirectToAction(nameof(Index));
         }
 
@@ -89,7 +88,7 @@ namespace Fakebook.Controllers
             rp.PosterId = User.Identity.GetPersonId();
             rp.PosterName = User.Identity.GetName();
             rp.DatePosted = DateTime.Now;
-            timelineService.AddReplyPost(rp);
+            wallService.AddReplyPost(rp);
 
             return RedirectToAction(nameof(Index));
         }
@@ -111,17 +110,42 @@ namespace Fakebook.Controllers
         }
 
         // Doesn't work if you put a HttpDelete tag on this. Otherwise this works fine
-        public IActionResult DeleteTimelinePost(int TimelinePostId)
+        public IActionResult DeleteWallPost(int WallPostId)
         {
-            timelineService.DeleteTimelinePost(TimelinePostId);
+            wallService.DeleteWallPost(WallPostId);
             return RedirectToAction(nameof(Index));
         }
 
         // Doesn't work if you put a HttpDelete tag on this. Otherwise this works fine
         public IActionResult DeleteReplyPost(int ReplyPostId)
         {
-            timelineService.DeleteReplyPost(ReplyPostId);
+            wallService.DeleteReplyPost(ReplyPostId);
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet("/MyFriends", Name = "MyFriends")]
+        public IActionResult Friends()
+        {
+            List<Person> friends = userService.GetFriends(User.Identity.GetPersonId());
+            ViewBag.Friends = friends;
+            return View();
+        }
+
+        [HttpGet("/MyGroups", Name = "MyGroups")]
+        public IActionResult Groups()
+        {
+            List<Group> groups = groupService.GetGroupsOfUser(User.Identity.GetPersonId());
+            ViewBag.Groups = groups;
+            return View();
+        }
+
+        [HttpGet("/MyFriends/RemoveFriend/{PersonTwoId}", Name = "RemoveFriend")]
+        public IActionResult RemoveFriend(int PersonTwoId)
+        {
+            int id1 = User.Identity.GetPersonId();
+            int id2 = PersonTwoId;
+            userService.RemoveFriend(id1, id2);
+            return RedirectToAction(nameof(Friends));
         }
 
         public IActionResult Privacy()

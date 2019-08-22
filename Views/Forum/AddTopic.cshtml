@@ -5,7 +5,14 @@
 <h1>Add New Topic</h1>
 <a asp-controller="Forum" asp-action="ViewForum" asp-route-ForumName="@ViewBag.ForumName">Back</a>
 <form method="post">
-    Topic Name: <input type="text" name="TopicName" required><br>
-    Topic Content: <input type="text" name="TopicContent" required><br>
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">Topic Name</span>
+    </div>
+    <input type="text" name="TopicName" placeholder="Topic Name" required><br>
+
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">Topic Content</span>
+    </div>
+    <input type="text" name="TopicContent" placeholder="Topic Content" required><br>
     <button>Add</button>
 </form>

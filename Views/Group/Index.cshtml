@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Group Page";
+}
+<h1>@ViewData["Title"]</h1>
+
+<a asp-controller="Group" asp-action="AddGroup">Add Group</a>
+
+<div class="container">
+    <!-- Example row of columns -->
+    <div class="row">
+        @foreach (var group in ViewBag.Groups)
+        {
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <img src="@group.GroupPictureUrl" class="card-img-top" width="200px" height="200px" />
+                    <h1 class="text-center">@group.GroupName</h1>
+                    <p class="card-text">@group.Description</p>
+                    @if (group.UserJoined)
+                    {
+                        <a>Leave</a>
+                    }
+                    else
+                    {
+                        <a class="card-link" asp-controller="Group" asp-action="JoinGroup" asp-route-GroupId="@group.GroupId">Join</a>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+    <hr>
+</div> <!-- /container -->

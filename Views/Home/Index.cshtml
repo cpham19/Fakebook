@@ -4,8 +4,6 @@
 
 }
 
-@model List<TimelinePost>
-
 <style type="text/css">
     .card-img-top {
         border-style: solid;
@@ -19,22 +17,22 @@
         <h1 class="text-center">@person.Name</h1>
         <img class="card-img-top" src="https://robohash.org/@person.Name" alt="Card image cap">
         <div class="card-body">
-            <h5 class="card-title">About Me</h5>
+            <h5 class="card-title">About Me <a class="btn btn-sm btn-primary" asp-controller="Home" asp-action="Edit">Edit</a></h5>
             <p class="card-text">@person.ProfileDescription</p>
-            <a class="btn btn-primary" asp-controller="Home" asp-action="Edit">Edit</a><br />
-            <a href="">Friends (@person.Friends.Count)</a>
+            <a asp-controller="Home" asp-action="Friends">Friends (@person.Friends.Count)</a><br/>
+            <a asp-controller="Home" asp-action="Groups">Groups (@person.Groups.Count)</a>
         </div>
     </div>
-    <!-- Timeline Entries Column -->
+    <!-- Wall Entries Column -->
     <div class="col-md-8">
-        <h1 class="my-4">Timeline Posts</h1>
-        <form method="post" asp-controller="Home" asp-action="AddTimelinePost">
+        <h1 class="my-4">Wall Posts</h1>
+        <form method="post" asp-controller="Home" asp-action="AddWallPost">
             <textarea type="text" name="Description" class="form-control" placeholder="New Post" required></textarea>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Add Post</button>
         </form>
         <br /><br />
-        <!-- Timeline Post -->
-        @foreach (var post in Model)
+        <!-- Wall Post -->
+        @foreach (var post in ViewBag.WallPosts)
         {
             <div class="card mb-4">
                 <div class="card-body">
@@ -45,8 +43,8 @@
                     Posted on @post.DatePosted by
                     <a asp-controller="User" asp-action="Index" asp-route-name="@post.PosterName">@post.PosterName</a>
                     @if(person.PersonId == post.PosterId) {
-                        <a asp-controller="Home" asp-action="EditTimelinePost" asp-route-TimelinePostId="@post.TimelinePostId">Edit</a>
-                        <a asp-controller="Home" asp-action="DeleteTimelinePost" asp-route-TimelinePostId="@post.TimelinePostId">Delete</a>
+                        <a asp-controller="Home" asp-action="EditWallPost" asp-route-WallPostId="@post.WallPostId">Edit</a>
+                        <a asp-controller="Home" asp-action="DeleteWallPost" asp-route-WallPostId="@post.WallPostId">Delete</a>
                     }
                 </div>
                 <!-- Replies to the Main Posts -->
@@ -67,8 +65,8 @@
                 }
                 <form method="post" asp-controller="Home" asp-action="AddReplyPost">
                     <textarea type="text" name="Description" class="form-control" placeholder="New Reply" required></textarea>
-                    <input type="text" name="TimelinePostId" class="form-control" value=@post.TimelinePostId hidden />
-                    <button class="btn btn-lg btn-primary" type="submit">Add Reply</button>
+                    <input type="text" name="WallPostId" class="form-control" value=@post.WallPostId hidden />
+                    <button class="btn btn-sm btn-primary" type="submit">Add Reply</button>
                 </form>
             </div>
         }

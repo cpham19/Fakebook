@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Fakebook.Models
 {
-    public class TimelinePost
+    public class WallPost
     {
-        public int TimelinePostId { get; set; }
+        public int WallPostId { get; set; }
         public string PosterName { get; set; }
         public string Description { get; set; }
         public DateTime DatePosted { get; set; }
@@ -22,7 +22,7 @@ namespace Fakebook.Models
         public string PosterName { get; set; }
         public string Description { get; set; }
         public DateTime DatePosted { get; set; }
-        public int TimelinePostId { get; set; }
+        public int WallPostId { get; set; }
         public int PosterId { get; set; }
     }
 }

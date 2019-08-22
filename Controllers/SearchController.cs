@@ -10,11 +10,11 @@ namespace Fakebook.Controllers
     public class SearchController : Controller
     {
         private readonly UserService userService;
-        private readonly TimelineService timelineService;
-        public SearchController(UserService userService, TimelineService timelineService)
+        private readonly WallService wallService;
+        public SearchController(UserService userService, WallService wallService)
         {
             this.userService = userService;
-            this.timelineService = timelineService;
+            this.wallService = wallService;
         }
 
         // This is the page that when the user clicks Search button for "first time" or when they type something in the url (Search/"Name of Person")
@@ -49,8 +49,29 @@ namespace Fakebook.Controllers
         public IActionResult Search(string name)
         {
             ViewBag.name = name;
+            ViewBag.PersonOneId = User.Identity.GetPersonId();
             ViewBag.Persons = userService.GetPersonsBasedOnName(User.Identity.GetPersonId(), name);
             return View();
+        }
+
+        public IActionResult RemoveFriend(string name, int PersonTwoId)
+        {
+            int id1 = User.Identity.GetPersonId();
+            int id2 = PersonTwoId;
+            Debug.WriteLine(id1);
+            Debug.WriteLine(id2);
+            userService.RemoveFriend(id1, id2);
+            return RedirectToAction("Search", new { name = name });
+        }
+
+        public IActionResult AddFriend(string name, int PersonTwoId)
+        {
+            Friend relationship = new Friend();
+            relationship.PersonOneId = User.Identity.GetPersonId();
+            relationship.PersonTwoId = PersonTwoId;
+            relationship.StatusCode = 1;
+            userService.AddFriend(relationship);
+            return RedirectToAction("Search", new { name = name });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

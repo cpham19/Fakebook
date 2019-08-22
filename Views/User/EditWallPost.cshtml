@@ -1,11 +1,11 @@
 ﻿@{
-    ViewData["Title"] = "Edit Timeline Post";
+    ViewData["Title"] = "Edit Wall Post";
 }
-@model TimelinePost
+@model WallPost
 
-<h1>Editting Timeline Post #@Model.TimelinePostId</h1>
-<a asp-controller="Home" asp-action="Index">Back</a>
-<form method="post" asp-route-TimelinePostId="@Model.TimelinePostId">
+<h1>Editting Wall Post #@Model.WallPostId</h1>
+<a asp-controller="User" asp-action="Index" asp-route-name="@ViewBag.Name">Back</a>
+<form method="post" asp-route-WallPostId="@Model.WallPostId">
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1">Description</span>

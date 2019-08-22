@@ -9,22 +9,22 @@ SET IDENTITY_INSERT Persons OFF
 
 GO
 
-SET IDENTITY_INSERT TimelinePosts ON 
-INSERT INTO TimelinePosts (TimelinePostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (1, N'Calvin', N'I am bored.', '2019-06-19', 2, 2);
-INSERT INTO TimelinePosts (TimelinePostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (2, N'Calvin', N'I am still bored', '2019-06-19', 2, 2);
-INSERT INTO TimelinePosts (TimelinePostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (3, N'John', N'Nice morning.', '2019-06-19', 1, 1);
-INSERT INTO TimelinePosts (TimelinePostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (4, N'John', N'I ate steak this morning!', '2019-06-20', 1, 1);
-INSERT INTO TimelinePosts (TimelinePostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (5, N'Jane', N'Nice night.', '2019-06-19', 3, 3);
-INSERT INTO TimelinePosts (TimelinePostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (6, N'Jane', N'Sleeping... Good night!', '2019-06-19', 3, 3);
-SET IDENTITY_INSERT TimelinePosts OFF
+SET IDENTITY_INSERT WallPosts ON 
+INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (1, N'Calvin', N'I am bored.', '2019-06-19', 2, 2);
+INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (2, N'Calvin', N'I am still bored', '2019-06-19', 2, 2);
+INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (3, N'John', N'Nice morning.', '2019-06-19', 1, 1);
+INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (4, N'John', N'I ate steak this morning!', '2019-06-20', 1, 1);
+INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (5, N'Jane', N'Nice night.', '2019-06-19', 3, 3);
+INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (6, N'Jane', N'Sleeping... Good night!', '2019-06-19', 3, 3);
+SET IDENTITY_INSERT WallPosts OFF
 
 GO
 
 SET IDENTITY_INSERT ReplyPosts ON 
-INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, TimelinePostId, PosterId) VALUES (1, N'Calvin', N'Are you?.', '2019-06-19', 1, 2);
-INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, TimelinePostId, PosterId) VALUES (2, N'Calvin', N'Yes I am', '2019-06-19', 1, 2);
-INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, TimelinePostId, PosterId) VALUES (3, N'Calvin', N'Good morning to you, John!.', '2019-06-19', 3, 2);
-INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, TimelinePostId, PosterId) VALUES (4, N'Jane', N'Yes, Good morning to you John!', '2019-06-19', 3, 3);
+INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, WallPostId, PosterId) VALUES (1, N'Calvin', N'Are you?.', '2019-06-19', 1, 2);
+INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, WallPostId, PosterId) VALUES (2, N'Calvin', N'Yes I am', '2019-06-19', 1, 2);
+INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, WallPostId, PosterId) VALUES (3, N'Calvin', N'Good morning to you, John!.', '2019-06-19', 3, 2);
+INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, WallPostId, PosterId) VALUES (4, N'Jane', N'Yes, Good morning to you John!', '2019-06-19', 3, 3);
 SET IDENTITY_INSERT ReplyPosts OFF
 
 GO
@@ -58,3 +58,13 @@ INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId, Poster
 SET IDENTITY_INSERT Replies OFF
 
 GO
+
+INSERT INTO Friends (PersonOneId, PersonTwoId, StatusCode) VALUES (1, 2, 1);
+INSERT INTO Friends (PersonOneId, PersonTwoId, StatusCode) VALUES (2, 3, 1);
+
+GO
+
+SET IDENTITY_INSERT Groups ON
+INSERT INTO Groups (GroupId, GroupName, Description, DateCreated, GroupPictureUrl, GroupCreatorId) VALUES (1, N'El Monte Boys', N'This is a group for people from El Monte', '2019-07-03', N'https://cdn4.iconfinder.com/data/icons/blast/127/batman-512.png' , 2);
+INSERT INTO Groups (GroupId, GroupName, Description, DateCreated, GroupPictureUrl, GroupCreatorId) VALUES (2, N'Los Angeles Boys', N'This is a group for people from LA', '2019-07-03', N'https://www.freepngimg.com/thumb/city/36187-4-city-transparent-picture-thumb.png' , 2);
+SET IDENTITY_INSERT Groups OFF

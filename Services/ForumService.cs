@@ -16,6 +16,8 @@ namespace Fakebook.Services
         void AddReply(Reply r);
         void EditReply(Reply r);
         void EditTopic(Topic t);
+        void DeleteTopic(int id);
+        void DeleteReply(int id);
     }
 
     public class ForumService : IForumService
@@ -99,6 +101,25 @@ namespace Fakebook.Services
         public void AddReply(Reply r)
         {
             db.Replies.Add(r);
+            db.SaveChanges();
+        }
+
+        public void DeleteTopic(int id)
+        {
+            Topic topic = this.GetTopic(id);
+            foreach (var reply in topic.Replies)
+            {
+                db.Replies.Remove(reply);
+            }
+
+            db.Topics.Remove(topic);
+            db.SaveChanges();
+        }
+
+        public void DeleteReply(int id)
+        {
+            Reply reply = this.GetReply(id);
+            db.Replies.Remove(reply);
             db.SaveChanges();
         }
     }

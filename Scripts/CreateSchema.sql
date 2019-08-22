@@ -21,16 +21,16 @@ CREATE TABLE [Persons] (
 
 GO
 
-CREATE TABLE [TimelinePosts] (
-    [TimelinePostId] int NOT NULL IDENTITY,
+CREATE TABLE [WallPosts] (
+    [WallPostId] int NOT NULL IDENTITY,
 	[PosterName] nvarchar(max) NULL,
     [Description] nvarchar(max) NULL,
 	[DatePosted] datetime2 NOT NULL,
 	[PosterId] int NOT NULL,
 	[UserIdOfProfile] int NOT NULL,
-    CONSTRAINT [PK_TimelinePosts] PRIMARY KEY ([TimelinePostId]),
-    CONSTRAINT [FK_TimelinePosts_Persons_PosterId] FOREIGN KEY ([PosterId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION,
-	CONSTRAINT [FK_TimelinePosts_Persons_UserIdOfProfile] FOREIGN KEY ([UserIdOfProfile]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION
+    CONSTRAINT [PK_WallPosts] PRIMARY KEY ([WallPostId]),
+    CONSTRAINT [FK_WallPosts_Persons_PosterId] FOREIGN KEY ([PosterId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION,
+	CONSTRAINT [FK_WallPosts_Persons_UserIdOfProfile] FOREIGN KEY ([UserIdOfProfile]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION
 );
 
 GO
@@ -40,10 +40,10 @@ CREATE TABLE [ReplyPosts] (
 	[PosterName] nvarchar(max) NULL,
     [Description] nvarchar(max) NULL,
 	[DatePosted] datetime2 NOT NULL,
-	[TimelinePostId] int NOT NULL,
+	[WallPostId] int NOT NULL,
 	[PosterId] int NOT NULL,
     CONSTRAINT [PK_ReplyPosts] PRIMARY KEY ([ReplyPostId]),
-    CONSTRAINT [FK_ReplyPosts_TimelinePosts_TimelinePostId] FOREIGN KEY ([TimelinePostId]) REFERENCES [TimelinePosts] ([TimelinePostId]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_ReplyPosts_WallPosts_WallPostId] FOREIGN KEY ([WallPostId]) REFERENCES [WallPosts] ([WallPostId]) ON DELETE NO ACTION,
 	CONSTRAINT [FK_ReplyPosts_Persons_PosterId] FOREIGN KEY ([PosterId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION
 );
 
@@ -88,12 +88,46 @@ CREATE TABLE [Replies] (
 
 GO
 
-CREATE INDEX [IX_FK_TimelinePosts_PosterId] ON [TimelinePosts] ([PosterId]);
-CREATE INDEX [IX_FK_TimelinePosts_UserIdOfProfile] ON [TimelinePosts] ([UserIdOfProfile]);
+CREATE TABLE [Friends] (
+	[PersonOneId] int NOT NULL,
+	[PersonTwoId] int NOT NULL,
+	[StatusCode] int NOT NULL DEFAULT 0,
+	CONSTRAINT [PK_Friends] PRIMARY KEY ([PersonOneId], [PersonTwoId]),
+	CONSTRAINT [FK_Friends_Persons_PersonOneId] FOREIGN KEY ([PersonOneId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION,
+	CONSTRAINT [FK_Friends_Persons_PersonTwoId] FOREIGN KEY ([PersonTwoId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION
+);
 
 GO
 
-CREATE INDEX [IX_FK_ReplyPosts_TimelinePostId] ON [ReplyPosts] ([TimelinePostId]);
+CREATE TABLE [Groups] (
+    [GroupId] int NOT NULL IDENTITY,
+    [GroupName] nvarchar(max) NULL,
+    [Description] nvarchar(450) NOT NULL,
+    [DateCreated] datetime2 NOT NULL,
+	[GroupPictureUrl] nvarchar(max) NOT NULL,
+	[GroupCreatorId] int NOT NULL,
+    CONSTRAINT [PK_Groups] PRIMARY KEY ([GroupId]),
+	CONSTRAINT [FK_Groups_Persons_GroupCreatorId] FOREIGN KEY ([GroupCreatorId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [GroupMembers] (
+    [GroupId] int NOT NULL,
+    [GroupMemberId] int NOT NULL,
+    CONSTRAINT [PK_GroupMembers] PRIMARY KEY ([GroupId], [GroupMemberId]),
+	CONSTRAINT [FK_GroupsMembers_GroupId] FOREIGN KEY ([GroupId]) REFERENCES [Groups] ([GroupId]) ON DELETE NO ACTION,
+	CONSTRAINT [FK_GroupsMembers_GroupMemberId] FOREIGN KEY ([GroupMemberId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE INDEX [IX_FK_WallPosts_PosterId] ON [WallPosts] ([PosterId]);
+CREATE INDEX [IX_FK_WallPosts_UserIdOfProfile] ON [WallPosts] ([UserIdOfProfile]);
+
+GO
+
+CREATE INDEX [IX_FK_ReplyPosts_WallPostId] ON [ReplyPosts] ([WallPostId]);
 CREATE INDEX [IX_FK_ReplyPosts_PosterId] ON [ReplyPosts] ([PosterId]);
 
 GO
@@ -107,6 +141,13 @@ CREATE INDEX [IX_FK_Replies_TopicId] ON [Replies] ([TopicId]);
 CREATE INDEX [IX_FK_Replies_PosterId] ON [Replies] ([PosterId]);
 
 GO
+
+CREATE INDEX [IX_FK_Friends_PersonOneId] ON [Friends] ([PersonOneId]);
+CREATE INDEX [IX_FK_Friends_PersonTwoId] ON [Friends] ([PersonTwoId]);
+
+GO
+
+CREATE INDEX [IX_FK_Groups_GroupCreatorId] ON [Groups] ([GroupCreatorId]);
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
 VALUES (N'20190726011148_InitialSchema', N'2.2.1-servicing-10028');

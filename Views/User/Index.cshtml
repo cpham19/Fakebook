@@ -18,21 +18,21 @@
         <div class="card-body">
             <h5 class="card-title">About Me</h5>
             <p class="card-text">@Model.ProfileDescription</p>
-            <a href="">Friends (@Model.Friends.Count)</a>
+            <a asp-controller="User" asp-action="Friends" asp-route-id="@Model.PersonId">Friends (@Model.Friends.Count)</a>
         </div>
     </div>
-    <!-- Timeline Entries Column -->
+    <!-- Wall Entries Column -->
     <div class="col-md-8">
-        <h1 class="my-4">Timeline Posts</h1>
-        <form method="post" asp-controller="User" asp-action="AddTimelinePost">
-            <input type="text" name="n" value=@Model.Name hidden />
+        <h1 class="my-4">Wall Posts</h1>
+        <form method="post" asp-controller="User" asp-action="AddWallPost">
+            <input type="text" name="id" value=@Model.PersonId hidden />
             <input type="text" name="UserIdOfProfile" class="form-control" value=@Model.PersonId hidden />
             <textarea type="text" name="Description" class="form-control" placeholder="New Post" required></textarea>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Add Post</button>
         </form>
         <br /><br />
-        <!-- Timeline Post -->
-        @foreach (var post in Model.TimelinePosts)
+        <!-- Wall Post -->
+        @foreach (var post in Model.WallPosts)
         {
             <div class="card mb-4">
                 <div class="card-body">
@@ -44,8 +44,8 @@
                     <a asp-controller="User" asp-action="Index" asp-route-name="@post.PosterName">@post.PosterName</a>
                     @if (ViewBag.PersonId == post.PosterId)
                     {
-                        <a asp-controller="User" asp-action="EditTimelinePost" asp-route-name="@Model.Name" asp-route-TimelinePostId="@post.TimelinePostId">Edit</a>
-                        <a asp-controller="User" asp-action="DeleteTimelinePost" asp-route-n="@Model.Name" asp-route-TimelinePostId="@post.TimelinePostId">Delete</a>
+                        <a asp-controller="User" asp-action="EditWallPost" asp-route-id="@Model.PersonId" asp-route-WallPostId="@post.WallPostId">Edit</a>
+                        <a asp-controller="User" asp-action="DeleteWallPost" asp-route-id="@Model.PersonId" asp-route-WallPostId="@post.WallPostId">Delete</a>
                     }
                 </div>
                 <!-- Replies to the Main Posts -->
@@ -59,16 +59,16 @@
                         <a asp-controller="User" asp-action="Index" asp-route-name="@reply.PosterName">@reply.PosterName</a>
                         @if (ViewBag.PersonId == reply.PosterId)
                         {
-                            <a asp-controller="User" asp-action="EditReplyPost" asp-route-name="@Model.Name" asp-route-ReplyPostId="@reply.ReplyPostId">Edit</a>
-                            <a asp-controller="User" asp-action="DeleteReplyPost" asp-route-n="@Model.Name" asp-route-ReplyPostId="@reply.ReplyPostId">Delete</a>
+                            <a asp-controller="User" asp-action="EditReplyPost" asp-route-id="@Model.PersonId" asp-route-ReplyPostId="@reply.ReplyPostId">Edit</a>
+                            <a asp-controller="User" asp-action="DeleteReplyPost" asp-route-id="@Model.PersonId" asp-route-ReplyPostId="@reply.ReplyPostId">Delete</a>
                         }
                     </div>
                 }
                 <form method="post" asp-controller="User" asp-action="AddReplyPost">
                     <textarea type="text" name="Description" class="form-control" placeholder="New Reply" required></textarea>
-                    <input type="text" name="TimelinePostId" class="form-control" value=@post.TimelinePostId hidden />
+                    <input type="text" name="WallPostId" class="form-control" value=@post.WallPostId hidden />
                     <input type="text" name="n" value=@Model.Name hidden />
-                    <button class="btn btn-lg btn-primary" type="submit">Add Reply</button>
+                    <button class="btn btn-sm btn-primary" type="submit">Add Reply</button>
                 </form>
             </div>
         }

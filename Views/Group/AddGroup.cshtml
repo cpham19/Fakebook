@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Add Group";
+}
+
+<h1>Add New Group</h1>
+
+<a asp-controller="Group" asp-action="Index">Back</a>
+<form method="post">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Group Name</span>
+        </div>
+        <input type="text" name="GroupName" placeholder="Group Name" required><br>
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Description</span>
+        </div>
+        <input type="text" name="Description" placeholder="Description" required><br>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Image Url</span>
+        </div>
+        <input type="text" name="GroupPictureUrl" placeholder="Group Picture Url" required><br>
+    </div>
+
+    <br />
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
+</form>

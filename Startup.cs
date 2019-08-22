@@ -36,10 +36,11 @@ namespace Fakebook
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<TimelineService>();
+            services.AddScoped<WallService>();
             services.AddScoped<UserService>();
             services.AddScoped<IForumService, ForumService>();
             services.AddScoped<AccountService>();
+            services.AddScoped<GroupService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

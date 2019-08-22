@@ -3,6 +3,12 @@
 }
 @model Forum
 
+<style>
+    .table-light {
+        border: solid 5px;
+    }
+</style>
+
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a asp-controller="Forum" asp-action="Index">Forums</a></li>
@@ -22,7 +28,7 @@
         <tr>
             <th scope="col">Topic Name</th>
             <th scope="col">Poster</th>
-            <th scope="col">Number of Replies</th>
+            <th scope="col">Replies</th>
         </tr>
     </thead>
     <tbody>
@@ -30,7 +36,7 @@
         {
             <tr scope="row">
                 <td><a asp-controller="Forum" asp-action="ViewTopic" asp-route-ForumName="@Model.ModifiedForumName()" asp-route-TopicId="@topic.TopicId" asp-route-TopicName="@topic.ModifiedTopicName()">@topic.TopicName</a></td>
-                <td><a asp-controller="User" asp-action="ViewUser" asp-route-name="@topic.PosterName">@topic.PosterName</a></td>
+                <td><a asp-controller="User" asp-action="Index" asp-route-id="@topic.PosterId">@topic.PosterName</a></td>
                 <td>@topic.Replies.Count</td>
             </tr>
         }

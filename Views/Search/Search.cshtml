@@ -2,14 +2,20 @@
     ViewData["Title"] = "Search Page";
 }
 
-<div class="jumbotron">
+<style>
+    .btn-primary {
+        width:100px;
+    }
+</style>
+
+<section class="py-5">
     <div class="container">
         <h1 class="display-3">Search for people</h1>
     </div>
-</div>
+</section>
 
 <form method="post" asp-controller="Search" asp-action="Index">
-    <input type="text" name="name" class="form-control" placeholder="Name of Person" value="@ViewBag.name" required/> <button class="btn btn-primary" type="submit">Find</button>
+    <input type="text" name="name" class="form-control" placeholder="Name of Person" value="@ViewBag.name" required /> <button class="btn btn-primary" type="submit">Find</button>
 </form>
 <br />
 
@@ -19,10 +25,19 @@
         @foreach (var person in ViewBag.Persons)
         {
         <div class="card" style="width: 18rem;">
-            <img src="https://robohash.org/@person.Name" class="card-img-top" />
-            <h1 class="text-center">@person.Name</h1>
-            <p class="card-text">@person.ProfileDescription</p>
-            <a class="btn btn-primary" asp-controller="User" asp-action="Index" asp-route-name="@person.Name">View</a>
+            <div class="card-body">
+                <img src="https://robohash.org/@person.Name" class="card-img-top" />
+                <h1 class="text-center">@person.Name</h1>
+                <p class="card-text">@person.ProfileDescription</p>
+                <a class="card-link" asp-controller="User" asp-action="Index" asp-route-id="@person.PersonId">View User</a>
+                @if (person.IsFriend)
+                {
+                    <a class="card-link" asp-controller="Search" asp-action="RemoveFriend" asp-route-name="@person.Name" asp-route-PersonTwoId="@person.PersonId">Remove Friend</a>
+                }
+                else {
+                    <a class="card-link" asp-controller="Search" asp-action="AddFriend" asp-route-name="@person.Name" asp-route-PersonTwoId="@person.PersonId">Add Friend</a>
+                }
+              </div>
         </div>
         }
     </div>

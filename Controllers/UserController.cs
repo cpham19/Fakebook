@@ -10,37 +10,29 @@ namespace Fakebook.Controllers
     public class UserController : Controller
     {
         private readonly UserService userService;
-        private readonly TimelineService timelineService;
-        public UserController(UserService userService, TimelineService timelineService)
+        private readonly WallService wallService;
+        public UserController(UserService userService, WallService wallService)
         {
             this.userService = userService;
-            this.timelineService = timelineService;
+            this.wallService = wallService;
         }
 
-        [HttpGet("/User/{name}", Name = "ViewUser")]
-        public IActionResult Index(string name)
+        [HttpGet("/User/{id}", Name = "ViewUser")]
+        public IActionResult Index(int id)
         {
             if (User.Identity.IsAuthenticated)
             {
-                if (name == null || name == "")
-                {
-                    // Don't View anything because no paramater. Search all people if no parameter
-                    ViewBag.Persons = new List<Person>();
-                    return RedirectToAction("Index", "Search");
-                }
-                else
-                {
-                    // Show the user
-                    var person = userService.GetPerson(name);
-                    if (person.PersonId == User.Identity.GetPersonId())
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                // Show the user
+                var person = userService.GetPersonBasedOnId(id);
+                //if (person.PersonId == User.Identity.GetPersonId())
+                //{
+                //    return RedirectToAction("Index", "Home");
+                //}
 
-                    person.TimelinePosts = timelineService.GetTimelinePosts(person.PersonId);
-                    ViewBag.PersonId = User.Identity.GetPersonId();
-                    return View(person);
-                }
+                person.WallPosts = wallService.GetWallPosts(person.PersonId);
+                ViewBag.PersonId = User.Identity.GetPersonId();
+                return View(person);
+
             }
             else
             {
@@ -48,78 +40,88 @@ namespace Fakebook.Controllers
             }
         }
 
-        // Used for adding timeline post
+        // Used for adding wall post
         [HttpPost]
-        public IActionResult AddTimelinePost(string n, TimelinePost tp)
+        public IActionResult AddWallPost(int id, WallPost tp)
         {
             tp.PosterName = User.Identity.GetName();
             tp.PosterId = User.Identity.GetPersonId();
             tp.DatePosted = DateTime.Now;
-            timelineService.AddTimelinePost(tp);
+            wallService.AddWallPost(tp);
 
-            return RedirectToAction(nameof(Index), new { name = n });
+            return RedirectToAction(nameof(Index), new { id = id });
         }
 
         // Used for replying to posts
         [HttpPost]
-        public IActionResult AddReplyPost(string n, ReplyPost rp)
+        public IActionResult AddReplyPost(int id, ReplyPost rp)
         {
             rp.PosterId = User.Identity.GetPersonId();
             rp.PosterName = User.Identity.GetName();
             rp.DatePosted = DateTime.Now;
-            timelineService.AddReplyPost(rp);
+            wallService.AddReplyPost(rp);
 
-            return RedirectToAction(nameof(Index), new { name = n });
+            return RedirectToAction(nameof(Index), new { id = id });
         }
 
-        // USed for editting a timeline post
-        [HttpGet("User/{name}/EditPost/{TimelinePostId}", Name = "UserEditTimelinePost")]
-        public IActionResult EditTimelinePost(string name, int TimelinePostId)
+        // USed for editting a wall post
+        [HttpGet("User/{id}/EditPost/{WallPostId}", Name = "UserEditWallPost")]
+        public IActionResult EditWallPost(int id, int WallPostId)
         {
-            ViewBag.Name = name;
-            TimelinePost tp = timelineService.GetTimelinePost(TimelinePostId);
+            ViewBag.Id = id;
+            WallPost tp = wallService.GetWallPost(WallPostId);
             return View(tp);
         }
 
-        // USed for editting a timeline post
-        [HttpPost("User/{n}/EditPost/{TimelinePostId}", Name = "UserSubmitEditTimelinePost")]
-        public IActionResult EditTimelinePost(string n, int TimelinePostId, TimelinePost tp)
+        // USed for editting a wall post
+        [HttpPost("User/{id}/EditPost/{WallPostId}", Name = "UserSubmitEditWallPost")]
+        public IActionResult EditWallPost(int id, int WallPostId, WallPost tp)
         {
-            tp.TimelinePostId = TimelinePostId;
-            timelineService.EditTimelinePost(tp);
-            return RedirectToAction(nameof(Index), new { name = n });
+            tp.WallPostId = WallPostId;
+            wallService.EditWallPost(tp);
+            return RedirectToAction(nameof(Index), new { id = id });
         }
 
         // USed for editting a reply post
-        [HttpGet("User/{name}/EditReplyPost/{ReplyPostId}", Name = "UserEditReplyPost")]
-        public IActionResult EditReplyPost(string name, int ReplyPostId)
+        [HttpGet("User/{id}/EditReplyPost/{ReplyPostId}", Name = "UserEditReplyPost")]
+        public IActionResult EditReplyPost(int id, int ReplyPostId)
         {
-            ViewBag.Name = name;
-            ReplyPost rp = timelineService.GetReplyPost(ReplyPostId);
+            ViewBag.Id = id;
+            ReplyPost rp = wallService.GetReplyPost(ReplyPostId);
             return View(rp);
         }
 
         // USed for editting a reply post
-        [HttpPost("User/{n}/EditReplyPost/{ReplyPostId}", Name = "UserSubmitEditReplyPost")]
-        public IActionResult EditReplyPost(string n, int ReplyPostId, ReplyPost rp)
+        [HttpPost("User/{id}/EditReplyPost/{ReplyPostId}", Name = "UserSubmitEditReplyPost")]
+        public IActionResult EditReplyPost(int id, int ReplyPostId, ReplyPost rp)
         {
             rp.ReplyPostId = ReplyPostId;
-            timelineService.EditReplyPost(rp);
-            return RedirectToAction(nameof(Index), new { name = n});
+            wallService.EditReplyPost(rp);
+            return RedirectToAction(nameof(Index), new { id = id });
         }
 
         // Doesn't work if you put a HttpDelete tag on this. Otherwise this works fine
-        public IActionResult DeleteTimelinePost(string n, int TimelinePostId)
+        public IActionResult DeleteWallPost(int id, int WallPostId)
         {
-            timelineService.DeleteTimelinePost(TimelinePostId);
-            return RedirectToAction(nameof(Index), new { name = n });
+            wallService.DeleteWallPost(WallPostId);
+            return RedirectToAction(nameof(Index), new { id = id });
         }
 
         // Doesn't work if you put a HttpDelete tag on this. Otherwise this works fine
-        public IActionResult DeleteReplyPost(string n, int ReplyPostId)
+        public IActionResult DeleteReplyPost(int id, int ReplyPostId)
         {
-            timelineService.DeleteReplyPost(ReplyPostId);
-            return RedirectToAction(nameof(Index), new { name = n });
+            wallService.DeleteReplyPost(ReplyPostId);
+            return RedirectToAction(nameof(Index), new { id = id });
+        }
+
+
+        [HttpGet("/User/{id}/Friends", Name = "UserFriends")]
+        public IActionResult Friends(int id)
+        {
+            List<Person> friends = userService.GetFriends(id);
+            ViewBag.ViewerId = User.Identity.GetPersonId();
+            ViewBag.Friends = friends;
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

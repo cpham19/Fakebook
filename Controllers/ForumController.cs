@@ -120,6 +120,19 @@ namespace Fakebook.Controllers
             return RedirectToAction("ViewTopic", new { ForumName = ForumName, TopicId = TopicId, TopicName = TopicName });
         }
 
+        public IActionResult DeleteTopic(string ForumName, int TopicId)
+        {
+            forumService.DeleteTopic(TopicId);
+            return RedirectToAction("ViewForum", new { ForumName = ForumName});
+        }
+
+
+        public IActionResult DeleteReply(string ForumName, int TopicId, string TopicName, int ReplyId)
+        {
+            forumService.DeleteReply(ReplyId);
+            return RedirectToAction("ViewTopic", new { ForumName = ForumName, TopicId = TopicId, TopicName = TopicName });
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
