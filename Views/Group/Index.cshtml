@@ -15,14 +15,7 @@
                     <img src="@group.GroupPictureUrl" class="card-img-top" width="200px" height="200px" />
                     <h1 class="text-center">@group.GroupName</h1>
                     <p class="card-text">@group.Description</p>
-                    @if (group.UserJoined)
-                    {
-                        <a>Leave</a>
-                    }
-                    else
-                    {
-                        <a class="card-link" asp-controller="Group" asp-action="JoinGroup" asp-route-GroupId="@group.GroupId">Join</a>
-                    }
+                    <a class="card-link" asp-controller="Group" asp-action="ViewGroup" asp-route-GroupId="@group.GroupId">View</a>
                 </div>
             </div>
         }

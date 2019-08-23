@@ -1,0 +1,93 @@
+﻿@{
+    ViewData["Title"] = "View Group";
+}
+
+<h1>
+    @if (ViewBag.Group.UserJoined)
+    {
+        <a class="card-link" asp-controller="Group" asp-action="LeaveGroup" asp-route-GroupId="@ViewBag.Group.GroupId">Leave</a>
+    }
+    else
+    {
+        <a class="card-link" asp-controller="Group" asp-action="JoinGroup" asp-route-GroupId="@ViewBag.Group.GroupId">Join</a>
+    }
+</h1>
+
+<style type="text/css">
+    .card-img-top {
+        border-style: solid;
+        border-color: blue;
+    }
+</style>
+
+<div class="row">
+    <!-- About Group -->
+    <div class="card" style="width: 18rem;">
+        <h1 class="text-center">@ViewBag.Group.GroupName</h1>
+        <img class="card-img-top" src="@ViewBag.Group.GroupPictureUrl" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">Group Info</h5>
+            <p class="card-text">@ViewBag.Group.Description</p>
+            <br /><br />
+            <p>Members</p>
+            <hr class="my-4">
+            @foreach (var member in ViewBag.Group.Members)
+            {
+                <a asp-controller="User" asp-action="Index" asp-route-id="@member.PersonId">@member.Name</a><br />
+            }
+        </div>
+    </div>
+    <!-- Wall Entries Column -->
+    <div class="col-md-8">
+        <h1 class="my-4">Wall Posts</h1>
+        <form method="post" asp-controller="Group" asp-action="AddWallPost">
+            <input type="text" name="GroupId" value=@ViewBag.Group.GroupId hidden />
+            <textarea type="text" name="Description" class="form-control" placeholder="New Post" required></textarea>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Add Post</button>
+        </form>
+        
+        <br/><br/>
+        <!-- Wall Post -->
+        @foreach (var post in ViewBag.Group.WallPosts)
+        {
+            <div class="card mb-4">
+                <div class="card-body">
+                    <p class="card-text">@post.Description</p>
+                </div>
+                <!-- Main Posts -->
+                <div class="card-footer text-muted">
+                    Posted on @post.DatePosted by
+                    <a asp-controller="User" asp-action="Index" asp-route-name="@post.PosterName">@post.PosterName</a>
+                    @if (ViewBag.PersonId == post.PosterId)
+                    {
+                        <a asp-controller="Group" asp-action="EditWallPost" asp-route-GroupId="@ViewBag.Group.GroupId" asp-route-WallPostId="@post.WallPostId">Edit</a>
+                        <a asp-controller="Group" asp-action="DeleteWallPost" asp-route-GroupId="@ViewBag.Group.GroupId" asp-route-WallPostId="@post.WallPostId">Delete</a>
+                    }
+                </div>
+                <!-- Replies to the Main Posts -->
+                @foreach (var reply in post.Replies)
+                {
+                    <div class="card-body">
+                        <p class="card-text">@reply.Description</p>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Posted on @reply.DatePosted by
+                        <a asp-controller="User" asp-action="Index" asp-route-name="@reply.PosterName">@reply.PosterName</a>
+                        @if (ViewBag.PersonId == reply.PosterId)
+                        {
+                            <a asp-controller="Group" asp-action="EditReplyPost" asp-route-GroupId="@ViewBag.Group.GroupId" asp-route-ReplyPostId="@reply.ReplyPostId">Edit</a>
+                            <a asp-controller="Group" asp-action="DeleteReplyPost" asp-route-GroupId="@ViewBag.Group.GroupId" asp-route-ReplyPostId="@reply.ReplyPostId">Delete</a>
+                        }
+                    </div>
+                }
+            <form method="post" asp-controller="Group" asp-action="AddReplyPost">
+                <textarea type="text" name="Description" class="form-control" placeholder="New Reply" required></textarea>
+                <input type="text" name="GroupId" class="form-control" value=@ViewBag.Group.GroupId hidden />
+                <input type="text" name="WallPostId" class="form-control" value=@post.WallPostId hidden />
+                <button class="btn btn-sm btn-primary" type="submit">Add Reply</button>
+            </form>
+            </div>
+        }
+    </div>
+</div>
+

@@ -21,34 +21,6 @@ CREATE TABLE [Persons] (
 
 GO
 
-CREATE TABLE [WallPosts] (
-    [WallPostId] int NOT NULL IDENTITY,
-	[PosterName] nvarchar(max) NULL,
-    [Description] nvarchar(max) NULL,
-	[DatePosted] datetime2 NOT NULL,
-	[PosterId] int NOT NULL,
-	[UserIdOfProfile] int NOT NULL,
-    CONSTRAINT [PK_WallPosts] PRIMARY KEY ([WallPostId]),
-    CONSTRAINT [FK_WallPosts_Persons_PosterId] FOREIGN KEY ([PosterId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION,
-	CONSTRAINT [FK_WallPosts_Persons_UserIdOfProfile] FOREIGN KEY ([UserIdOfProfile]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION
-);
-
-GO
-
-CREATE TABLE [ReplyPosts] (
-    [ReplyPostId] int NOT NULL IDENTITY,
-	[PosterName] nvarchar(max) NULL,
-    [Description] nvarchar(max) NULL,
-	[DatePosted] datetime2 NOT NULL,
-	[WallPostId] int NOT NULL,
-	[PosterId] int NOT NULL,
-    CONSTRAINT [PK_ReplyPosts] PRIMARY KEY ([ReplyPostId]),
-    CONSTRAINT [FK_ReplyPosts_WallPosts_WallPostId] FOREIGN KEY ([WallPostId]) REFERENCES [WallPosts] ([WallPostId]) ON DELETE NO ACTION,
-	CONSTRAINT [FK_ReplyPosts_Persons_PosterId] FOREIGN KEY ([PosterId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION
-);
-
-GO	
-
 CREATE TABLE [Forums] (
     [ForumId] int NOT NULL IDENTITY,
     [ForumName] nvarchar(max) NULL,
@@ -86,6 +58,7 @@ CREATE TABLE [Replies] (
 	CONSTRAINT [FK_Replies_Persons_PosterId] FOREIGN KEY ([PosterId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION
 );
 
+
 GO
 
 CREATE TABLE [Friends] (
@@ -113,17 +86,45 @@ CREATE TABLE [Groups] (
 GO
 
 CREATE TABLE [GroupMembers] (
+	[Id] int NOT NULL IDENTITY,
     [GroupId] int NOT NULL,
     [GroupMemberId] int NOT NULL,
-    CONSTRAINT [PK_GroupMembers] PRIMARY KEY ([GroupId], [GroupMemberId]),
-	CONSTRAINT [FK_GroupsMembers_GroupId] FOREIGN KEY ([GroupId]) REFERENCES [Groups] ([GroupId]) ON DELETE NO ACTION,
-	CONSTRAINT [FK_GroupsMembers_GroupMemberId] FOREIGN KEY ([GroupMemberId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION
+    CONSTRAINT [PK_GroupMembers] PRIMARY KEY ([Id]),
+	CONSTRAINT [FK_GroupsMembers_Groups_GroupId] FOREIGN KEY ([GroupId]) REFERENCES [Groups] ([GroupId]) ON DELETE NO ACTION,
+	CONSTRAINT [FK_GroupsMembers_Persons_GroupMemberId] FOREIGN KEY ([GroupMemberId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [WallPosts] (
+    [WallPostId] int NOT NULL IDENTITY,
+	[GroupId] int NOT NULL DEFAULT 0,
+	[PosterName] nvarchar(max) NULL,
+    [Description] nvarchar(max) NULL,
+	[DatePosted] datetime2 NOT NULL,
+	[PosterId] int NOT NULL,
+	[UserIdOfProfile] int NOT NULL DEFAULT 0,
+    CONSTRAINT [PK_WallPosts] PRIMARY KEY ([WallPostId]),
+    CONSTRAINT [FK_WallPosts_Persons_PosterId] FOREIGN KEY ([PosterId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION,
+);
+
+GO
+
+CREATE TABLE [ReplyPosts] (
+    [ReplyPostId] int NOT NULL IDENTITY,
+	[PosterName] nvarchar(max) NULL,
+    [Description] nvarchar(max) NULL,
+	[DatePosted] datetime2 NOT NULL,
+	[WallPostId] int NOT NULL,
+	[PosterId] int NOT NULL,
+    CONSTRAINT [PK_ReplyPosts] PRIMARY KEY ([ReplyPostId]),
+    CONSTRAINT [FK_ReplyPosts_WallPosts_WallPostId] FOREIGN KEY ([WallPostId]) REFERENCES [WallPosts] ([WallPostId]) ON DELETE NO ACTION,
+	CONSTRAINT [FK_ReplyPosts_Persons_PosterId] FOREIGN KEY ([PosterId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION
 );
 
 GO
 
 CREATE INDEX [IX_FK_WallPosts_PosterId] ON [WallPosts] ([PosterId]);
-CREATE INDEX [IX_FK_WallPosts_UserIdOfProfile] ON [WallPosts] ([UserIdOfProfile]);
 
 GO
 

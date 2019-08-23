@@ -4,13 +4,23 @@
 
 @model List<Forum>
 
-<h1>Forums</h1>
-
 <style>
     .table-light {
         border: solid 5px;
     }
 </style>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">Forums</li>
+    </ol>
+</nav>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Forums</h1>
+    </div>
+</div>
 
 <a asp-controller="Forum" asp-action="AddForum">Add New Forum</a>
 <table class="table table-striped table-light">

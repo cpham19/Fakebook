@@ -9,26 +9,6 @@ SET IDENTITY_INSERT Persons OFF
 
 GO
 
-SET IDENTITY_INSERT WallPosts ON 
-INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (1, N'Calvin', N'I am bored.', '2019-06-19', 2, 2);
-INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (2, N'Calvin', N'I am still bored', '2019-06-19', 2, 2);
-INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (3, N'John', N'Nice morning.', '2019-06-19', 1, 1);
-INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (4, N'John', N'I ate steak this morning!', '2019-06-20', 1, 1);
-INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (5, N'Jane', N'Nice night.', '2019-06-19', 3, 3);
-INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (6, N'Jane', N'Sleeping... Good night!', '2019-06-19', 3, 3);
-SET IDENTITY_INSERT WallPosts OFF
-
-GO
-
-SET IDENTITY_INSERT ReplyPosts ON 
-INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, WallPostId, PosterId) VALUES (1, N'Calvin', N'Are you?.', '2019-06-19', 1, 2);
-INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, WallPostId, PosterId) VALUES (2, N'Calvin', N'Yes I am', '2019-06-19', 1, 2);
-INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, WallPostId, PosterId) VALUES (3, N'Calvin', N'Good morning to you, John!.', '2019-06-19', 3, 2);
-INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, WallPostId, PosterId) VALUES (4, N'Jane', N'Yes, Good morning to you John!', '2019-06-19', 3, 3);
-SET IDENTITY_INSERT ReplyPosts OFF
-
-GO
-
 SET IDENTITY_INSERT Forums ON 
 INSERT INTO Forums (ForumId,ForumName, PosterId) VALUES (1, N'News', 2);
 INSERT INTO Forums (ForumId,ForumName, PosterId) VALUES (2, N'Marketplace', 2);
@@ -68,3 +48,32 @@ SET IDENTITY_INSERT Groups ON
 INSERT INTO Groups (GroupId, GroupName, Description, DateCreated, GroupPictureUrl, GroupCreatorId) VALUES (1, N'El Monte Boys', N'This is a group for people from El Monte', '2019-07-03', N'https://cdn4.iconfinder.com/data/icons/blast/127/batman-512.png' , 2);
 INSERT INTO Groups (GroupId, GroupName, Description, DateCreated, GroupPictureUrl, GroupCreatorId) VALUES (2, N'Los Angeles Boys', N'This is a group for people from LA', '2019-07-03', N'https://www.freepngimg.com/thumb/city/36187-4-city-transparent-picture-thumb.png' , 2);
 SET IDENTITY_INSERT Groups OFF
+
+GO
+
+SET IDENTITY_INSERT GroupMembers ON
+INSERT INTO GroupMembers (Id, GroupId, GroupMemberId) VALUES (1, 1, 1);
+INSERT INTO GroupMembers (Id, GroupId, GroupMemberId) VALUES (2, 1, 2);
+SET IDENTITY_INSERT GroupMembers OFF
+
+GO
+
+SET IDENTITY_INSERT WallPosts ON 
+INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (1, N'Calvin', N'I am bored.', '2019-06-19', 2, 2);
+INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (2, N'Calvin', N'I am still bored', '2019-06-19', 2, 2);
+INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (3, N'John', N'Nice morning.', '2019-06-19', 1, 1);
+INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (4, N'John', N'I ate steak this morning!', '2019-06-20', 1, 1);
+INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (5, N'Jane', N'Nice night.', '2019-06-19', 3, 3);
+INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (6, N'Jane', N'Sleeping... Good night!', '2019-06-19', 3, 3);
+INSERT INTO WallPosts (WallPostId, GroupId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (7, 1, N'Calvin', N'Thanks inviting me to this group!', '2019-06-19', 2, 0);
+SET IDENTITY_INSERT WallPosts OFF
+
+GO
+
+SET IDENTITY_INSERT ReplyPosts ON 
+INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, WallPostId, PosterId) VALUES (1, N'Calvin', N'Are you?.', '2019-06-19', 1, 2);
+INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, WallPostId, PosterId) VALUES (2, N'Calvin', N'Yes I am', '2019-06-19', 1, 2);
+INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, WallPostId, PosterId) VALUES (3, N'Calvin', N'Good morning to you, John!.', '2019-06-19', 3, 2);
+INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, WallPostId, PosterId) VALUES (4, N'Jane', N'Yes, Good morning to you John!', '2019-06-19', 3, 3);
+INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, WallPostId, PosterId) VALUES (5, N'Calvin', N'Does this work?', '2019-06-19', 7, 2);
+SET IDENTITY_INSERT ReplyPosts OFF

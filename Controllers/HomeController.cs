@@ -148,6 +148,12 @@ namespace Fakebook.Controllers
             return RedirectToAction(nameof(Friends));
         }
 
+        public IActionResult LeaveGroup(int GroupId)
+        {
+            groupService.LeaveGroup(User.Identity.GetPersonId(), GroupId);
+            return RedirectToAction(nameof(Index));
+        }
+
         public IActionResult Privacy()
         {
             return View();

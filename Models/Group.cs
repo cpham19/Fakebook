@@ -19,11 +19,12 @@ namespace Fakebook.Models
         public bool UserJoined { get; set; } = false;
         [NotMapped]
         public List<Person> Members { get; set; } = new List<Person>();
+        public List<WallPost> WallPosts { get; set; } = new List<WallPost>();
     }
 
     public class GroupMember
     {
-        [Key]
+        public int Id { get; set; }
         public int GroupId { get; set; }
         public int GroupMemberId { get; set; }
     }
