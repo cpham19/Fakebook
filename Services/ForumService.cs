@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Fakebook.Models;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
@@ -35,7 +36,13 @@ namespace Fakebook.Services
             foreach(var forum in forums)
             {
                 forum.Topics = db.Topics.Where(t => t.ForumId == forum.ForumId).ToList();
+                foreach (var topic in forum.Topics)
+                {
+                    Person person = db.Persons.Where(p => p.PersonId == topic.PosterId).SingleOrDefault();
+                    topic.PosterName = person.Name;
+                }
             }
+
             return forums;
         }
 
@@ -45,7 +52,14 @@ namespace Fakebook.Services
             forum.Topics = db.Topics.Where(t => t.ForumId == forum.ForumId).ToList();
             foreach (var topic in forum.Topics)
             {
+                Person person = db.Persons.Where(p => p.PersonId == topic.PosterId).SingleOrDefault();
+                topic.PosterName = person.Name;
                 topic.Replies = db.Replies.Where(r => r.TopicId == topic.TopicId).ToList();
+                foreach( var reply in topic.Replies)
+                {
+                    Person person2 = db.Persons.Where(p => p.PersonId == reply.PosterId).SingleOrDefault();
+                    reply.PosterName = person2.Name;
+                }
             }
             return forum;
         }
@@ -54,6 +68,17 @@ namespace Fakebook.Services
         {
             Forum forum = db.Forums.Where(f => f.ForumId == id).SingleOrDefault();
             forum.Topics = db.Topics.Where(t => t.ForumId == id).ToList();
+            foreach (var topic in forum.Topics)
+            {
+                Person person = db.Persons.Where(p => p.PersonId == topic.PosterId).SingleOrDefault();
+                topic.PosterName = person.Name;
+                topic.Replies = db.Replies.Where(r => r.TopicId == topic.TopicId).ToList();
+                foreach (var reply in topic.Replies)
+                {
+                    Person person2 = db.Persons.Where(p => p.PersonId == reply.PosterId).SingleOrDefault();
+                    reply.PosterName = person2.Name;
+                }
+            }
             return forum;
         }
 
@@ -61,6 +86,11 @@ namespace Fakebook.Services
         {
             Topic topic = db.Topics.Where(t => t.TopicId == id).SingleOrDefault();
             topic.Replies = db.Replies.Where(r => r.TopicId == id).ToList();
+            foreach (var reply in topic.Replies)
+            {
+                Person person = db.Persons.Where(p => p.PersonId == reply.PosterId).SingleOrDefault();
+                reply.PosterName = person.Name;
+            }
 
             return topic;
         }

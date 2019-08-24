@@ -16,25 +16,25 @@ SET IDENTITY_INSERT Forums OFF
 GO
 
 SET IDENTITY_INSERT Topics ON 
-INSERT INTO Topics (TopicId, TopicName, TopicContent, TopicDate, ForumId, PosterId, PosterName) VALUES (1, N'Updates involving home pages', N'You can add posts now...', '2019-07-03', 1, 2, N'Calvin');
-INSERT INTO Topics (TopicId, TopicName, TopicContent, TopicDate, ForumId, PosterId, PosterName) VALUES (2, N'Updates involving forum', N'You can look at forums now...', '2019-07-03', 1, 2, N'Calvin');
-INSERT INTO Topics (TopicId, TopicName, TopicContent, TopicDate, ForumId, PosterId, PosterName) VALUES (3, N'Selling dirt', N'Fresh and good quality dirt', '2019-07-01', 2, 2, N'John');
-INSERT INTO Topics (TopicId, TopicName, TopicContent, TopicDate, ForumId, PosterId, PosterName) VALUES (4, N'Selling a car', N'Model Honda, Year 2005, Condition Used', '2019-07-03', 2, 2, N'John');
+INSERT INTO Topics (TopicId, TopicName, TopicContent, TopicDate, ForumId, PosterId) VALUES (1, N'Updates involving home pages', N'You can add posts now...', '2019-07-03', 1, 2);
+INSERT INTO Topics (TopicId, TopicName, TopicContent, TopicDate, ForumId, PosterId) VALUES (2, N'Updates involving forum', N'You can look at forums now...', '2019-07-03', 1, 2);
+INSERT INTO Topics (TopicId, TopicName, TopicContent, TopicDate, ForumId, PosterId) VALUES (3, N'Selling dirt', N'Fresh and good quality dirt', '2019-07-01', 2, 2);
+INSERT INTO Topics (TopicId, TopicName, TopicContent, TopicDate, ForumId, PosterId) VALUES (4, N'Selling a car', N'Model Honda, Year 2005, Condition Used', '2019-07-03', 2, 2);
 SET IDENTITY_INSERT Topics OFF 
 
 GO
 
 SET IDENTITY_INSERT Replies ON
-INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId, PosterName) VALUES (1, N'Nice updates...', '2019-07-03', 1, 1, N'John');
-INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId, PosterName) VALUES (2, N'Yes... Very nice updates...', '2019-07-03', 1, 3, N'Jane');
-INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId, PosterName) VALUES (3, N'Keep up on the good updates...', '2019-07-03', 2, 4, N'Bill');
-INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId, PosterName) VALUES (4, N'Great work....', '2019-07-03', 2, 5, N'Louis');
-INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId, PosterName) VALUES (5, N'How much for the dirt?', '2019-07-03', 3, 2, N'Calvin');
-INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId, PosterName) VALUES (6, N'$20', '2019-07-03', 3, 1, N'John');
-INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId, PosterName) VALUES (7, N'Deal....', '2019-07-03', 3, 2, N'Calvin');
-INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId, PosterName) VALUES (8, N'How much for the car??', '2019-07-03', 4, 4, N'Bill');
-INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId, PosterName) VALUES (9, N'For you, $10.', '2019-07-03', 4, 1, N'John');
-INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId, PosterName) VALUES (10, N'Nah, too expensive.', '2019-07-03', 4, 4, N'Bill');
+INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (1, N'Nice updates...', '2019-07-03', 1, 1);
+INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (2, N'Yes... Very nice updates...', '2019-07-03', 1, 3);
+INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (3, N'Keep up on the good updates...', '2019-07-03', 2, 4);
+INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (4, N'Great work....', '2019-07-03', 2, 5);
+INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (5, N'How much for the dirt?', '2019-07-03', 3, 2);
+INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (6, N'$20', '2019-07-03', 3, 1);
+INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (7, N'Deal....', '2019-07-03', 3, 2);
+INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (8, N'How much for the car??', '2019-07-03', 4, 4);
+INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (9, N'For you, $10.', '2019-07-03', 4, 1);
+INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (10, N'Nah, too expensive.', '2019-07-03', 4, 4);
 SET IDENTITY_INSERT Replies OFF
 
 GO
@@ -59,21 +59,41 @@ SET IDENTITY_INSERT GroupMembers OFF
 GO
 
 SET IDENTITY_INSERT WallPosts ON 
-INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (1, N'Calvin', N'I am bored.', '2019-06-19', 2, 2);
-INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (2, N'Calvin', N'I am still bored', '2019-06-19', 2, 2);
-INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (3, N'John', N'Nice morning.', '2019-06-19', 1, 1);
-INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (4, N'John', N'I ate steak this morning!', '2019-06-20', 1, 1);
-INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (5, N'Jane', N'Nice night.', '2019-06-19', 3, 3);
-INSERT INTO WallPosts (WallPostId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (6, N'Jane', N'Sleeping... Good night!', '2019-06-19', 3, 3);
-INSERT INTO WallPosts (WallPostId, GroupId, PosterName, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (7, 1, N'Calvin', N'Thanks inviting me to this group!', '2019-06-19', 2, 0);
+INSERT INTO WallPosts (WallPostId, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (1, N'I am bored.', '2019-06-19', 2, 2);
+INSERT INTO WallPosts (WallPostId, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (2, N'I am still bored', '2019-06-19', 2, 2);
+INSERT INTO WallPosts (WallPostId, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (3, N'Nice morning.', '2019-06-19', 1, 1);
+INSERT INTO WallPosts (WallPostId, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (4, N'I ate steak this morning!', '2019-06-20', 1, 1);
+INSERT INTO WallPosts (WallPostId, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (5, N'Nice night.', '2019-06-19', 3, 3);
+INSERT INTO WallPosts (WallPostId, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (6, N'Sleeping... Good night!', '2019-06-19', 3, 3);
+INSERT INTO WallPosts (WallPostId, GroupId, Description, DatePosted, PosterId, UserIdOfProfile) VALUES (7, 1, N'Thanks inviting me to this group!', '2019-06-19', 2, 0);
 SET IDENTITY_INSERT WallPosts OFF
 
 GO
 
 SET IDENTITY_INSERT ReplyPosts ON 
-INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, WallPostId, PosterId) VALUES (1, N'Calvin', N'Are you?.', '2019-06-19', 1, 2);
-INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, WallPostId, PosterId) VALUES (2, N'Calvin', N'Yes I am', '2019-06-19', 1, 2);
-INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, WallPostId, PosterId) VALUES (3, N'Calvin', N'Good morning to you, John!.', '2019-06-19', 3, 2);
-INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, WallPostId, PosterId) VALUES (4, N'Jane', N'Yes, Good morning to you John!', '2019-06-19', 3, 3);
-INSERT INTO ReplyPosts (ReplyPostId, PosterName, Description, DatePosted, WallPostId, PosterId) VALUES (5, N'Calvin', N'Does this work?', '2019-06-19', 7, 2);
+INSERT INTO ReplyPosts (ReplyPostId, Description, DatePosted, WallPostId, PosterId) VALUES (1, N'Are you?.', '2019-06-19', 1, 2);
+INSERT INTO ReplyPosts (ReplyPostId, Description, DatePosted, WallPostId, PosterId) VALUES (2, N'Yes I am', '2019-06-19', 1, 2);
+INSERT INTO ReplyPosts (ReplyPostId, Description, DatePosted, WallPostId, PosterId) VALUES (3, N'Good morning to you, John!.', '2019-06-19', 3, 2);
+INSERT INTO ReplyPosts (ReplyPostId, Description, DatePosted, WallPostId, PosterId) VALUES (4, N'Yes, Good morning to you John!', '2019-06-19', 3, 3);
+INSERT INTO ReplyPosts (ReplyPostId, Description, DatePosted, WallPostId, PosterId) VALUES (5, N'Does this work?', '2019-06-19', 7, 2);
 SET IDENTITY_INSERT ReplyPosts OFF
+
+GO
+
+SET IDENTITY_INSERT Blogs ON
+INSERT INTO Blogs (BlogId, Headline, PictureUrl, Title, Description, DatePosted, PosterId) VALUES (1, N'Special Headline #1', N'http://www.sclance.com/pngs/blog-png/blog_png_147442.png', N'Random Blog #1', N'The triumph persists in the jest. Its exchanged jungle buys the temper past the unauthorized mailbox. The override moans under any maker! The ridiculous client displays an infamous identifier. The bomb lies on top of the stimulated cheat.', '2019-06-19', 2);
+INSERT INTO Blogs (BlogId, Headline, PictureUrl, Title, Description, DatePosted, PosterId) VALUES (2, N'Special Headline #2', N'http://www.sclance.com/pngs/blog-png/blog_png_147442.png', N'Random Blog #2', N'Does an awaited antique redirect a fooling overflow? The ideological bubble works throughout an instrumental tennis. The guide alarms his unsatisfactory norm under a plotter. A day gasps into the bare mug.', '2019-06-19', 2);
+INSERT INTO Blogs (BlogId, Headline, PictureUrl, Title, Description, DatePosted, PosterId) VALUES (3, N'Special Headline #3', N'http://www.sclance.com/pngs/blog-png/blog_png_147442.png', N'Random Blog #3', N'The famine decays? The afternoon listens after the pan horse. A spiritual award hopes the invited backlog. A bargain rebuilds the science. With the screw consents the skull.', '2019-06-19', 2);
+SET IDENTITY_INSERT Blogs OFF
+
+GO
+
+SET IDENTITY_INSERT BlogComments ON
+INSERT INTO BlogComments (BlogCommentId,  BlogId, Description, DatePosted, PosterId) VALUES (1, 1, N'Nice blog post..', '2019-06-19', 1);
+INSERT INTO BlogComments (BlogCommentId, BlogId, Description, DatePosted, PosterId) VALUES (2, 2, N'Nice blog post..', '2019-06-19', 2);
+INSERT INTO BlogComments (BlogCommentId, BlogId, Description, DatePosted, PosterId) VALUES (3, 3, N'Nice blog post..', '2019-06-19', 3);
+SET IDENTITY_INSERT BlogComments OFF
+
+GO
+
+

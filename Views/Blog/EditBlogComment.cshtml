@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Edit Blog Comment";
+}
+@model BlogComment
+
+<h1>Edit Blog</h1>
+
+<a asp-controller="Blog" asp-action="ReadBlog" asp-route-BlogId="@Model.BlogId">Back</a>
+<form method="post" asp-controller="Blog" asp-action="EditBlogComment">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Descripton</span>
+        </div>
+        <textarea class="form-control" type="text" name="Description" placeholder="Description" required>@Model.Description</textarea>
+    </div>
+
+    <input type="text" name="BlogId" placeholder="BlogId" value="@Model.BlogId" hidden required />
+    <input type="text" name="BlogCommentId" placeholder="BlogCommentId" value="@Model.BlogCommentId" hidden required />
+
+    <br />
+    <button>Edit</button>
+</form>

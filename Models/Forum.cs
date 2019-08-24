@@ -36,6 +36,7 @@ namespace Fakebook
         public string TopicContent { get; set; }
         public virtual int ForumId { get; set; }
         public int PosterId { get; set; }
+        [NotMapped]
         public string PosterName { get; set; }
 
         public string ModifiedTopicName()
@@ -61,6 +62,7 @@ namespace Fakebook
         public DateTime ReplyDate { get; set; }
         public virtual int TopicId { get; set; }
         public int PosterId { get; set; }
+        [NotMapped]
         public string PosterName { get; set; }
 
         //public override string ToString()

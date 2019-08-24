@@ -38,7 +38,6 @@ CREATE TABLE [Topics] (
     [TopicDate] datetime2 NOT NULL,
     [ForumId] int NOT NULL,
 	[PosterId] int NOT NULL,
-	[PosterName] nvarchar(max) NOT NULL,
     CONSTRAINT [PK_Topics] PRIMARY KEY ([TopicId]),
 	CONSTRAINT [FK_Topics_Forums_ForumId] FOREIGN KEY ([ForumId]) REFERENCES [Forums] ([ForumId]) ON DELETE NO ACTION,
 	CONSTRAINT [FK_Topics_Persons_PosterId] FOREIGN KEY ([PosterId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION
@@ -52,7 +51,6 @@ CREATE TABLE [Replies] (
 	[ReplyDate] datetime2 NOT NULL,
     [TopicId] int NOT NULL,
 	[PosterId] int NOT NULL,
-	[PosterName] nvarchar(max) NOT NULL,
     CONSTRAINT [PK_Replies] PRIMARY KEY ([ReplyId]),
     CONSTRAINT [FK_Replies_Topics_TopicId] FOREIGN KEY ([TopicId]) REFERENCES [Topics] ([TopicId]) ON DELETE NO ACTION,
 	CONSTRAINT [FK_Replies_Persons_PosterId] FOREIGN KEY ([PosterId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION
@@ -99,7 +97,6 @@ GO
 CREATE TABLE [WallPosts] (
     [WallPostId] int NOT NULL IDENTITY,
 	[GroupId] int NOT NULL DEFAULT 0,
-	[PosterName] nvarchar(max) NULL,
     [Description] nvarchar(max) NULL,
 	[DatePosted] datetime2 NOT NULL,
 	[PosterId] int NOT NULL,
@@ -112,7 +109,6 @@ GO
 
 CREATE TABLE [ReplyPosts] (
     [ReplyPostId] int NOT NULL IDENTITY,
-	[PosterName] nvarchar(max) NULL,
     [Description] nvarchar(max) NULL,
 	[DatePosted] datetime2 NOT NULL,
 	[WallPostId] int NOT NULL,
@@ -120,6 +116,32 @@ CREATE TABLE [ReplyPosts] (
     CONSTRAINT [PK_ReplyPosts] PRIMARY KEY ([ReplyPostId]),
     CONSTRAINT [FK_ReplyPosts_WallPosts_WallPostId] FOREIGN KEY ([WallPostId]) REFERENCES [WallPosts] ([WallPostId]) ON DELETE NO ACTION,
 	CONSTRAINT [FK_ReplyPosts_Persons_PosterId] FOREIGN KEY ([PosterId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [Blogs] (
+    [BlogId] int NOT NULL IDENTITY,
+	[Headline] nvarchar(max) NULL,
+	[PictureUrl] nvarchar(max) NULL,
+	[Title] nvarchar(max) NULL,
+    [Description] nvarchar(max) NULL,
+	[DatePosted] datetime2 NOT NULL,
+	[PosterId] int NOT NULL,
+    CONSTRAINT [PK_Blogs] PRIMARY KEY ([BlogId]),
+    CONSTRAINT [FK_Blogs_Persons_PosterId] FOREIGN KEY ([PosterId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION,
+);
+
+GO
+
+CREATE TABLE [BlogComments] (
+    [BlogCommentId] int NOT NULL IDENTITY,
+	[BlogId] int NOT NULL,
+    [Description] nvarchar(max) NULL,
+	[DatePosted] datetime2 NOT NULL,
+	[PosterId] int NOT NULL,
+    CONSTRAINT [PK_BlogComments] PRIMARY KEY ([BlogCommentId]),
+    CONSTRAINT [FK_BlogComments_Persons_PosterId] FOREIGN KEY ([PosterId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION
 );
 
 GO
@@ -149,6 +171,16 @@ CREATE INDEX [IX_FK_Friends_PersonTwoId] ON [Friends] ([PersonTwoId]);
 GO
 
 CREATE INDEX [IX_FK_Groups_GroupCreatorId] ON [Groups] ([GroupCreatorId]);
+
+GO
+
+CREATE INDEX [IX_FK_Blogs_PosterId] ON [Blogs] ([PosterId]);
+
+GO
+
+CREATE INDEX [IX_FK_BlogComments_PosterId] ON [BlogComments] ([PosterId]);
+
+GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
 VALUES (N'20190726011148_InitialSchema', N'2.2.1-servicing-10028');

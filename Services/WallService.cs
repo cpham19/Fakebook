@@ -21,7 +21,7 @@ namespace Fakebook.Services
 
         public WallPost GetWallPost(int id)
         {
-            return db.WallPosts.Where(tp => tp.WallPostId == id).SingleOrDefault();
+            return db.WallPosts.Where(wp => wp.WallPostId == id).SingleOrDefault();
         }
 
         public ReplyPost GetReplyPost(int id)
@@ -37,17 +37,25 @@ namespace Fakebook.Services
         // Get user's wall posts and their replies
         public List<WallPost> GetWallPosts(int id)
         {
-            List<WallPost> wallPosts = db.WallPosts.Where(tp => tp.UserIdOfProfile == id).OrderByDescending(tp => tp.DatePosted).ToList();
-            foreach (var tp in wallPosts) {
-                tp.Replies = db.ReplyPosts.Where(reply => reply.WallPostId == tp.WallPostId).OrderBy(reply => reply.DatePosted).ToList();
+            List<WallPost> wallPosts = db.WallPosts.Where(wp => wp.UserIdOfProfile == id).OrderByDescending(wp => wp.DatePosted).ToList();
+            foreach (var wp in wallPosts) {
+                Person person = db.Persons.Where(p => p.PersonId == wp.PosterId).SingleOrDefault();
+                wp.PosterName = person.Name;
+                wp.Replies = db.ReplyPosts.Where(reply => reply.WallPostId == wp.WallPostId).OrderBy(reply => reply.DatePosted).ToList();
+
+                foreach(var reply in wp.Replies)
+                {
+                    Person person2 = db.Persons.Where(p => p.PersonId == reply.PosterId).SingleOrDefault();
+                    reply.PosterName = person2.Name;
+                }
             }
             return wallPosts;
         }
 
         // Add a new wall post to their page (or other people's page perhaps)
-        public void AddWallPost(WallPost tp)
+        public void AddWallPost(WallPost wp)
         {
-            db.WallPosts.Add(tp);
+            db.WallPosts.Add(wp);
             db.SaveChanges();
         }
 
@@ -59,10 +67,10 @@ namespace Fakebook.Services
         }
 
         // Editting Wall Post
-        public void EditWallPost(WallPost tp)
+        public void EditWallPost(WallPost wp)
         {
-            WallPost wallPost = this.GetWallPost(tp.WallPostId);
-            wallPost.Description = tp.Description;
+            WallPost wallPost = this.GetWallPost(wp.WallPostId);
+            wallPost.Description = wp.Description;
             db.SaveChanges();
         }
 
@@ -82,8 +90,8 @@ namespace Fakebook.Services
                 db.ReplyPosts.Remove(reply);
             }
 
-            WallPost tp = this.GetWallPost(id);
-            db.WallPosts.Remove(tp);
+            WallPost wp = this.GetWallPost(id);
+            db.WallPosts.Remove(wp);
             db.SaveChanges();
         }
 

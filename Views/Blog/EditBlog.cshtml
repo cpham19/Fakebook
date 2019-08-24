@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Edit Blog";
+}
+@model Blog
+
+<h1>Edit Blog</h1>
+
+<a asp-controller="Blog" asp-action="Index">Back</a>
+<form method="post">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Headline</span>
+        </div>
+        <input class="form-control" type="text" name="Headline" placeholder="Headline" value="@Model.Headline" required />
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Picture URL</span>
+        </div>
+        <input class="form-control" type="text" name="PictureUrl" placeholder="Picture URL" value="@Model.PictureUrl" required />
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Title</span>
+        </div>
+        <input class="form-control" type="text" name="Title" placeholder="Title" value="@Model.Title" required/>
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Description</span>
+        </div>
+        <textarea class="form-control" type="text" name="Description" placeholder="Description" required>@Model.Description</textarea>
+    </div>
+
+    <input type="text" name="BlogId" placeholder="BlogId" value="@Model.BlogId" hidden required />
+
+    <br />
+    <button>Edit</button>
+</form>
