@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewData["Title"] = "Groups";
+}
+
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-3">My Groups</h1>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Example row of columns -->
+    <div class="row">
+        @foreach (var group in ViewBag.Groups)
+        {
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <img src="@group.GroupPictureUrl" class="card-img-top" width="200px" height="200px" />
+                    <h1 class="text-center">@group.GroupName</h1>
+                    <p class="card-text">@group.Description</p>
+                    <a class="card-link" asp-controller="Group" asp-action="ViewGroup" asp-route-GroupId="@group.GroupId">View</a>
+                </div>
+            </div>
+        }
+    </div>
+    <hr>
+</div> <!-- /container -->

@@ -29,11 +29,6 @@
                     <div class="card-footer text-muted">
                         Posted on @blog.DatePosted by
                         <a asp-controller="User" asp-action="Index" asp-route-id="@blog.PosterId">@blog.PosterName</a>
-                        @if (ViewBag.PersonId == blog.PosterId)
-                        {
-                            <a asp-controller="Blog" asp-action="EditBlog" asp-route-BlogId="@blog.BlogId">Edit</a>
-                            <a asp-controller="Blog" asp-action="DeleteBlog" asp-route-BlogId="@blog.BlogId">Delete</a>
-                        }
                     </div>
                 </div>
 

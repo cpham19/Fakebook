@@ -60,7 +60,7 @@ namespace Fakebook.Controllers
         }
 
         // Used for editting blog
-        [HttpGet("/Blogs/EditBlog/{BlogId}", Name = "EditBlog")]
+        [HttpGet("/Blogs/blog/{BlogId}/EditBlog", Name = "EditBlog")]
         public IActionResult EditBlog(int BlogId)
         {
             Blog blog = blogService.GetBlog(BlogId);
@@ -68,15 +68,15 @@ namespace Fakebook.Controllers
         }
 
         // Used for editting blog
-        [HttpPost("/Blogs/EditBlog/{BlogId}", Name = "SubmitEditBlog")]
+        [HttpPost("/Blogs/blog/{BlogId}/EditBlog", Name = "SubmitEditBlog")]
         public IActionResult EditBlog(int BlogId, Blog blog)
         {
             blog.BlogId = BlogId;
             blogService.EditBlog(blog);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("ReadBlog", new { BlogId = BlogId });
         }
 
-        [HttpGet("/Blogs/DeleteBlog/{BlogId}", Name = "DeleteBlog")]
+        [HttpGet("/Blogs/blog/{BlogId}/DeleteBlog", Name = "DeleteBlog")]
         public IActionResult DeleteBlog(int BlogId)
         {
             blogService.DeleteBlog(BlogId);

@@ -20,6 +20,11 @@
             <p class="lead">
                 by
                 <a asp-controller="User" asp-action="Index" asp-route-id="@Model.PosterId">@Model.PosterName</a>
+                @if (ViewBag.PersonId == Model.PosterId)
+                {
+                    <a asp-controller="Blog" asp-action="EditBlog" asp-route-BlogId="@Model.BlogId">Edit</a>
+                    <a asp-controller="Blog" asp-action="DeleteBlog" asp-route-BlogId="@Model.BlogId">Delete</a>
+                }
             </p>
 
             <hr>

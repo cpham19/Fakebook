@@ -18,7 +18,10 @@
         <div class="card-body">
             <h5 class="card-title">About Me</h5>
             <p class="card-text">@Model.ProfileDescription</p>
-            <a asp-controller="User" asp-action="Friends" asp-route-id="@Model.PersonId">Friends (@Model.Friends.Count)</a>
+            <a asp-controller="User" asp-action="Friends" asp-route-id="@Model.PersonId">Friends (@Model.Friends.Count)</a><br />
+            <a asp-controller="User" asp-action="Groups" asp-route-id="@Model.PersonId">Groups (@Model.Groups.Count)</a><br />
+            <a asp-controller="User" asp-action="Blogs" asp-route-id="@Model.PersonId">Blogs (@Model.Blogs.Count)</a><br />
+            <a asp-controller="User" asp-action="Stores" asp-route-id="@Model.PersonId">Stores (@Model.Stores.Count)</a>
         </div>
     </div>
     <!-- Wall Entries Column -->

@@ -12,11 +12,15 @@ namespace Fakebook.Controllers
         private readonly WallService wallService;
         private readonly UserService userService;
         private readonly GroupService groupService;
-        public HomeController(WallService wallService, UserService userService, GroupService groupService)
+        private readonly BlogService blogService;
+        private readonly StoreService storeService;
+        public HomeController(WallService wallService, UserService userService, GroupService groupService, BlogService blogService, StoreService storeService)
         {
             this.wallService = wallService;
             this.userService = userService;
             this.groupService = groupService;
+            this.blogService = blogService;
+            this.storeService = storeService;
         }
 
         public IActionResult Index()
@@ -152,6 +156,23 @@ namespace Fakebook.Controllers
         {
             groupService.LeaveGroup(User.Identity.GetPersonId(), GroupId);
             return RedirectToAction(nameof(Index));
+        }
+
+
+        [HttpGet("/MyBlogs", Name = "MyBlogs")]
+        public IActionResult Blogs()
+        {
+            List<Blog> blogs = blogService.GetBlogsOfUser(User.Identity.GetPersonId());
+            ViewBag.Blogs = blogs;
+            return View();
+        }
+
+        [HttpGet("/MyStores", Name = "MyStores")]
+        public IActionResult Stores()
+        {
+            List<Store> stores = storeService.GetStoresOfUser(User.Identity.GetPersonId());
+            ViewBag.Stores = stores;
+            return View();
         }
 
         public IActionResult Privacy()

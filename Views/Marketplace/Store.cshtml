@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Shop Page";
+}
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-3">@ViewBag.Store.StoreName</h1>
+    </div>
+</div>
+
+@if (ViewBag.Store.StoreOwnerId == ViewBag.PersonId)
+{
+    <a asp-controller="Marketplace" asp-action="AddStoreItem" asp-route-StoreId="@ViewBag.Store.StoreId">Add Item</a><br/>
+    <a asp-controller="Marketplace" asp-action="EditStore" asp-route-StoreId="@ViewBag.Store.StoreId">Edit Store</a><br/>
+    <a asp-controller="Marketplace" asp-action="DeleteStore" asp-route-StoreId="@ViewBag.Store.StoreId">Delete Store</a>
+}
+
+<!-- Page Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-9">
+            <div class="row">
+                @foreach (var item in ViewBag.Store.Items)
+                {
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <a href="#"><img class="card-img-top" src="@item.ItemImageUrl" width="740px" height="300px" alt=""></a>
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <a asp-controller="Marketplace" asp-action="StoreItem" asp-route-StoreId="@item.StoreId" asp-route-StoreItemId="@item.StoreItemId">@item.ItemName</a>
+                                </h4>
+                                <h5></h5>
+                                <p class="card-text">@item.ItemDescription</p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.col-lg-9 -->
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /.container -->

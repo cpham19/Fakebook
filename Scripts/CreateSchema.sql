@@ -146,6 +146,35 @@ CREATE TABLE [BlogComments] (
 
 GO
 
+CREATE TABLE [Stores] (
+    [StoreId] int NOT NULL IDENTITY,
+	[StoreImageUrl] nvarchar(max) NULL,
+	[StoreName] nvarchar(max) NULL,
+    [StoreDescription] nvarchar(max) NULL,
+	[DateCreated] datetime2 NOT NULL,
+	[StoreOwnerId] int NOT NULL,
+    CONSTRAINT [PK_Stores] PRIMARY KEY ([StoreId]),
+    CONSTRAINT [FK_Stores_Persons_PosterId] FOREIGN KEY ([StoreOwnerId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [StoreItems] (
+    [StoreItemId] int NOT NULL IDENTITY,
+	[StoreId] int NOT NULL,
+	[ItemImageUrl] nvarchar(max) NULL,
+	[ItemName] nvarchar(max) NULL,
+    [ItemDescription] nvarchar(max) NULL,
+	[ItemCondition] nvarchar(max) NULL,
+	[DateCreated] datetime2 NOT NULL,
+	[Quantity] int NOT NULL,
+	[Price] float NOT NULL,
+    CONSTRAINT [PK_StoreItems] PRIMARY KEY ([StoreItemId]),
+    CONSTRAINT [FK_StoresItems_Stores_StoreId] FOREIGN KEY ([StoreId]) REFERENCES [Stores] ([StoreId]) ON DELETE NO ACTION
+);
+
+GO
+
 CREATE INDEX [IX_FK_WallPosts_PosterId] ON [WallPosts] ([PosterId]);
 
 GO
@@ -179,6 +208,14 @@ CREATE INDEX [IX_FK_Blogs_PosterId] ON [Blogs] ([PosterId]);
 GO
 
 CREATE INDEX [IX_FK_BlogComments_PosterId] ON [BlogComments] ([PosterId]);
+
+GO
+
+CREATE INDEX [IX_FK_Stores_StoreOwnerId] ON [Stores] ([StoreOwnerId]);
+
+GO
+
+CREATE INDEX [IX_FK_StoreItems_StoreId] ON [StoreItems] ([StoreId]);
 
 GO
 

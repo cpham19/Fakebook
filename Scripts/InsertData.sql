@@ -96,4 +96,18 @@ SET IDENTITY_INSERT BlogComments OFF
 
 GO
 
+SET IDENTITY_INSERT Stores ON
+INSERT INTO Stores (StoreId, StoreImageUrl , StoreName, StoreDescription, DateCreated, StoreOwnerId) VALUES (1, N'http://pixsector.com/cache/a35c7d7b/avd437689ef3a02914ac1.png', N'Calvin Shop', N'This is my shop!', '2019-06-19', 2);
+INSERT INTO Stores (StoreId, StoreImageUrl , StoreName, StoreDescription, DateCreated, StoreOwnerId) VALUES (2, N'https://www.pinclipart.com/picdir/middle/11-110975_available-app-store-vector-online-store-icon-png.png', N'John Shop', N'This is my shop!', '2019-06-19', 1);
+INSERT INTO Stores (StoreId, StoreImageUrl , StoreName, StoreDescription, DateCreated, StoreOwnerId) VALUES (3, N'https://image.flaticon.com/icons/png/512/123/123403.png', N'Jane Shop', N'This is my shop!', '2019-06-19', 3);
+SET IDENTITY_INSERT Stores OFF
 
+GO
+
+SET IDENTITY_INSERT StoreItems ON
+INSERT INTO StoreItems (StoreItemId, StoreId, ItemImageUrl , ItemName, ItemCondition, ItemDescription, DateCreated, Quantity, Price) VALUES (1, 1, N'https://banner2.kisspng.com/20180125/eve/kisspng-stock-photography-banana-fruit-stock-footage-berry-golden-banana-5a6a7c02aed7e5.3327397415169280027162.jpg', N'Bananas', N'Fresh', N'A fresh pair of bananas for sale!', '2019-06-19', 20, 51.24);
+INSERT INTO StoreItems (StoreItemId, StoreId, ItemImageUrl , ItemName, ItemCondition, ItemDescription, DateCreated, Quantity, Price) VALUES (2, 2, N'https://www.pngfind.com/pngs/m/176-1763979_strawberry-png-image-fruits-transparent-png.png', N'Strawberries', N'Fresh', N'A fresh pair of strawberries for sale!', '2019-06-20', 5, 24.25);
+INSERT INTO StoreItems (StoreItemId, StoreId, ItemImageUrl , ItemName, ItemCondition, ItemDescription, DateCreated, Quantity, Price) VALUES (3, 1, N'https://png.pngtree.com/png-clipart/20190117/ourmid/pngtree-summer-delicious-watermelon-summer-fruit-png-image_422603.jpg', N'Watermelon', N'Fresh', N'One fresh watermelon for sale!', '2019-06-19', 1, 2455.24);
+SET IDENTITY_INSERT Stores OFF
+
+GO

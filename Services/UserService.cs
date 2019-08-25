@@ -38,6 +38,9 @@ namespace Fakebook.Services
                 groups.Add(group);
             }
             person.Groups = groups;
+            person.Blogs = db.Blogs.Where(b => b.PosterId == id).ToList();
+            person.Stores = db.Stores.Where(store => store.StoreOwnerId == id).ToList();
+
             return person;
         }
 

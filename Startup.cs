@@ -42,6 +42,7 @@ namespace Fakebook
             services.AddScoped<AccountService>();
             services.AddScoped<GroupService>();
             services.AddScoped<BlogService>();
+            services.AddScoped<StoreService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

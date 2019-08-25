@@ -9,12 +9,18 @@ namespace Fakebook.Controllers
 {
     public class UserController : Controller
     {
-        private readonly UserService userService;
         private readonly WallService wallService;
-        public UserController(UserService userService, WallService wallService)
+        private readonly UserService userService;
+        private readonly GroupService groupService;
+        private readonly BlogService blogService;
+        private readonly StoreService storeService;
+        public UserController(WallService wallService, UserService userService, GroupService groupService, BlogService blogService, StoreService storeService)
         {
-            this.userService = userService;
             this.wallService = wallService;
+            this.userService = userService;
+            this.groupService = groupService;
+            this.blogService = blogService;
+            this.storeService = storeService;
         }
 
         [HttpGet("/User/{id}", Name = "ViewUser")]
@@ -121,6 +127,30 @@ namespace Fakebook.Controllers
             List<Person> friends = userService.GetFriends(id);
             ViewBag.ViewerId = User.Identity.GetPersonId();
             ViewBag.Friends = friends;
+            return View();
+        }
+
+        [HttpGet("/User/{id}/MyGroups", Name = "UserGroups")]
+        public IActionResult Groups(int id)
+        {
+            List<Group> groups = groupService.GetGroupsOfUser(id);
+            ViewBag.Groups = groups;
+            return View();
+        }
+
+        [HttpGet("/User/{id}/MyBlogs", Name = "UserBlogs")]
+        public IActionResult Blogs(int id)
+        {
+            List<Blog> blogs = blogService.GetBlogsOfUser(id);
+            ViewBag.Blogs = blogs;
+            return View();
+        }
+
+        [HttpGet("/User/{id}/MyStores", Name = "UserStores")]
+        public IActionResult Stores(int id)
+        {
+            List<Store> stores = storeService.GetStoresOfUser(id);
+            ViewBag.Stores = stores;
             return View();
         }
 

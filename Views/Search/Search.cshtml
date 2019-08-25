@@ -29,7 +29,7 @@
                 <img src="https://robohash.org/@person.Name" class="card-img-top" />
                 <h1 class="text-center">@person.Name</h1>
                 <p class="card-text">@person.ProfileDescription</p>
-                <a class="card-link" asp-controller="User" asp-action="Index" asp-route-id="@person.PersonId">View User</a>
+                <a class="card-link" asp-controller="User" asp-action="Index" asp-route-id="@person.PersonId">View</a>
                 @if (person.IsFriend)
                 {
                     <a class="card-link" asp-controller="Search" asp-action="RemoveFriend" asp-route-name="@person.Name" asp-route-PersonTwoId="@person.PersonId">Remove Friend</a>

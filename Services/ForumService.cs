@@ -85,6 +85,7 @@ namespace Fakebook.Services
         public Topic GetTopic(int id)
         {
             Topic topic = db.Topics.Where(t => t.TopicId == id).SingleOrDefault();
+            topic.PosterName = db.Persons.Where(p => p.PersonId == topic.PosterId).SingleOrDefault().Name;
             topic.Replies = db.Replies.Where(r => r.TopicId == id).ToList();
             foreach (var reply in topic.Replies)
             {

@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Add Store";
+}
+
+@model StoreItem
+
+<h1>Add Store</h1>
+
+<form method="post">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Name</span>
+        </div>
+        <input class="form-control" type="text" name="ItemName" placeholder="Name" value="@Model.ItemName" required />
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Condition</span>
+        </div>
+        <input class="form-control" type="text" name="ItemCondition" placeholder="Condition" value="@Model.ItemCondition" required />
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Image Url</span>
+        </div>
+        <input class="form-control" type="text" name="ItemImageUrl" placeholder="Image Url" value="@Model.ItemImageUrl" required />
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Description</span>
+        </div>
+        <input class="form-control" type="text" name="ItemDescription" placeholder="Description" value="@Model.ItemDescription" required />
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Price</span>
+        </div>
+        <input class="form-control" type="text" name="Price" placeholder="Price" value="@Model.Price" required />
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Quantity</span>
+        </div>
+        <input class="form-control" type="text" name="Quantity" placeholder="Quantity" value="@Model.Quantity" required />
+    </div>
+
+    <br />
+    <button>Post</button>
+</form>

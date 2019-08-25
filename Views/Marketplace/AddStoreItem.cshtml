@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "Add Store";
+}
+
+<h1>Add Store</h1>
+
+<form method="post">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Name</span>
+        </div>
+        <input class="form-control" type="text" name="ItemName" placeholder="Name" required />
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Condition</span>
+        </div>
+        <input class="form-control" type="text" name="ItemCondition" placeholder="Condition" required />
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Image Url</span>
+        </div>
+        <input class="form-control" type="text" name="ItemImageUrl" placeholder="Image Url" required />
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Description</span>
+        </div>
+        <input class="form-control" type="text" name="ItemDescription" placeholder="Description" required />
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Price</span>
+        </div>
+        <input class="form-control" type="text" name="Price" placeholder="Price" required />
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Quantity</span>
+        </div>
+        <input class="form-control" type="text" name="Quantity" placeholder="Quantity" required />
+    </div>
+
+    <br />
+    <button>Post</button>
+</form>

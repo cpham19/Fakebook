@@ -4,7 +4,6 @@
 @model ReplyPost
 
 <h1>Editting Reply #@Model.ReplyPostId</h1>
-<a asp-controller="User" asp-action="Index" asp-route-name="@ViewBag.Name">Back</a>
 <form method="post" asp-route-ReplyPostId="@Model.ReplyPostId">
     <div class="input-group mb-3">
         <div class="input-group-prepend">

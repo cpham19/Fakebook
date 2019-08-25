@@ -4,7 +4,6 @@
 @model WallPost
 
 <h1>Editting Wall Post #@Model.WallPostId</h1>
-<a asp-controller="Group" asp-action="ViewGroup" asp-route-GroupId="@ViewBag.GroupId">Back</a>
 <form method="post" asp-route-WallPostId="@Model.WallPostId">
     <div class="input-group mb-3">
         <div class="input-group-prepend">

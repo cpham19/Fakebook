@@ -51,6 +51,11 @@ namespace Fakebook.Services
             return blogs;
         }
 
+        public List<Blog> GetBlogsOfUser(int PersonId)
+        {
+            return db.Blogs.Where(b => b.PosterId == PersonId).ToList();
+        }
+
         public void AddBlog(Blog b)
         {
             db.Blogs.Add(b);
@@ -69,6 +74,11 @@ namespace Fakebook.Services
         public void DeleteBlog(int BlogId)
         {
             Blog blog = this.GetBlog(BlogId);
+            List<BlogComment> blogComments = db.BlogComments.Where(bc => bc.BlogId == BlogId).ToList();
+            foreach (var comment in blogComments)
+            {
+                db.BlogComments.Remove(comment);
+            }
             db.Blogs.Remove(blog);
             db.SaveChanges();
         }

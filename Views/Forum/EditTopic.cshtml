@@ -4,7 +4,6 @@
 @model Topic
 
 <h1>Editting Topic #@Model.TopicId</h1>
-<a asp-action="ViewTopic" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@ViewBag.TopicName">Back</a>
 <form method="post" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@ViewBag.TopicName">
     <div class="input-group mb-3">
         <div class="input-group-prepend">

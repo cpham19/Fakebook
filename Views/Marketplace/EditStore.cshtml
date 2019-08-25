@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Add Store";
+}
+
+@model Store
+
+<h1>Add Store</h1>
+
+<form method="post">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Store Name</span>
+        </div>
+        <input class="form-control" type="text" name="StoreName" placeholder="Name" value="@Model.StoreName" required/>
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Store Description</span>
+        </div>
+        <input class="form-control" type="text" name="StoreDescription" placeholder="Description" value="@Model.StoreDescription" required/>
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Store Image Url</span>
+        </div>
+        <input class="form-control" type="text" name="StoreImageUrl" placeholder="Image Url" value="@Model.StoreImageUrl" required/>
+    </div>
+
+    <br />
+    <button>Edit</button>
+</form>
