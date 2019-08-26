@@ -31,6 +31,8 @@ namespace Fakebook.Models
         public double Price { get; set; }
         public int Quantity { get; set; }
         [NotMapped]
+        public int PosterId { get; set; }
+        [NotMapped]
         public List<Review> Reviews { get; set; } = new List<Review>();
     }
 
@@ -43,5 +45,25 @@ namespace Fakebook.Models
         public DateTime DatePosted { get; set; }
         [NotMapped]
         public string PosterName { get; set; }
+    }
+
+    public class Cart
+    {
+        public List<CartItem> Items { get; set; } = new List<CartItem>();
+        public double Total { get; set; }
+    }
+
+    public class CartItem
+    {
+        public int CartItemId { get; set; }
+        [NotMapped]
+        public string CartItemName { get; set; }
+        public int StoreItemId { get; set; }
+        public int PersonId { get; set; }
+        [NotMapped]
+        public int StoreId { get; set; }
+        [NotMapped]
+        public double CartItemPrice { get; set; }
+        public int CartItemQuantity { get; set; }
     }
 }

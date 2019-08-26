@@ -9,8 +9,11 @@
     </div>
 </div>
 
-<a asp-controller="Marketplace" asp-action="AddStore">Add Store</a>
-<br/><br/><br/>
+<a asp-controller="Marketplace" asp-action="AddStore">Add Store</a><br/>
+<a asp-controller="Marketplace" asp-action="Cart" class="btn btn-info">View Cart (@ViewBag.Cart.Items.Count)</a>
+<br />
+<br />
+<br />
 
 <!-- Page Content -->
 <div class="container">
@@ -21,7 +24,7 @@
             <div class="col-lg-4 col-sm-6 portfolio-item">
                 <div class="card">
                     <img class="card-img-top" src="@store.StoreImageUrl" width="740px" height="300px" alt="">
-                    <hr/>
+                    <hr />
                     <div class="card-body">
                         <h4 class="card-title">
                             <a asp-controller="Marketplace" asp-action="Store" asp-route-StoreId="@store.StoreId">@store.StoreName</a>

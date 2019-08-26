@@ -29,5 +29,6 @@ namespace Fakebook.Services
         public DbSet<Store> Stores { get; set; }
         public DbSet<StoreItem> StoreItems { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
     }
 }

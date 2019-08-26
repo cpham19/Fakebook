@@ -3,12 +3,16 @@
 }
 @model StoreItem
 
+<div>
+    <a asp-controller="Marketplace" asp-action="Cart" class="btn btn-info">View Cart (@ViewBag.Cart.Items.Count)</a>
+</div>
+
 <!-- Page Content -->
 <div class="container">
 
     <div class="row">
 
-        <div class="col-lg-9">
+        <div class="col-lg-8">
 
             <div class="card mt-4">
                 <img class="card-img-top img-fluid" src="@Model.ItemImageUrl" width="600px" height="400px" alt="">
@@ -18,12 +22,27 @@
                     <h4>Price: $@Model.Price</h4>
                     <h4>Quantity: @Model.Quantity</h4>
                     <p class="card-text">@Model.ItemDescription</p>
-                    <a asp-controller="Marketplace" asp-action="EditStoreItem" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@Model.StoreItemId">Edit</a>
-                    <a asp-controller="Marketplace" asp-action="DeleteStoreItem" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@Model.StoreItemId">Delete</a>
+                    <form>
+                        <select class="selectpicker" name="Quantity">
+                            @for (int i = 1; i <= Model.Quantity; i++)
+                            {
+                                <option>@i</option>
+                            }
+                        </select>
+                        <input name="StoreId" value="@Model.StoreId" hidden />
+                        <input name="StoreItemId" value="@Model.StoreItemId" hidden />
+                        <button type="submit" class="btn bg-success" asp-controller="Marketplace" asp-action="AddToCart">Add To Cart</button>
+
+                    </form>
+                    <br />
+                    @if (ViewBag.PersonId == Model.PosterId)
+                    {
+                        <a asp-controller="Marketplace" asp-action="EditStoreItem" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@Model.StoreItemId">Edit</a>
+                        <a asp-controller="Marketplace" asp-action="DeleteStoreItem" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@Model.StoreItemId">Delete</a>
+                    }
                 </div>
             </div>
             <!-- /.card -->
-
             <!-- Comments/Reviews -->
             <div class="card card-outline-secondary my-4">
                 <div class="card-header">
@@ -35,7 +54,8 @@
                         <p>@review.Description</p>
                         <small class="text-muted">
                             Posted by <a asp-controller="User" asp-action="Index" asp-route-id="@review.PosterId">@review.PosterName</a> on @review.DatePosted
-                            @if (ViewBag.PersonId == review.PosterId) {
+                            @if (ViewBag.PersonId == review.PosterId)
+                            {
                                 <a asp-controller="Marketplace" asp-action="EditReview" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@review.StoreItemId" asp-route-ReviewId="@review.ReviewId">Edit</a>
                                 <a asp-controller="Marketplace" asp-action="DeleteReview" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@review.StoreItemId" asp-route-ReviewId="@review.ReviewId">Delete</a>
                             }
@@ -60,7 +80,6 @@
 
         </div>
         <!-- /.col-lg-9 -->
-
     </div>
 
 </div>

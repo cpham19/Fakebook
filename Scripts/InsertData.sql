@@ -119,3 +119,9 @@ INSERT INTO Reviews (ReviewId, StoreItemId, PosterId, Description, DatePosted) V
 SET IDENTITY_INSERT Reviews OFF
 
 GO
+
+SET IDENTITY_INSERT CartItems ON
+INSERT INTO CartItems (CartItemId, PersonId, StoreItemId, CartItemQuantity) VALUES (1, 2, 2, 10);
+SET IDENTITY_INSERT CartItems OFF
+
+GO

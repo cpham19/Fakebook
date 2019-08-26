@@ -22,6 +22,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Marketplace", Name = "MarketplaceIndex")]
         public IActionResult Index()
         {
+            ViewBag.Cart = storeService.GetCart(User.Identity.GetPersonId());
             ViewBag.Stores = storeService.GetStores();
             return View();
         }
@@ -30,6 +31,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Marketplace/store/{StoreId}", Name = "StoreIndex")]
         public IActionResult Store(int StoreId)
         {
+            ViewBag.Cart = storeService.GetCart(User.Identity.GetPersonId());
             ViewBag.PersonId = User.Identity.GetPersonId();
             ViewBag.Store = storeService.GetStore(StoreId);
             return View();
@@ -80,6 +82,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Marketplace/store/{StoreId}/storeitem/{StoreItemId}", Name = "ViewStoreItem")]
         public IActionResult StoreItem(int StoreId, int StoreItemId)
         {
+            ViewBag.Cart = storeService.GetCart(User.Identity.GetPersonId());
             ViewBag.PersonId = User.Identity.GetPersonId();
             StoreItem storeItem = storeService.GetStoreItem(StoreItemId);
             return View(storeItem);
@@ -158,5 +161,30 @@ namespace Fakebook.Controllers
             return RedirectToAction("StoreItem", new { StoreId = StoreId, StoreItemId = StoreItemId });
         }
 
+        // View Cart
+        [HttpGet("/Marketplace/cart", Name = "Cart")]
+        public IActionResult Cart()
+        {
+            Cart cart = storeService.GetCart(User.Identity.GetPersonId());
+            return View(cart);
+        }
+
+        public IActionResult DeleteCartItem(int CartItemId)
+        {
+            storeService.DeleteCartItem(CartItemId);
+            return RedirectToAction("Cart");
+        }
+
+        public IActionResult AddToCart(int StoreId, int StoreItemId, int Quantity)
+        {
+            CartItem ci = new CartItem();
+            ci.StoreId = StoreId;
+            ci.StoreItemId = StoreItemId;
+            ci.CartItemQuantity = Quantity;
+            ci.PersonId = User.Identity.GetPersonId();
+
+            storeService.AddToCart(ci);
+            return RedirectToAction("StoreItem", new { StoreId = StoreId, StoreItemId = StoreItemId });
+        }
     }
 }

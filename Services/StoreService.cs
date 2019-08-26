@@ -27,6 +27,11 @@ namespace Fakebook.Services
             {
                 review.PosterName = db.Persons.Where(p => p.PersonId == review.PosterId).SingleOrDefault().Name;
             }
+
+            // Get Store Owner Id
+            Store store = db.Stores.Where(s => s.StoreId == storeItem.StoreId).SingleOrDefault();
+            storeItem.PosterId = store.StoreOwnerId;
+
             return storeItem;
         }
 
@@ -163,6 +168,51 @@ namespace Fakebook.Services
         {
             Review review = db.Reviews.Where(rev => rev.ReviewId == r.ReviewId).SingleOrDefault();
             review.Description = r.Description;
+            db.SaveChanges();
+        }
+
+        public Cart GetCart(int PersonId)
+        {
+            Cart cart = new Cart();
+            List<CartItem> cartitems = db.CartItems.Where(ci => ci.PersonId == PersonId).ToList();
+            double total = 0.00;
+            foreach(var item in cartitems)
+            {
+                StoreItem si = db.StoreItems.Where(s => s.StoreItemId == item.StoreItemId).SingleOrDefault();
+                item.StoreId = si.StoreId;
+                item.CartItemName = si.ItemName;
+                item.CartItemPrice = float.Parse(Math.Round(si.Price, 2).ToString());
+                total += item.CartItemPrice * item.CartItemQuantity;
+            }
+
+            cart.Total = Math.Truncate(total * 100) / 100; ;
+            cart.Items = cartitems;
+
+            return cart;
+        }
+
+        public void AddToCart(CartItem cartitem)
+        {
+            // Check if item is in cart already
+            CartItem c = db.CartItems.Where(ci => ci.StoreItemId == cartitem.StoreItemId && ci.PersonId == cartitem.PersonId).SingleOrDefault();
+
+            // Add Item to cart
+            if (c == null)
+            {
+                db.CartItems.Add(cartitem);
+            }
+            // Just change the quantity (if user added 20 items, and he decides to add 10 more, then there should be 30 items in the card
+            else
+            {
+                c.CartItemQuantity += cartitem.CartItemQuantity;
+            }
+            db.SaveChanges();
+        }
+
+        public void DeleteCartItem(int CartItemId)
+        {
+            CartItem ci = db.CartItems.Where(c => c.CartItemId == CartItemId).SingleOrDefault();
+            db.CartItems.Remove(ci);
             db.SaveChanges();
         }
     }

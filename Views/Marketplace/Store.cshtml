@@ -7,10 +7,18 @@
     </div>
 </div>
 
+<div>
+    <a asp-controller="Marketplace" asp-action="Cart" class="btn btn-info">View Cart (@ViewBag.Cart.Items.Count)</a>
+</div>
+
+<br/>
+
 @if (ViewBag.Store.StoreOwnerId == ViewBag.PersonId)
 {
-    <a asp-controller="Marketplace" asp-action="AddStoreItem" asp-route-StoreId="@ViewBag.Store.StoreId">Add Item</a><br/>
-    <a asp-controller="Marketplace" asp-action="EditStore" asp-route-StoreId="@ViewBag.Store.StoreId">Edit Store</a><br/>
+    <a asp-controller="Marketplace" asp-action="AddStoreItem" asp-route-StoreId="@ViewBag.Store.StoreId">Add Item</a>
+    <br />
+    <a asp-controller="Marketplace" asp-action="EditStore" asp-route-StoreId="@ViewBag.Store.StoreId">Edit Store</a>
+    <br />
     <a asp-controller="Marketplace" asp-action="DeleteStore" asp-route-StoreId="@ViewBag.Store.StoreId">Delete Store</a>
 }
 
