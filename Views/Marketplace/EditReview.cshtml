@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewData["Title"] = "EditReview";
+}
+@model Review
+
+<h1>Edit Review</h1>
+
+<div class="card card-outline-secondary my-4">
+    <div class="card-body">
+        <form method="post" asp-controller="Marketplace" asp-action="EditReview">
+            <div class="form-group">
+                <input type="text" name="StoreId" class="form-control" value="@ViewBag.StoreId" hidden />
+                <input type="text" name="StoreItemId" class="form-control" value="@Model.StoreItemId" hidden />
+                <textarea class="form-control" name="Description" placeholder="Description" rows="3">@Model.Description</textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Edit</button>
+        </form>
+    </div>
+</div>

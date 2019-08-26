@@ -11,11 +11,11 @@
         <div class="col-lg-9">
 
             <div class="card mt-4">
-                <img class="card-img-top img-fluid" src="@Model.ItemImageUrl" width="800px" height="400px" alt="">
+                <img class="card-img-top img-fluid" src="@Model.ItemImageUrl" width="600px" height="400px" alt="">
                 <div class="card-body">
                     <h1 class="card-title">@Model.ItemName</h1>
                     <h4>Condition: @Model.ItemCondition</h4>
-                    <h4>Price: @Model.Price</h4>
+                    <h4>Price: $@Model.Price</h4>
                     <h4>Quantity: @Model.Quantity</h4>
                     <p class="card-text">@Model.ItemDescription</p>
                     <a asp-controller="Marketplace" asp-action="EditStoreItem" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@Model.StoreItemId">Edit</a>
@@ -30,16 +30,30 @@
                     Product Reviews
                 </div>
                 <div class="card-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                    <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-                    <hr>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                    <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-                    <hr>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                    <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-                    <hr>
-                    <a href="#" class="btn btn-success">Leave a Review</a>
+                    @foreach (var review in Model.Reviews)
+                    {
+                        <p>@review.Description</p>
+                        <small class="text-muted">
+                            Posted by <a asp-controller="User" asp-action="Index" asp-route-id="@review.PosterId">@review.PosterName</a> on @review.DatePosted
+                            @if (ViewBag.PersonId == review.PosterId) {
+                                <a asp-controller="Marketplace" asp-action="EditReview" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@review.StoreItemId" asp-route-ReviewId="@review.ReviewId">Edit</a>
+                                <a asp-controller="Marketplace" asp-action="DeleteReview" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@review.StoreItemId" asp-route-ReviewId="@review.ReviewId">Delete</a>
+                            }
+                        </small>
+                        <hr>
+                    }
+                </div>
+            </div>
+            <div class="card card-outline-secondary my-4">
+                <div class="card-body">
+                    <form method="post" asp-controller="Marketplace" asp-action="AddReview">
+                        <div class="form-group">
+                            <input type="text" name="StoreId" class="form-control" value="@Model.StoreId" hidden />
+                            <input type="text" name="StoreItemId" class="form-control" value="@Model.StoreItemId" hidden />
+                            <textarea class="form-control" name="Description" placeholder="Description" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success">Leave a review</button>
+                    </form>
                 </div>
             </div>
             <!-- /.card -->

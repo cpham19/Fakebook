@@ -154,6 +154,14 @@ namespace Fakebook.Controllers
             return View();
         }
 
+        [HttpGet("/User/{id}/MyReviews", Name = "UserReviews")]
+        public IActionResult Reviews(int id)
+        {
+            List<StoreItem> itemsReviewed = storeService.GetReviewsOfUser(id);
+            ViewBag.ItemsReviewed = itemsReviewed;
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

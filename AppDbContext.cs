@@ -28,5 +28,6 @@ namespace Fakebook.Services
         public DbSet<BlogComment> BlogComments { get; set; }
         public DbSet<Store> Stores { get; set; }
         public DbSet<StoreItem> StoreItems { get; set; }
+        public DbSet<Review> Reviews { get; set; }
     }
 }

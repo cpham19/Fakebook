@@ -40,6 +40,7 @@ namespace Fakebook.Services
             person.Groups = groups;
             person.Blogs = db.Blogs.Where(b => b.PosterId == id).ToList();
             person.Stores = db.Stores.Where(store => store.StoreOwnerId == id).ToList();
+            person.Reviews = db.Reviews.Where(review => review.PosterId == id).ToList();
 
             return person;
         }

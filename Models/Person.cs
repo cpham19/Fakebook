@@ -27,6 +27,10 @@ namespace Fakebook.Models
         public List<Blog> Blogs { get; set; } = new List<Blog>();
         [NotMapped]
         public List<Store> Stores { get; set; } = new List<Store>();
+        [NotMapped]
+        public List<Review> Reviews { get; set; } = new List<Review>();
+        [NotMapped]
+        public List<StoreItem> ItemsReviewed{ get; set; } = new List<StoreItem>();
     }
 
     public class Friend

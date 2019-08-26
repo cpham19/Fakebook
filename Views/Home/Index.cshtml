@@ -20,9 +20,10 @@
             <h5 class="card-title">About Me <a class="btn btn-sm btn-primary" asp-controller="Home" asp-action="Edit">Edit</a></h5>
             <p class="card-text">@person.ProfileDescription</p>
             <a asp-controller="Home" asp-action="Friends">Friends (@person.Friends.Count)</a><br />
-            <a asp-controller="Home" asp-action="Groups">Groups (@person.Groups.Count)</a><br/>
-            <a asp-controller="Home" asp-action="Blogs">Blogs (@person.Blogs.Count)</a><br/>
-            <a asp-controller="Home" asp-action="Stores">Stores (@person.Stores.Count)</a>
+            <a asp-controller="Home" asp-action="Groups">Groups (@person.Groups.Count)</a><br />
+            <a asp-controller="Home" asp-action="Blogs">Blogs (@person.Blogs.Count)</a><br />
+            <a asp-controller="Home" asp-action="Stores">Stores (@person.Stores.Count)</a><br />
+            <a asp-controller="Home" asp-action="Reviews">Reviews (@person.Reviews.Count)</a>
         </div>
     </div>
     <!-- Wall Entries Column -->

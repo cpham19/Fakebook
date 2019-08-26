@@ -30,5 +30,18 @@ namespace Fakebook.Models
         public DateTime DateCreated { get; set; }
         public double Price { get; set; }
         public int Quantity { get; set; }
+        [NotMapped]
+        public List<Review> Reviews { get; set; } = new List<Review>();
+    }
+
+    public class Review
+    {
+        public int ReviewId { get; set; }
+        public int StoreItemId { get; set; }
+        public int PosterId { get; set; }
+        public string Description { get; set; }
+        public DateTime DatePosted { get; set; }
+        [NotMapped]
+        public string PosterName { get; set; }
     }
 }

@@ -175,6 +175,14 @@ namespace Fakebook.Controllers
             return View();
         }
 
+        [HttpGet("/MyReviews", Name = "MyReviews")]
+        public IActionResult Reviews()
+        {
+            List<StoreItem> itemsReviewed = storeService.GetReviewsOfUser(User.Identity.GetPersonId());
+            ViewBag.ItemsReviewed = itemsReviewed;
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

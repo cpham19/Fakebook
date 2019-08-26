@@ -175,6 +175,19 @@ CREATE TABLE [StoreItems] (
 
 GO
 
+CREATE TABLE [Reviews] (
+    [ReviewId] int NOT NULL IDENTITY,
+	[StoreItemId] int NOT NULL,
+	[PosterId] int NOT NULL,
+    [Description] nvarchar(max) NULL,
+	[DatePosted] datetime2 NOT NULL,
+    CONSTRAINT [PK_Reviews] PRIMARY KEY ([ReviewId]),
+    CONSTRAINT [FK_Reviews_StoreItems_StoreItemId] FOREIGN KEY ([StoreItemId]) REFERENCES [StoreItems] ([StoreItemId]) ON DELETE NO ACTION,
+	CONSTRAINT [FK_Reviews_Persons_PosterId] FOREIGN KEY ([PosterId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION,
+);
+
+GO
+
 CREATE INDEX [IX_FK_WallPosts_PosterId] ON [WallPosts] ([PosterId]);
 
 GO
@@ -216,6 +229,11 @@ CREATE INDEX [IX_FK_Stores_StoreOwnerId] ON [Stores] ([StoreOwnerId]);
 GO
 
 CREATE INDEX [IX_FK_StoreItems_StoreId] ON [StoreItems] ([StoreId]);
+
+GO
+
+CREATE INDEX [IX_FK_Reviews_StoreItemId] ON [Reviews] ([StoreItemId]);
+CREATE INDEX [IX_FK_Reviews_PosterId] ON [Reviews] ([PosterId]);
 
 GO
 

@@ -2,6 +2,12 @@
     ViewData["Title"] = "Read Blog";
 }
 
+<style>
+    .media {
+        border: solid 5px;
+    }
+</style>
+
 @model Blog
 
  <a asp-controller="Blog" asp-action="Index">Back</a>
@@ -74,6 +80,7 @@
                             <a asp-controller="Blog" asp-action="EditBlogComment" asp-route-BlogId="@comment.BlogId" asp-route-BlogCommentId="@comment.BlogCommentId">Edit</a>
                             <a asp-controller="Blog" asp-action="DeleteBlogComment" asp-route-BlogId="@comment.BlogId" asp-route-BlogCommentId="@comment.BlogCommentId">Delete</a>
                         }
+                        <hr/>
                     </div>
                 </div>
             }

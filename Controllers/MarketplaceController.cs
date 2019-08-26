@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Fakebook.Models;
@@ -79,6 +80,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Marketplace/store/{StoreId}/storeitem/{StoreItemId}", Name = "ViewStoreItem")]
         public IActionResult StoreItem(int StoreId, int StoreItemId)
         {
+            ViewBag.PersonId = User.Identity.GetPersonId();
             StoreItem storeItem = storeService.GetStoreItem(StoreItemId);
             return View(storeItem);
         }
@@ -124,5 +126,37 @@ namespace Fakebook.Controllers
             storeService.DeleteStoreItem(StoreItemId);
             return RedirectToAction("Store", new { StoreId = StoreId});
         }
+
+        public IActionResult AddReview(int StoreId, int StoreItemId, Review r)
+        {
+            r.StoreItemId = StoreItemId;
+            r.PosterId = User.Identity.GetPersonId();
+            r.DatePosted = DateTime.Now;
+            storeService.AddReview(r);
+            return RedirectToAction("StoreItem", new { StoreId = StoreId, StoreItemId = StoreItemId });
+        }
+
+        // Edit Review
+        [HttpGet("/Marketplace/store/{StoreId}/storeitem/{StoreItemId}/review/{ReviewId}/EditReview", Name = "EditReview")]
+        public IActionResult EditReview(int StoreId, int StoreItemId, int ReviewId)
+        {
+            Review review = storeService.GetReview(ReviewId);
+            return View(review);
+        }
+
+        // Edit Review
+        [HttpPost("/Marketplace/store/{StoreId}/storeitem/{StoreItemId}/review/{ReviewId}/EditReview", Name = "SubmitEditReview")]
+        public IActionResult EditReview(int StoreId, int StoreItemId, int ReviewId, Review r)
+        {
+            storeService.EditReview(r);
+            return RedirectToAction("StoreItem", new { StoreId = StoreId, StoreItemId = StoreItemId });
+        }
+
+        public IActionResult DeleteReview(int StoreId, int StoreItemId, int ReviewId)
+        {
+            storeService.DeleteReview(ReviewId);
+            return RedirectToAction("StoreItem", new { StoreId = StoreId, StoreItemId = StoreItemId });
+        }
+
     }
 }

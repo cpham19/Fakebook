@@ -21,7 +21,13 @@ namespace Fakebook.Services
 
         public StoreItem GetStoreItem(int StoreItemId)
         {
-            return db.StoreItems.Where(st => st.StoreItemId == StoreItemId).SingleOrDefault();
+            StoreItem storeItem = db.StoreItems.Where(st => st.StoreItemId == StoreItemId).SingleOrDefault();
+            storeItem.Reviews = db.Reviews.Where(review => review.StoreItemId == storeItem.StoreItemId).ToList();
+            foreach (var review in storeItem.Reviews)
+            {
+                review.PosterName = db.Persons.Where(p => p.PersonId == review.PosterId).SingleOrDefault().Name;
+            }
+            return storeItem;
         }
 
         public Store GetStore(int StoreId)
@@ -36,7 +42,7 @@ namespace Fakebook.Services
         public List<Store> GetStores()
         {
             List<Store> stores = db.Stores.OrderBy(store => store.StoreId).ToList();
-            foreach(var store in stores)
+            foreach (var store in stores)
             {
                 Person person = db.Persons.Where(p => p.PersonId == store.StoreOwnerId).SingleOrDefault();
                 store.StoreOwnerName = person.Name;
@@ -70,8 +76,13 @@ namespace Fakebook.Services
         public void DeleteStore(int StoreId)
         {
             Store store = this.GetStore(StoreId);
-            foreach(var storeitem in store.Items)
+            foreach (var storeitem in store.Items)
             {
+                List<Review> reviews = db.Reviews.Where(review => review.StoreItemId == storeitem.StoreItemId).ToList();
+                foreach (var review in reviews)
+                {
+                    db.Reviews.Remove(review);
+                }
                 db.StoreItems.Remove(storeitem);
             }
 
@@ -100,7 +111,58 @@ namespace Fakebook.Services
         public void DeleteStoreItem(int StoreItemId)
         {
             StoreItem st = this.GetStoreItem(StoreItemId);
+            List<Review> reviews = db.Reviews.Where(review => review.StoreItemId == StoreItemId).ToList();
+            foreach (var review in reviews)
+            {
+                db.Reviews.Remove(review);
+            }
             db.StoreItems.Remove(st);
+            db.SaveChanges();
+        }
+
+        public Review GetReview(int ReviewId)
+        {
+            return db.Reviews.Where(r => r.ReviewId == ReviewId).SingleOrDefault();
+        }
+
+        public List<StoreItem> GetReviewsOfUser(int PersonId)
+        {
+            List<Review> reviews = db.Reviews.Where(review => review.PosterId == PersonId).ToList();
+            List<StoreItem> itemsReviewed = new List<StoreItem>();
+            foreach (var review in reviews)
+            {
+                StoreItem si = db.StoreItems.Where(item => item.StoreItemId == review.StoreItemId).SingleOrDefault();
+                if (!itemsReviewed.Contains(si))
+                {
+                    itemsReviewed.Add(si);
+                }
+            }
+
+            foreach (var itemReview in itemsReviewed)
+            {
+                itemReview.Reviews = db.Reviews.Where(review => review.PosterId == PersonId).ToList();
+            }
+
+            return itemsReviewed;
+        }
+
+        public void AddReview(Review review)
+        {
+            db.Reviews.Add(review);
+            db.SaveChanges();
+        }
+
+        public void DeleteReview(int ReviewId)
+        {
+            Review review = db.Reviews.Where(r => r.ReviewId == ReviewId).SingleOrDefault();
+            db.Reviews.Remove(review);
+            db.SaveChanges();
+        }
+
+        public void EditReview(Review r)
+        {
+            Review review = db.Reviews.Where(rev => rev.ReviewId == r.ReviewId).SingleOrDefault();
+            review.Description = r.Description;
             db.SaveChanges();
         }
     }

@@ -23,16 +23,13 @@
                 {
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="card h-100">
-                            <a href="#"><img class="card-img-top" src="@item.ItemImageUrl" width="740px" height="300px" alt=""></a>
+                            <img class="card-img-top" src="@item.ItemImageUrl" width="740px" height="300px" alt="">
                             <div class="card-body">
                                 <h4 class="card-title">
                                     <a asp-controller="Marketplace" asp-action="StoreItem" asp-route-StoreId="@item.StoreId" asp-route-StoreItemId="@item.StoreItemId">@item.ItemName</a>
                                 </h4>
                                 <h5></h5>
                                 <p class="card-text">@item.ItemDescription</p>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
                             </div>
                         </div>
                     </div>
