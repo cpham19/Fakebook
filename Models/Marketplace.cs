@@ -59,6 +59,8 @@ namespace Fakebook.Models
         [NotMapped]
         public string StoreName { get; set; }
         [NotMapped]
+        public string OrderItemImageUrl { get; set; }
+        [NotMapped]
         public string OrderItemName { get; set; }
     }
 
@@ -67,6 +69,7 @@ namespace Fakebook.Models
         public int OrderId { get; set; }
         public int PersonId { get; set; }
         public int OrderStatus { get; set; }
+        public DateTime OrderDate { get; set; }
         [NotMapped]
         public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
         [NotMapped]

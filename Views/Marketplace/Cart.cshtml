@@ -9,9 +9,17 @@
     .lead {
         text-align: right;
     }
+
+    .btn-info {
+        float:right;
+    }
 </style>
 
-<h1>Shopping Cart</h1>
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-3">Shopping Cart</h1>
+    </div>
+</div>
 
 <table class="table">
     <thead>
@@ -29,10 +37,14 @@
                 <td>
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">
+                            <img src="@item.OrderItemImageUrl" width="100px" height="100px"/>
                             <a asp-controller="Marketplace" asp-action="StoreItem" asp-route-StoreId="@item.StoreId" asp-route-OrderItemId="@item.StoreItemId">@item.OrderItemName</a>
                         </h5>
                     </div>
-                    <small><a asp-controller="Marketplace" asp-action="DeleteOrderItem" asp-route-OrderItemId="@item.OrderItemId">Delete</a></small>
+                    <small>
+                        Sold by <a asp-controller="Marketplace" asp-action="Store" asp-route-StoreId="@item.StoreId">@item.StoreName</a><br/>
+                        <a asp-controller="Marketplace" asp-action="DeleteOrderItem" asp-route-OrderItemId="@item.OrderItemId">Delete</a>
+                    </small>
                 </td>
                 <td>$@item.OrderItemPrice</td>
                 <td>@item.OrderItemQuantity</td>
@@ -43,7 +55,6 @@
 <hr />
 
 <p class="lead">
-    TOTAL: $@Model.Total
+    TOTAL: $@Model.Total<br/>
+    <a class="btn btn-info" asp-controller="Marketplace" asp-action="Checkout" asp-route-OrderId="@Model.OrderId">Checkout</a>
 </p>
-
-<a class="btn btn-info lead" asp-controller="Marketplace" asp-action="Checkout" asp-route-OrderId="@Model.OrderId">Checkout</a>

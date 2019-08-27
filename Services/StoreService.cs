@@ -125,6 +125,17 @@ namespace Fakebook.Services
             db.SaveChanges();
         }
 
+        public bool CheckUserHasStore(int PersonId)
+        {
+            Store store = db.Stores.Where(s => s.StoreOwnerId == PersonId).SingleOrDefault();
+
+            if (store == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
         public bool checkStoreOwner(int StoreId, int PersonId)
         {
             Store store = db.Stores.Where(s => s.StoreId == StoreId && s.StoreOwnerId == PersonId).SingleOrDefault();
@@ -186,6 +197,15 @@ namespace Fakebook.Services
         public Order GetCart(int PersonId)
         {
             Order cart = db.Orders.Where(order => order.PersonId == PersonId && order.OrderStatus == 0).SingleOrDefault();
+            if(cart == null)
+            {
+                Order neworder = new Order();
+                neworder.PersonId = PersonId;
+                db.Orders.Add(neworder);
+                db.SaveChanges();
+                cart = db.Orders.Where(o => o.PersonId == PersonId && o.OrderStatus == 0).SingleOrDefault();
+            }
+
             List<OrderItem> orderitems = db.OrderItems.Where(item => item.OrderId == cart.OrderId).ToList();
             double total = 0.00;
             foreach(var item in orderitems)
@@ -195,7 +215,8 @@ namespace Fakebook.Services
                 item.StoreId = si.StoreId;
                 item.StoreName = store.StoreName;
                 item.OrderItemName = si.ItemName;
-                item.OrderItemPrice = float.Parse(Math.Round(si.Price, 2).ToString());
+                item.OrderItemImageUrl = si.ItemImageUrl;
+                item.OrderItemPrice = double.Parse(Math.Round(si.Price, 2).ToString());
                 total += item.OrderItemPrice * item.OrderItemQuantity;
             }
 
@@ -249,6 +270,7 @@ namespace Fakebook.Services
         {
             Order order = db.Orders.Where(o => o.OrderId == OrderId && o.OrderStatus == 0).SingleOrDefault();
             order.OrderStatus = 1;
+            order.OrderDate = DateTime.Now;
 
             List<OrderItem> orderitems = db.OrderItems.Where(oi => oi.OrderId == order.OrderId).ToList();
             foreach(var item in orderitems)
@@ -263,6 +285,29 @@ namespace Fakebook.Services
             neworder.PersonId = PersonId;
             db.Orders.Add(neworder);
             db.SaveChanges();
+        }
+
+        public List<Order> GetOrderHistory(int PersonId)
+        {
+            List<Order> orders = db.Orders.Where(o => o.PersonId == PersonId && o.OrderStatus == 1).OrderBy(o => o.OrderDate).ToList();
+            foreach(var order in orders)
+            {
+                order.OrderItems = db.OrderItems.Where(oi => oi.OrderId == order.OrderId).ToList();
+                double total = 0.00;
+                foreach(var oi in order.OrderItems)
+                {
+                    StoreItem si = db.StoreItems.Where(s => s.StoreItemId == oi.StoreItemId).SingleOrDefault();
+                    Store store = db.Stores.Where(st => st.StoreId == si.StoreId).SingleOrDefault();
+                    oi.StoreId = si.StoreId;
+                    oi.StoreName = store.StoreName;
+                    oi.OrderItemName = si.ItemName;
+                    oi.OrderItemImageUrl = si.ItemImageUrl;
+                    total += oi.OrderItemPrice * oi.OrderItemQuantity;
+                }
+                order.Total = total;
+            }
+
+            return orders;
         }
     }
 }

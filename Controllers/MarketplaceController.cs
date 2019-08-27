@@ -22,6 +22,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Marketplace", Name = "MarketplaceIndex")]
         public IActionResult Index()
         {
+            ViewBag.HasStore = storeService.CheckUserHasStore(User.Identity.GetPersonId());
             ViewBag.Cart = storeService.GetCart(User.Identity.GetPersonId());
             ViewBag.Stores = storeService.GetStores();
             return View();
@@ -168,6 +169,14 @@ namespace Fakebook.Controllers
         {
             Order cart = storeService.GetCart(User.Identity.GetPersonId());
             return View(cart);
+        }
+
+        // View Order History
+        [HttpGet("/Marketplace/orderhistory", Name = "OrderHistory")]
+        public IActionResult OrderHistory()
+        {
+            List<Order> orderhistory = storeService.GetOrderHistory(User.Identity.GetPersonId());
+            return View(orderhistory);
         }
 
         public IActionResult DeleteOrderItem(int OrderItemId)

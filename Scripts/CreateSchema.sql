@@ -192,6 +192,7 @@ CREATE TABLE [Orders] (
     [OrderId] int NOT NULL IDENTITY,
 	[PersonId] int NOT NULL,
 	[OrderStatus] int NOT NULL DEFAULT 0,
+	[OrderDate] datetime2 DEFAULT '',
     CONSTRAINT [PK_Orders] PRIMARY KEY ([OrderId]),
 	CONSTRAINT [FK_Orders_Persons_PersonId] FOREIGN KEY ([PersonId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION,
 );
