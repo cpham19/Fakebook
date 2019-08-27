@@ -4,7 +4,7 @@
 @model StoreItem
 
 <div>
-    <a asp-controller="Marketplace" asp-action="Cart" class="btn btn-info">View Cart (@ViewBag.Cart.Items.Count)</a>
+    <a asp-controller="Marketplace" asp-action="Cart" class="btn btn-info">View Cart (@ViewBag.Cart.OrderItems.Count)</a>
 </div>
 
 <!-- Page Content -->
@@ -20,23 +20,34 @@
                     <h1 class="card-title">@Model.ItemName</h1>
                     <h4>Condition: @Model.ItemCondition</h4>
                     <h4>Price: $@Model.Price</h4>
-                    <h4>Quantity: @Model.Quantity</h4>
+                    @if (Model.Quantity != 0)
+                    {
+                        <h4>Quantity: @Model.Quantity</h4>
+                    }
+                    else
+                    {
+                        <h4>OUT OF STOCK</h4>
+                    }
                     <p class="card-text">@Model.ItemDescription</p>
-                    <form>
-                        <select class="selectpicker" name="Quantity">
-                            @for (int i = 1; i <= Model.Quantity; i++)
-                            {
-                                <option>@i</option>
-                            }
-                        </select>
-                        <input name="StoreId" value="@Model.StoreId" hidden />
-                        <input name="StoreItemId" value="@Model.StoreItemId" hidden />
-                        <button type="submit" class="btn bg-success" asp-controller="Marketplace" asp-action="AddToCart">Add To Cart</button>
+                    @if (!ViewBag.IsOwner && Model.Quantity != 0)
+                    {
+                        <form>
+                            <select class="selectpicker" name="Quantity">
+                                @for (int i = 1; i <= Model.Quantity; i++)
+                                {
+                                    <option>@i</option>
+                                }
+                            </select>
+                            <input name="StoreId" value="@Model.StoreId" hidden />
+                            <input name="StoreItemId" value="@Model.StoreItemId" hidden />
+                            <input name="OrderItemPrice" value="@Model.Price" hidden />
+                            <button type="submit" class="btn bg-success" asp-controller="Marketplace" asp-action="AddToCart">Add To Cart</button>
 
-                    </form>
-                    <br />
+                        </form>
+                    }
                     @if (ViewBag.PersonId == Model.PosterId)
                     {
+                        <br />
                         <a asp-controller="Marketplace" asp-action="EditStoreItem" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@Model.StoreItemId">Edit</a>
                         <a asp-controller="Marketplace" asp-action="DeleteStoreItem" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@Model.StoreItemId">Delete</a>
                     }

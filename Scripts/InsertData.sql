@@ -120,8 +120,14 @@ SET IDENTITY_INSERT Reviews OFF
 
 GO
 
-SET IDENTITY_INSERT CartItems ON
-INSERT INTO CartItems (CartItemId, PersonId, StoreItemId, CartItemQuantity) VALUES (1, 2, 2, 10);
-SET IDENTITY_INSERT CartItems OFF
+SET IDENTITY_INSERT Orders ON
+INSERT INTO Orders (OrderId, PersonId, OrderStatus) VALUES (1, 2, 0);
+SET IDENTITY_INSERT Orders OFF
+
+GO
+
+SET IDENTITY_INSERT OrderItems ON
+INSERT INTO OrderItems (OrderItemId, OrderId, StoreItemId, OrderItemQuantity, OrderItemPrice) VALUES (1, 1, 2, 3, 24.25);
+SET IDENTITY_INSERT OrderItems OFF
 
 GO

@@ -47,23 +47,30 @@ namespace Fakebook.Models
         public string PosterName { get; set; }
     }
 
-    public class Cart
+    public class OrderItem
     {
-        public List<CartItem> Items { get; set; } = new List<CartItem>();
-        public double Total { get; set; }
-    }
-
-    public class CartItem
-    {
-        public int CartItemId { get; set; }
-        [NotMapped]
-        public string CartItemName { get; set; }
+        public int OrderItemId { get; set; }
+        public int OrderId { get; set; }
         public int StoreItemId { get; set; }
-        public int PersonId { get; set; }
+        public double OrderItemPrice { get; set; }
+        public int OrderItemQuantity { get; set; }
         [NotMapped]
         public int StoreId { get; set; }
         [NotMapped]
-        public double CartItemPrice { get; set; }
-        public int CartItemQuantity { get; set; }
+        public string StoreName { get; set; }
+        [NotMapped]
+        public string OrderItemName { get; set; }
     }
+
+    public class Order
+    {
+        public int OrderId { get; set; }
+        public int PersonId { get; set; }
+        public int OrderStatus { get; set; }
+        [NotMapped]
+        public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+        [NotMapped]
+        public double Total { get; set; }
+    }
+
 }

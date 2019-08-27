@@ -188,17 +188,29 @@ CREATE TABLE [Reviews] (
 
 GO
 
-CREATE TABLE [CartItems] (
-    [CartItemId] int NOT NULL IDENTITY,
+CREATE TABLE [Orders] (
+    [OrderId] int NOT NULL IDENTITY,
 	[PersonId] int NOT NULL,
-	[StoreItemId] int NOT NULL,
-	[CartItemQuantity] int NOT NULL,
-    CONSTRAINT [PK_CartItems] PRIMARY KEY ([CartItemId]),
-	CONSTRAINT [FK_CartItems_Persons_PersonId] FOREIGN KEY ([PersonId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION,
-	CONSTRAINT [FK_CartItems_StoreItems_StoreItemId] FOREIGN KEY ([StoreItemId]) REFERENCES [StoreItems] ([StoreItemId]) ON DELETE NO ACTION,
+	[OrderStatus] int NOT NULL DEFAULT 0,
+    CONSTRAINT [PK_Orders] PRIMARY KEY ([OrderId]),
+	CONSTRAINT [FK_Orders_Persons_PersonId] FOREIGN KEY ([PersonId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION,
 );
 
 GO
+
+CREATE TABLE [OrderItems] (
+    [OrderItemId] int NOT NULL IDENTITY,
+	[OrderId] int NOT NULL,
+	[StoreItemId] int NOT NULL,
+	[OrderItemQuantity] int NOT NULL,
+	[OrderItemPrice] float NOT NULL,
+    CONSTRAINT [PK_OrderItems] PRIMARY KEY ([OrderItemId]),
+	CONSTRAINT [FK_OrderItems_Orders_OrderId] FOREIGN KEY ([OrderId]) REFERENCES [Orders] ([OrderId]) ON DELETE NO ACTION,
+	CONSTRAINT [FK_OrderItems_StoreItems_StoreItemId] FOREIGN KEY ([StoreItemId]) REFERENCES [StoreItems] ([StoreItemId]) ON DELETE NO ACTION,
+);
+
+GO
+
 
 CREATE INDEX [IX_FK_WallPosts_PosterId] ON [WallPosts] ([PosterId]);
 
@@ -249,8 +261,11 @@ CREATE INDEX [IX_FK_Reviews_PosterId] ON [Reviews] ([PosterId]);
 
 GO
 
-CREATE INDEX [IX_FK_CartItems_PersonId] ON [CartItems] ([PersonId]);
-CREATE INDEX [IX_FK_CartItems_StoreItemId] ON [StoreItems] ([StoreItemId]);
+CREATE INDEX [IX_FK_Orders_PersonId] ON [Orders] ([PersonId]);
+
+GO
+
+CREATE INDEX [IX_FK_OrderItems_StoreItemId] ON [StoreItems] ([StoreItemId]);
 
 GO
 

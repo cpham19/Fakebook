@@ -125,6 +125,18 @@ namespace Fakebook.Services
             db.SaveChanges();
         }
 
+        public bool checkStoreOwner(int StoreId, int PersonId)
+        {
+            Store store = db.Stores.Where(s => s.StoreId == StoreId && s.StoreOwnerId == PersonId).SingleOrDefault();
+
+            if (store == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public Review GetReview(int ReviewId)
         {
             return db.Reviews.Where(r => r.ReviewId == ReviewId).SingleOrDefault();
@@ -171,48 +183,85 @@ namespace Fakebook.Services
             db.SaveChanges();
         }
 
-        public Cart GetCart(int PersonId)
+        public Order GetCart(int PersonId)
         {
-            Cart cart = new Cart();
-            List<CartItem> cartitems = db.CartItems.Where(ci => ci.PersonId == PersonId).ToList();
+            Order cart = db.Orders.Where(order => order.PersonId == PersonId && order.OrderStatus == 0).SingleOrDefault();
+            List<OrderItem> orderitems = db.OrderItems.Where(item => item.OrderId == cart.OrderId).ToList();
             double total = 0.00;
-            foreach(var item in cartitems)
+            foreach(var item in orderitems)
             {
                 StoreItem si = db.StoreItems.Where(s => s.StoreItemId == item.StoreItemId).SingleOrDefault();
+                Store store = db.Stores.Where(st => st.StoreId == si.StoreId).SingleOrDefault();
                 item.StoreId = si.StoreId;
-                item.CartItemName = si.ItemName;
-                item.CartItemPrice = float.Parse(Math.Round(si.Price, 2).ToString());
-                total += item.CartItemPrice * item.CartItemQuantity;
+                item.StoreName = store.StoreName;
+                item.OrderItemName = si.ItemName;
+                item.OrderItemPrice = float.Parse(Math.Round(si.Price, 2).ToString());
+                total += item.OrderItemPrice * item.OrderItemQuantity;
             }
 
             cart.Total = Math.Truncate(total * 100) / 100; ;
-            cart.Items = cartitems;
+            cart.OrderItems = orderitems;
 
             return cart;
         }
 
-        public void AddToCart(CartItem cartitem)
+        public void AddToCart(OrderItem orderitem, int PersonId)
         {
-            // Check if item is in cart already
-            CartItem c = db.CartItems.Where(ci => ci.StoreItemId == cartitem.StoreItemId && ci.PersonId == cartitem.PersonId).SingleOrDefault();
+            Order order = db.Orders.Where(o => o.PersonId == PersonId && o.OrderStatus == 0).SingleOrDefault();
+            // Have to make a new order (cart) everytime someone checks out their cart or doesn't have a cart/order yet. Might not be a good way to approach
+            if (order == null)
+            {
+                Order neworder = new Order();
+                neworder.PersonId = PersonId;
+                db.Orders.Add(neworder);
+                db.SaveChanges();
+                order = db.Orders.Where(o => o.PersonId == PersonId && o.OrderStatus == 0).SingleOrDefault();
+            }
 
+            // Check if item is in cart already
+            OrderItem c = db.OrderItems.Where(ci => ci.StoreItemId == orderitem.StoreItemId && ci.OrderId == order.OrderId).SingleOrDefault();
             // Add Item to cart
             if (c == null)
             {
-                db.CartItems.Add(cartitem);
+                orderitem.OrderId = order.OrderId;
+                db.OrderItems.Add(orderitem);
             }
             // Just change the quantity (if user added 20 items, and he decides to add 10 more, then there should be 30 items in the card
             else
             {
-                c.CartItemQuantity += cartitem.CartItemQuantity;
+                StoreItem storeItem = db.StoreItems.Where(si => si.StoreItemId == c.StoreItemId).SingleOrDefault();
+                if (storeItem.Quantity >= c.OrderItemQuantity + orderitem.OrderItemQuantity)
+                {
+                    c.OrderItemQuantity += orderitem.OrderItemQuantity;
+                }
             }
             db.SaveChanges();
         }
 
-        public void DeleteCartItem(int CartItemId)
+        public void DeleteOrderItem(int OrderItemId)
         {
-            CartItem ci = db.CartItems.Where(c => c.CartItemId == CartItemId).SingleOrDefault();
-            db.CartItems.Remove(ci);
+            OrderItem ci = db.OrderItems.Where(c => c.OrderItemId == OrderItemId).SingleOrDefault();
+            db.OrderItems.Remove(ci);
+            db.SaveChanges();
+        }
+
+        public void Checkout(int OrderId)
+        {
+            Order order = db.Orders.Where(o => o.OrderId == OrderId && o.OrderStatus == 0).SingleOrDefault();
+            order.OrderStatus = 1;
+
+            List<OrderItem> orderitems = db.OrderItems.Where(oi => oi.OrderId == order.OrderId).ToList();
+            foreach(var item in orderitems)
+            {
+                StoreItem storeitem = db.StoreItems.Where(st => st.StoreItemId == item.StoreItemId).SingleOrDefault();
+                storeitem.Quantity -= item.OrderItemQuantity;
+            }
+
+            // Make a new cart/order for user after checking out
+            int PersonId = order.PersonId;
+            Order neworder = new Order();
+            neworder.PersonId = PersonId;
+            db.Orders.Add(neworder);
             db.SaveChanges();
         }
     }

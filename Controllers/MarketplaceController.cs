@@ -83,6 +83,7 @@ namespace Fakebook.Controllers
         public IActionResult StoreItem(int StoreId, int StoreItemId)
         {
             ViewBag.Cart = storeService.GetCart(User.Identity.GetPersonId());
+            ViewBag.IsOwner = storeService.checkStoreOwner(StoreId, User.Identity.GetPersonId());
             ViewBag.PersonId = User.Identity.GetPersonId();
             StoreItem storeItem = storeService.GetStoreItem(StoreItemId);
             return View(storeItem);
@@ -165,26 +166,34 @@ namespace Fakebook.Controllers
         [HttpGet("/Marketplace/cart", Name = "Cart")]
         public IActionResult Cart()
         {
-            Cart cart = storeService.GetCart(User.Identity.GetPersonId());
+            Order cart = storeService.GetCart(User.Identity.GetPersonId());
             return View(cart);
         }
 
-        public IActionResult DeleteCartItem(int CartItemId)
+        public IActionResult DeleteOrderItem(int OrderItemId)
         {
-            storeService.DeleteCartItem(CartItemId);
+            storeService.DeleteOrderItem(OrderItemId);
             return RedirectToAction("Cart");
         }
 
-        public IActionResult AddToCart(int StoreId, int StoreItemId, int Quantity)
+        public IActionResult AddToCart(int StoreId, int StoreItemId, int Quantity, double OrderItemPrice)
         {
-            CartItem ci = new CartItem();
-            ci.StoreId = StoreId;
-            ci.StoreItemId = StoreItemId;
-            ci.CartItemQuantity = Quantity;
-            ci.PersonId = User.Identity.GetPersonId();
-
-            storeService.AddToCart(ci);
+            OrderItem oi = new OrderItem();
+            oi.StoreId = StoreId;
+            oi.StoreItemId = StoreItemId;
+            oi.OrderItemQuantity = Quantity;
+            Debug.Write(OrderItemPrice);
+            Debug.Write(OrderItemPrice);
+            Debug.Write(OrderItemPrice);
+            oi.OrderItemPrice = OrderItemPrice;
+            storeService.AddToCart(oi, User.Identity.GetPersonId());
             return RedirectToAction("StoreItem", new { StoreId = StoreId, StoreItemId = StoreItemId });
+        }
+
+        public IActionResult Checkout(int OrderId)
+        {
+            storeService.Checkout(OrderId);
+            return RedirectToAction("Cart");
         }
     }
 }
