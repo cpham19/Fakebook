@@ -108,6 +108,7 @@ SET IDENTITY_INSERT StoreItems ON
 INSERT INTO StoreItems (StoreItemId, StoreId, ItemImageUrl , ItemName, ItemCondition, ItemDescription, DateCreated, Quantity, Price) VALUES (1, 1, N'https://banner2.kisspng.com/20180125/eve/kisspng-stock-photography-banana-fruit-stock-footage-berry-golden-banana-5a6a7c02aed7e5.3327397415169280027162.jpg', N'Bananas', N'Fresh', N'A fresh pair of bananas for sale!', '2019-06-19', 20, 51.24);
 INSERT INTO StoreItems (StoreItemId, StoreId, ItemImageUrl , ItemName, ItemCondition, ItemDescription, DateCreated, Quantity, Price) VALUES (2, 2, N'https://www.pngfind.com/pngs/m/176-1763979_strawberry-png-image-fruits-transparent-png.png', N'Strawberries', N'Fresh', N'A fresh pair of strawberries for sale!', '2019-06-20', 5, 24.25);
 INSERT INTO StoreItems (StoreItemId, StoreId, ItemImageUrl , ItemName, ItemCondition, ItemDescription, DateCreated, Quantity, Price) VALUES (3, 1, N'https://png.pngtree.com/png-clipart/20190117/ourmid/pngtree-summer-delicious-watermelon-summer-fruit-png-image_422603.jpg', N'Watermelon', N'Fresh', N'One fresh watermelon for sale!', '2019-06-19', 1, 2455.24);
+INSERT INTO StoreItems (StoreItemId, StoreId, ItemImageUrl , ItemName, ItemCondition, ItemDescription, DateCreated, Quantity, Price) VALUES (4, 3, N'https://png.pngtree.com/element_pic/16/11/20/3d2bbb93bc2ef3c20b9da2eed1c3ef82.jpg', N'Avocados', N'Fresh', N'Fresh Avocados for sale!', '2019-06-19', 15, 424.24);
 SET IDENTITY_INSERT StoreItems OFF
 
 GO
@@ -121,13 +122,15 @@ SET IDENTITY_INSERT Reviews OFF
 GO
 
 SET IDENTITY_INSERT Orders ON
-INSERT INTO Orders (OrderId, PersonId, OrderStatus) VALUES (1, 2, 0);
+INSERT INTO Orders (OrderId, PersonId, StoreId, OrderStatus) VALUES (1, 2, 2, 0);
+INSERT INTO Orders (OrderId, PersonId, StoreId, OrderStatus) VALUES (2, 2, 3, 0);
 SET IDENTITY_INSERT Orders OFF
 
 GO
 
 SET IDENTITY_INSERT OrderItems ON
 INSERT INTO OrderItems (OrderItemId, OrderId, StoreItemId, OrderItemQuantity, OrderItemPrice) VALUES (1, 1, 2, 3, 24.25);
+INSERT INTO OrderItems (OrderItemId, OrderId, StoreItemId, OrderItemQuantity, OrderItemPrice) VALUES (2, 2, 4, 3, 424.24);
 SET IDENTITY_INSERT OrderItems OFF
 
 GO

@@ -194,49 +194,45 @@ namespace Fakebook.Services
             db.SaveChanges();
         }
 
-        public Order GetCart(int PersonId)
+        public List<Order> GetCart(int PersonId)
         {
-            Order cart = db.Orders.Where(order => order.PersonId == PersonId && order.OrderStatus == 0).SingleOrDefault();
-            if(cart == null)
-            {
-                Order neworder = new Order();
-                neworder.PersonId = PersonId;
-                db.Orders.Add(neworder);
-                db.SaveChanges();
-                cart = db.Orders.Where(o => o.PersonId == PersonId && o.OrderStatus == 0).SingleOrDefault();
-            }
+            List<Order> cart = db.Orders.Where(order => order.PersonId == PersonId && order.OrderStatus == 0).ToList();
 
-            List<OrderItem> orderitems = db.OrderItems.Where(item => item.OrderId == cart.OrderId).ToList();
-            double total = 0.00;
-            foreach(var item in orderitems)
+            foreach (var order in cart)
             {
-                StoreItem si = db.StoreItems.Where(s => s.StoreItemId == item.StoreItemId).SingleOrDefault();
-                Store store = db.Stores.Where(st => st.StoreId == si.StoreId).SingleOrDefault();
-                item.StoreId = si.StoreId;
-                item.StoreName = store.StoreName;
-                item.OrderItemName = si.ItemName;
-                item.OrderItemImageUrl = si.ItemImageUrl;
-                item.OrderItemPrice = double.Parse(Math.Round(si.Price, 2).ToString());
-                total += item.OrderItemPrice * item.OrderItemQuantity;
-            }
+                List<OrderItem> orderitems = db.OrderItems.Where(item => item.OrderId == order.OrderId).ToList();
+                double total = 0.00;
+                foreach (var item in orderitems)
+                {
+                    StoreItem si = db.StoreItems.Where(s => s.StoreItemId == item.StoreItemId).SingleOrDefault();
+                    Store store = db.Stores.Where(st => st.StoreId == si.StoreId).SingleOrDefault();
+                    item.OrderItemName = si.ItemName;
+                    item.OrderItemImageUrl = si.ItemImageUrl;
+                    item.OrderItemPrice = double.Parse(Math.Round(si.Price, 2).ToString());
+                    total += item.OrderItemPrice * item.OrderItemQuantity;
+                }
 
-            cart.Total = Math.Truncate(total * 100) / 100; ;
-            cart.OrderItems = orderitems;
+                order.Total = Math.Truncate(total * 100) / 100; ;
+                order.StoreName = db.Stores.Where(st => st.StoreId == order.StoreId).SingleOrDefault().StoreName;
+                order.OrderItems = orderitems;
+
+            }
 
             return cart;
         }
 
-        public void AddToCart(OrderItem orderitem, int PersonId)
+        public void AddToCart(OrderItem orderitem, int StoreId, int PersonId)
         {
-            Order order = db.Orders.Where(o => o.PersonId == PersonId && o.OrderStatus == 0).SingleOrDefault();
-            // Have to make a new order (cart) everytime someone checks out their cart or doesn't have a cart/order yet. Might not be a good way to approach
+            Order order = db.Orders.Where(o => o.PersonId == PersonId && o.StoreId == StoreId && o.OrderStatus == 0).SingleOrDefault();
+            // Make a new order if it doesn't exist
             if (order == null)
             {
                 Order neworder = new Order();
                 neworder.PersonId = PersonId;
+                neworder.StoreId = StoreId;
                 db.Orders.Add(neworder);
                 db.SaveChanges();
-                order = db.Orders.Where(o => o.PersonId == PersonId && o.OrderStatus == 0).SingleOrDefault();
+                order = db.Orders.Where(o => o.PersonId == PersonId && o.StoreId == StoreId && o.OrderStatus == 0).SingleOrDefault();
             }
 
             // Check if item is in cart already
@@ -261,30 +257,43 @@ namespace Fakebook.Services
 
         public void DeleteOrderItem(int OrderItemId)
         {
-            OrderItem ci = db.OrderItems.Where(c => c.OrderItemId == OrderItemId).SingleOrDefault();
-            db.OrderItems.Remove(ci);
+            OrderItem oi = db.OrderItems.Where(item => item.OrderItemId == OrderItemId).SingleOrDefault();
+            db.OrderItems.Remove(oi);
             db.SaveChanges();
         }
 
-        public void Checkout(int OrderId)
+        public void Checkout(int PersonId)
         {
-            Order order = db.Orders.Where(o => o.OrderId == OrderId && o.OrderStatus == 0).SingleOrDefault();
-            order.OrderStatus = 1;
-            order.OrderDate = DateTime.Now;
-
-            List<OrderItem> orderitems = db.OrderItems.Where(oi => oi.OrderId == order.OrderId).ToList();
-            foreach(var item in orderitems)
+            List<Order> orders = db.Orders.Where(o => o.PersonId == PersonId && o.OrderStatus == 0).ToList();
+            foreach(var order in orders)
             {
-                StoreItem storeitem = db.StoreItems.Where(st => st.StoreItemId == item.StoreItemId).SingleOrDefault();
-                storeitem.Quantity -= item.OrderItemQuantity;
+                order.OrderStatus = 1;
+                order.OrderDate = DateTime.Now;
+                List<OrderItem> orderitems = db.OrderItems.Where(oi => oi.OrderId == order.OrderId).ToList();
+                foreach (var item in orderitems)
+                {
+                    StoreItem storeitem = db.StoreItems.Where(st => st.StoreItemId == item.StoreItemId).SingleOrDefault();
+                    storeitem.Quantity -= item.OrderItemQuantity;
+                }
             }
 
-            // Make a new cart/order for user after checking out
-            int PersonId = order.PersonId;
-            Order neworder = new Order();
-            neworder.PersonId = PersonId;
-            db.Orders.Add(neworder);
             db.SaveChanges();
+        }
+
+        public List<Order> GetSaleHistory(int PersonId)
+        {
+            Store store = db.Stores.Where(s => s.StoreOwnerId == PersonId).SingleOrDefault();
+            List<Order> orders = null;
+            if (store == null)
+            {
+                return orders;
+            }
+            else
+            {
+               
+            }
+
+            return orders;
         }
 
         public List<Order> GetOrderHistory(int PersonId)
@@ -298,13 +307,12 @@ namespace Fakebook.Services
                 {
                     StoreItem si = db.StoreItems.Where(s => s.StoreItemId == oi.StoreItemId).SingleOrDefault();
                     Store store = db.Stores.Where(st => st.StoreId == si.StoreId).SingleOrDefault();
-                    oi.StoreId = si.StoreId;
-                    oi.StoreName = store.StoreName;
                     oi.OrderItemName = si.ItemName;
                     oi.OrderItemImageUrl = si.ItemImageUrl;
                     total += oi.OrderItemPrice * oi.OrderItemQuantity;
                 }
                 order.Total = total;
+                order.StoreName = db.Stores.Where(store => store.StoreId == order.StoreId).SingleOrDefault().StoreName;
             }
 
             return orders;

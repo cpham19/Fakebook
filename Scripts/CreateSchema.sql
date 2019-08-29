@@ -192,8 +192,10 @@ CREATE TABLE [Orders] (
     [OrderId] int NOT NULL IDENTITY,
 	[PersonId] int NOT NULL,
 	[OrderStatus] int NOT NULL DEFAULT 0,
+	[StoreId] int NOT NULL,
 	[OrderDate] datetime2 DEFAULT '',
     CONSTRAINT [PK_Orders] PRIMARY KEY ([OrderId]),
+	CONSTRAINT [FK_Orders_Stores_StoreId] FOREIGN KEY ([StoreId]) REFERENCES [Stores] ([StoreId]) ON DELETE NO ACTION,
 	CONSTRAINT [FK_Orders_Persons_PersonId] FOREIGN KEY ([PersonId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION,
 );
 
@@ -263,6 +265,7 @@ CREATE INDEX [IX_FK_Reviews_PosterId] ON [Reviews] ([PosterId]);
 GO
 
 CREATE INDEX [IX_FK_Orders_PersonId] ON [Orders] ([PersonId]);
+CREATE INDEX [IX_FK_Orders_StoreId] ON [Orders] ([StoreId]);
 
 GO
 

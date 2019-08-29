@@ -3,7 +3,7 @@
     ViewData["Title"] = "Cart";
 }
 
-@model Order
+@model List<Order>
 
 <style>
     .lead {
@@ -11,7 +11,11 @@
     }
 
     .btn-info {
-        float:right;
+        float: right;
+    }
+
+    table {
+        border: solid 3px;
     }
 </style>
 
@@ -21,40 +25,50 @@
     </div>
 </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Price</th>
-            <th scope="col">Quantity</th>
-        </tr>
-    </thead>
+@foreach (var order in Model)
+{
+    if (order.OrderItems.Count != 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+            </thead>
 
-    <tbody>
-        @foreach (var item in Model.OrderItems)
-        {
-            <tr>
-                <td>
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">
-                            <img src="@item.OrderItemImageUrl" width="100px" height="100px"/>
-                            <a asp-controller="Marketplace" asp-action="StoreItem" asp-route-StoreId="@item.StoreId" asp-route-StoreItemId="@item.StoreItemId">@item.OrderItemName</a>
-                        </h5>
-                    </div>
-                    <small>
-                        Sold by <a asp-controller="Marketplace" asp-action="Store" asp-route-StoreId="@item.StoreId">@item.StoreName</a><br/>
-                        <a asp-controller="Marketplace" asp-action="DeleteOrderItem" asp-route-OrderItemId="@item.OrderItemId">Delete</a>
-                    </small>
-                </td>
-                <td>$@item.OrderItemPrice</td>
-                <td>@item.OrderItemQuantity</td>
-            </tr>
-        }
-    </tbody>
-</table>
-<hr />
+            <tbody>
+                @foreach (var item in order.OrderItems)
+                {
+                    <tr>
+                        <td>
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">
+                                    <img src="@item.OrderItemImageUrl" width="100px" height="100px" />
+                                    <a asp-controller="Marketplace" asp-action="StoreItem" asp-route-StoreId="@order.StoreId" asp-route-StoreItemId="@item.StoreItemId">@item.OrderItemName</a>
+                                </h5>
+                            </div>
+                            <small>
+                                Sold by <a asp-controller="Marketplace" asp-action="Store" asp-route-StoreId="@order.StoreId">@order.StoreName</a><br />
+                                <a asp-controller="Marketplace" asp-action="DeleteOrderItem" asp-route-OrderItemId="@item.OrderItemId">Delete</a>
+                            </small>
+                        </td>
+                        <td>$@item.OrderItemPrice</td>
+                        <td>@item.OrderItemQuantity</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+        <br />
+    }
+}
 
-<p class="lead">
-    TOTAL: $@Model.Total<br/>
-    <a class="btn btn-info" asp-controller="Marketplace" asp-action="Checkout" asp-route-OrderId="@Model.OrderId">Checkout</a>
-</p>
+@if (Model.Count != 0)
+{
+    <hr />
+    <p class="lead">
+        <a class="btn btn-info" asp-controller="Marketplace" asp-action="Checkout">Checkout</a>
+    </p>
+}

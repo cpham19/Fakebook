@@ -167,7 +167,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Marketplace/cart", Name = "Cart")]
         public IActionResult Cart()
         {
-            Order cart = storeService.GetCart(User.Identity.GetPersonId());
+            List<Order> cart = storeService.GetCart(User.Identity.GetPersonId());
             return View(cart);
         }
 
@@ -188,20 +188,16 @@ namespace Fakebook.Controllers
         public IActionResult AddToCart(int StoreId, int StoreItemId, int Quantity, double OrderItemPrice)
         {
             OrderItem oi = new OrderItem();
-            oi.StoreId = StoreId;
             oi.StoreItemId = StoreItemId;
             oi.OrderItemQuantity = Quantity;
-            Debug.Write(OrderItemPrice);
-            Debug.Write(OrderItemPrice);
-            Debug.Write(OrderItemPrice);
             oi.OrderItemPrice = OrderItemPrice;
-            storeService.AddToCart(oi, User.Identity.GetPersonId());
+            storeService.AddToCart(oi, StoreId, User.Identity.GetPersonId());
             return RedirectToAction("StoreItem", new { StoreId = StoreId, StoreItemId = StoreItemId });
         }
 
-        public IActionResult Checkout(int OrderId)
+        public IActionResult Checkout()
         {
-            storeService.Checkout(OrderId);
+            storeService.Checkout(User.Identity.GetPersonId());
             return RedirectToAction("Cart");
         }
     }

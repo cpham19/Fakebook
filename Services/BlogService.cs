@@ -10,6 +10,14 @@ using System.Diagnostics;
 // Used for wall posts and their replies
 namespace Fakebook.Services
 {
+    public static class StringExtensions
+    {
+        public static bool Contains(this string source, string toCheck, StringComparison comp)
+        {
+            return source?.IndexOf(toCheck, comp) >= 0;
+        }
+    }
+
     public class BlogService
     {
         private readonly AppDbContext db;
@@ -49,6 +57,43 @@ namespace Fakebook.Services
                 blog.PosterName = person.Name;
             }
             return blogs;
+        }
+
+        public List<Blog> Search(string s)
+        {
+            List<Blog> blogs = db.Blogs
+                .Where(b => b.Headline.Contains(s, StringComparison.OrdinalIgnoreCase) == true || 
+                            b.Description.Contains(s, StringComparison.OrdinalIgnoreCase) == true ||
+                            b.Title.Contains(s, StringComparison.OrdinalIgnoreCase) == true)
+                .OrderByDescending(b => b.DatePosted).ToList();
+            foreach (var blog in blogs)
+            {
+                Person person = db.Persons.Where(p => p.PersonId == blog.PosterId).SingleOrDefault();
+                blog.PosterName = person.Name;
+            }
+            return blogs;
+        }
+
+        public List<Blog> SearchWords(string[] words)
+        {
+            List<Blog> blogs = new List<Blog>();
+                
+            foreach(var word in words)
+            {
+                List<Blog> blogs1 = db.Blogs
+                .Where(b => b.Headline.Contains(word, StringComparison.OrdinalIgnoreCase) == true ||
+                            b.Description.Contains(word, StringComparison.OrdinalIgnoreCase) == true ||
+                            b.Title.Contains(word, StringComparison.OrdinalIgnoreCase) == true)
+                            .OrderByDescending(b => b.DatePosted).ToList();
+                blogs.AddRange(blogs1);
+            }
+             
+            foreach (var blog in blogs)
+            {
+                Person person = db.Persons.Where(p => p.PersonId == blog.PosterId).SingleOrDefault();
+                blog.PosterName = person.Name;
+            }
+            return blogs.Distinct().ToList();
         }
 
         public List<Blog> GetBlogsOfUser(int PersonId)

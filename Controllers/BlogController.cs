@@ -125,7 +125,30 @@ namespace Fakebook.Controllers
             return RedirectToAction("ReadBlog", new { BlogId = BlogId });
         }
 
-        public IActionResult Privacy()
+        public IActionResult SearchQuery(string s)
+        {
+            return RedirectToAction("Search", new { s = s });
+        }
+
+        [HttpGet("/Blogs/search/{s}", Name = "SearchBlog")]
+        public IActionResult Search(string s)
+        {
+            ViewBag.Query = s;
+
+            string[] words = s.Split(" ");
+            ViewBag.Blogs = null;
+            if (words.Length > 1)
+            {
+                ViewBag.Blogs = blogService.SearchWords(words);
+            }
+            else
+            {
+                ViewBag.Blogs = blogService.Search(s);
+            }
+            return View();
+        }
+
+            public IActionResult Privacy()
         {
             return View();
         }
