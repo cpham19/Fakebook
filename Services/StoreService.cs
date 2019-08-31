@@ -280,17 +280,28 @@ namespace Fakebook.Services
             db.SaveChanges();
         }
 
-        public List<Order> GetSaleHistory(int PersonId)
+        public List<Order> GetSalesHistory(int PersonId)
         {
             Store store = db.Stores.Where(s => s.StoreOwnerId == PersonId).SingleOrDefault();
             List<Order> orders = null;
-            if (store == null)
+          
+            if (store != null)
             {
-                return orders;
-            }
-            else
-            {
-               
+                orders = db.Orders.Where(order => order.StoreId == store.StoreId && order.OrderStatus == 1).ToList();
+                foreach (var order in orders)
+                {
+                    order.OrderItems = db.OrderItems.Where(oi => oi.OrderId == order.OrderId).ToList();
+                    double total = 0.00;
+                    foreach (var oi in order.OrderItems)
+                    {
+                        StoreItem si = db.StoreItems.Where(s => s.StoreItemId == oi.StoreItemId).SingleOrDefault();
+                        oi.OrderItemName = si.ItemName;
+                        oi.OrderItemImageUrl = si.ItemImageUrl;
+                        total += oi.OrderItemPrice * oi.OrderItemQuantity;
+                    }
+                    order.Total = total;
+                    order.PersonName = db.Persons.Where(p => p.PersonId == PersonId).SingleOrDefault().Name;
+                }
             }
 
             return orders;

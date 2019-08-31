@@ -3,10 +3,11 @@
 }
 @model StoreItem
 
-<div>
-    <a asp-controller="Marketplace" asp-action="Cart" class="btn btn-info">View Cart</a>
-    <a asp-controller="Marketplace" asp-action="OrderHistory" class="btn btn-info">View Order History</a>
-</div>
+    <div>
+        <a asp-controller="Marketplace" asp-action="Cart" class="btn btn-info">View Cart</a>
+        <a asp-controller="Marketplace" asp-action="SalesHistory" class="btn btn-primary">View Sales History</a>
+        <a asp-controller="Marketplace" asp-action="OrderHistory" class="btn btn-secondary">View Order History</a>
+    </div>
 
 <!-- Page Content -->
 <div class="container">

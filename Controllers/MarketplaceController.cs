@@ -179,6 +179,14 @@ namespace Fakebook.Controllers
             return View(orderhistory);
         }
 
+        // View Order History
+        [HttpGet("/Marketplace/saleshistory", Name = "SalesHistory")]
+        public IActionResult SalesHistory()
+        {
+            List<Order> saleshistory = storeService.GetSalesHistory(User.Identity.GetPersonId());
+            return View(saleshistory);
+        }
+
         public IActionResult DeleteOrderItem(int OrderItemId)
         {
             storeService.DeleteOrderItem(OrderItemId);
