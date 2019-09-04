@@ -22,6 +22,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Groups", Name = "Groups")]
         public IActionResult Index()
         {
+            ViewBag.PersonId = User.Identity.GetPersonId();
             ViewBag.Groups = groupService.GetGroups(User.Identity.GetPersonId());
             return View();
         }
@@ -40,10 +41,15 @@ namespace Fakebook.Controllers
         [HttpPost("/Group/AddGroup", Name = "AddGroup")]
         public IActionResult AddGroup(Group g)
         {
-            g.GroupCreatorId = User.Identity.GetPersonId();
-            g.DateCreated = DateTime.Now;
-            groupService.AddGroup(g);
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                g.GroupCreatorId = User.Identity.GetPersonId();
+                g.DateCreated = DateTime.Now;
+                groupService.AddGroup(g);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(g);
         }
 
         [HttpGet("/Group/{GroupId}", Name = "ViewGroup")]
@@ -110,9 +116,14 @@ namespace Fakebook.Controllers
         [HttpPost("Group/{GroupId}/EditPost/{WallPostId}", Name = "GroupSubmitEditWallPost")]
         public IActionResult EditWallPost(int GroupId, int WallPostId, WallPost tp)
         {
-            tp.WallPostId = WallPostId;
-            wallService.EditWallPost(tp);
-            return RedirectToAction(nameof(ViewGroup), new { GroupId = GroupId });
+            if (ModelState.IsValid)
+            {
+                tp.WallPostId = WallPostId;
+                wallService.EditWallPost(tp);
+                return RedirectToAction(nameof(ViewGroup), new { GroupId = GroupId });
+            }
+
+            return View(tp);
         }
 
         // USed for editting a reply post
@@ -128,9 +139,14 @@ namespace Fakebook.Controllers
         [HttpPost("Group/{GroupId}/EditReplyPost/{ReplyPostId}", Name = "GroupSubmitEditReplyPost")]
         public IActionResult EditReplyPost(int GroupId, int ReplyPostId, ReplyPost rp)
         {
-            rp.ReplyPostId = ReplyPostId;
-            wallService.EditReplyPost(rp);
-            return RedirectToAction(nameof(ViewGroup), new { GroupId = GroupId });
+            if (ModelState.IsValid)
+            {
+                rp.ReplyPostId = ReplyPostId;
+                wallService.EditReplyPost(rp);
+                return RedirectToAction(nameof(ViewGroup), new { GroupId = GroupId });
+            }
+
+            return View(rp);
         }
 
         // Doesn't work if you put a HttpDelete tag on this. Otherwise this works fine
@@ -145,6 +161,13 @@ namespace Fakebook.Controllers
         {
             wallService.DeleteReplyPost(ReplyPostId);
             return RedirectToAction(nameof(ViewGroup), new { GroupId = GroupId });
+        }
+
+        // Delete Group
+        public IActionResult DeleteGroup(int GroupId)
+        {
+            groupService.DeleteGroup(GroupId);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

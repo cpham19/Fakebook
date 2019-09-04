@@ -12,6 +12,7 @@
         </div>
         <input class="form-control" type="text" name="Headline" placeholder="Headline" value="@Model.Headline" required />
     </div>
+    <span asp-validation-for="Headline" class="text-danger"></span>
 
     <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -19,13 +20,15 @@
         </div>
         <input class="form-control" type="text" name="PictureUrl" placeholder="Picture URL" value="@Model.PictureUrl" required />
     </div>
+    <span asp-validation-for="PictureUrl" class="text-danger"></span>
 
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1">Title</span>
         </div>
-        <input class="form-control" type="text" name="Title" placeholder="Title" value="@Model.Title" required/>
+        <input class="form-control" type="text" name="Title" placeholder="Title" value="@Model.Title" required />
     </div>
+    <span asp-validation-for="Title" class="text-danger"></span>
 
     <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -33,6 +36,7 @@
         </div>
         <textarea class="form-control" type="text" name="Description" placeholder="Description" required>@Model.Description</textarea>
     </div>
+    <span asp-validation-for="Description" class="text-danger"></span>
 
     <input type="text" name="BlogId" placeholder="BlogId" value="@Model.BlogId" hidden required />
 

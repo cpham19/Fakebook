@@ -63,9 +63,14 @@ namespace Fakebook.Controllers
         [HttpPost("/EditPost/{WallPostId}", Name = "SubmitEditWallPost")]
         public IActionResult EditWallPost(int WallPostId, WallPost tp)
         {
-            tp.WallPostId = WallPostId;
-            wallService.EditWallPost(tp);
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                tp.WallPostId = WallPostId;
+                wallService.EditWallPost(tp);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(tp);
         }
 
         // USed for editting a reply post
@@ -80,9 +85,14 @@ namespace Fakebook.Controllers
         [HttpPost("/EditReplyPost/{ReplyPostId}", Name = "SubmitEditReplyPost")]
         public IActionResult EditReplyPost(int ReplyPostId, ReplyPost rp)
         {
-            rp.ReplyPostId = ReplyPostId;
-            wallService.EditReplyPost(rp);
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                rp.ReplyPostId = ReplyPostId;
+                wallService.EditReplyPost(rp);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(rp);
         }
 
         // Used for replying to posts

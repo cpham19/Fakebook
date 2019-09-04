@@ -8,8 +8,11 @@ namespace Fakebook.Models
     public class Store
     {
         public int StoreId { get; set; }
+        [ValidUrl]
         public string StoreImageUrl { get; set; }
+        [StringLength(30, MinimumLength = 3)]
         public string StoreName { get; set; }
+        [StringLength(30, MinimumLength = 3)]
         public string StoreDescription { get; set; }
         public DateTime DateCreated { get; set; }
         public int StoreOwnerId { get; set; }
@@ -23,12 +26,17 @@ namespace Fakebook.Models
     {
         public int StoreItemId { get; set; }
         public int StoreId { get; set; }
+        [ValidUrl]
         public string ItemImageUrl { get; set; }
+        [StringLength(30, MinimumLength = 3)]
         public string ItemName { get; set;}
         public string ItemCondition { get; set; }
+        [StringLength(60)]
         public string ItemDescription { get; set; }
         public DateTime DateCreated { get; set; }
+        [RegularExpression(@"^[0-9]+(\.[0-9]{1,2})?$")]
         public double Price { get; set; }
+        [RegularExpression(@"^[0-9]*$")]
         public int Quantity { get; set; }
         [NotMapped]
         public int PosterId { get; set; }
@@ -41,6 +49,7 @@ namespace Fakebook.Models
         public int ReviewId { get; set; }
         public int StoreItemId { get; set; }
         public int PosterId { get; set; }
+        //[StringLength(60, MinimumLength = 3)]
         public string Description { get; set; }
         public DateTime DatePosted { get; set; }
         [NotMapped]

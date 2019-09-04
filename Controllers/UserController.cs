@@ -83,9 +83,13 @@ namespace Fakebook.Controllers
         [HttpPost("User/{id}/EditPost/{WallPostId}", Name = "UserSubmitEditWallPost")]
         public IActionResult EditWallPost(int id, int WallPostId, WallPost tp)
         {
-            tp.WallPostId = WallPostId;
-            wallService.EditWallPost(tp);
-            return RedirectToAction(nameof(Index), new { id = id });
+            if (ModelState.IsValid)
+            {
+                tp.WallPostId = WallPostId;
+                wallService.EditWallPost(tp);
+                return RedirectToAction(nameof(Index), new { id = id });
+            }
+            return View(tp);
         }
 
         // USed for editting a reply post
@@ -101,9 +105,14 @@ namespace Fakebook.Controllers
         [HttpPost("User/{id}/EditReplyPost/{ReplyPostId}", Name = "UserSubmitEditReplyPost")]
         public IActionResult EditReplyPost(int id, int ReplyPostId, ReplyPost rp)
         {
-            rp.ReplyPostId = ReplyPostId;
-            wallService.EditReplyPost(rp);
-            return RedirectToAction(nameof(Index), new { id = id });
+            if (ModelState.IsValid)
+            {
+                rp.ReplyPostId = ReplyPostId;
+                wallService.EditReplyPost(rp);
+                return RedirectToAction(nameof(Index), new { id = id });
+            }
+
+            return View(rp);
         }
 
         // Doesn't work if you put a HttpDelete tag on this. Otherwise this works fine

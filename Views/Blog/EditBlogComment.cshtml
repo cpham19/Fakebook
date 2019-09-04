@@ -13,6 +13,8 @@
         <textarea class="form-control" type="text" name="Description" placeholder="Description" required>@Model.Description</textarea>
     </div>
 
+    <span asp-validation-for="Description" class="text-danger"></span>
+
     <input type="text" name="BlogId" placeholder="BlogId" value="@Model.BlogId" hidden required />
     <input type="text" name="BlogCommentId" placeholder="BlogCommentId" value="@Model.BlogCommentId" hidden required />
 

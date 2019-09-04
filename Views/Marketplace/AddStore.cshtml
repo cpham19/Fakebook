@@ -2,6 +2,8 @@
     ViewData["Title"] = "Add Store";
 }
 
+@model Store
+
 <h1>Add Store</h1>
 
 <form method="post">
@@ -9,23 +11,26 @@
         <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1">Store Name</span>
         </div>
-        <input class="form-control" type="text" name="StoreName" placeholder="Name" required/>
+        <input class="form-control" type="text" name="StoreName" placeholder="Name" required />
     </div>
+    <span asp-validation-for="StoreName" class="text-danger"></span>
 
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1">Store Description</span>
         </div>
-        <input class="form-control" type="text" name="StoreDescription" placeholder="Description" required/>
+        <input class="form-control" type="text" name="StoreDescription" placeholder="Description" required />
     </div>
+    <span asp-validation-for="StoreDescription" class="text-danger"></span>
 
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1">Store Image Url</span>
         </div>
-        <input class="form-control" type="text" name="StoreImageUrl" placeholder="Image Url" required/>
+        <input class="form-control" type="text" name="StoreImageUrl" placeholder="Image Url" required />
     </div>
-    
+    <span asp-validation-for="StoreImageUrl" class="text-danger"></span>
+
     <br />
     <button>Post</button>
 </form>

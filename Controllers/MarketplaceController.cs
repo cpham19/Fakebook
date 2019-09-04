@@ -49,10 +49,15 @@ namespace Fakebook.Controllers
         [HttpPost("/Marketplace/AddStore", Name = "SubmitAddStore")]
         public IActionResult AddStore(Store store)
         {
-            store.StoreOwnerId = User.Identity.GetPersonId();
-            store.DateCreated = DateTime.Now;
-            storeService.AddStore(store);
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                store.StoreOwnerId = User.Identity.GetPersonId();
+                store.DateCreated = DateTime.Now;
+                storeService.AddStore(store);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(store);
         }
 
         // Edit store
@@ -67,8 +72,12 @@ namespace Fakebook.Controllers
         [HttpPost("/Marketplace/store/{StoreId}/EditStore", Name = "SubmitEditStore")]
         public IActionResult EditStore(int StoreId, Store store)
         {
-            storeService.EditStore(store);
-            return RedirectToAction("Store", new { StoreId = StoreId });
+            if (ModelState.IsValid)
+            {
+                storeService.EditStore(store);
+                return RedirectToAction("Store", new { StoreId = StoreId });
+            }
+            return View(store);
         }
 
         // Delete store
@@ -102,10 +111,14 @@ namespace Fakebook.Controllers
         [HttpPost("/Marketplace/store/{StoreId}/AddItem", Name = "SubmitAddStoreItem")]
         public IActionResult AddStoreItem(int StoreId, StoreItem storeItem)
         {
-            storeItem.StoreId = StoreId;
-            storeItem.DateCreated = DateTime.Now;
-            storeService.AddStoreItem(storeItem);
-            return RedirectToAction("Store", new { StoreId = StoreId });
+            if (ModelState.IsValid)
+            {
+                storeItem.StoreId = StoreId;
+                storeItem.DateCreated = DateTime.Now;
+                storeService.AddStoreItem(storeItem);
+                return RedirectToAction("Store", new { StoreId = StoreId });
+            }
+            return View(storeItem);
         }
 
         // Edit store item
@@ -120,10 +133,15 @@ namespace Fakebook.Controllers
         [HttpPost("/Marketplace/store/{StoreId}/storeitem/{StoreItemId}/EditItem", Name = "SubmitEditStoreItem")]
         public IActionResult EditStoreItem(int StoreId, int StoreItemId, StoreItem si)
         {
-            si.StoreId = StoreId;
-            si.StoreItemId = StoreItemId;
-            storeService.EditStoreItem(si);
-            return RedirectToAction("StoreItem", new { StoreId = StoreId, StoreItemId = StoreItemId});
+            if (ModelState.IsValid)
+            {
+                si.StoreId = StoreId;
+                si.StoreItemId = StoreItemId;
+                storeService.EditStoreItem(si);
+                return RedirectToAction("StoreItem", new { StoreId = StoreId, StoreItemId = StoreItemId });
+            }
+
+            return View(si);
         }
 
         public IActionResult DeleteStoreItem(int StoreId, int StoreItemId)
@@ -134,10 +152,15 @@ namespace Fakebook.Controllers
 
         public IActionResult AddReview(int StoreId, int StoreItemId, Review r)
         {
-            r.StoreItemId = StoreItemId;
-            r.PosterId = User.Identity.GetPersonId();
-            r.DatePosted = DateTime.Now;
-            storeService.AddReview(r);
+            if (ModelState.IsValid)
+            {
+                r.StoreItemId = StoreItemId;
+                r.PosterId = User.Identity.GetPersonId();
+                r.DatePosted = DateTime.Now;
+                storeService.AddReview(r);
+                return RedirectToAction("StoreItem", new { StoreId = StoreId, StoreItemId = StoreItemId });
+            }
+
             return RedirectToAction("StoreItem", new { StoreId = StoreId, StoreItemId = StoreItemId });
         }
 
@@ -153,8 +176,13 @@ namespace Fakebook.Controllers
         [HttpPost("/Marketplace/store/{StoreId}/storeitem/{StoreItemId}/review/{ReviewId}/EditReview", Name = "SubmitEditReview")]
         public IActionResult EditReview(int StoreId, int StoreItemId, int ReviewId, Review r)
         {
-            storeService.EditReview(r);
-            return RedirectToAction("StoreItem", new { StoreId = StoreId, StoreItemId = StoreItemId });
+            if (ModelState.IsValid)
+            {
+                storeService.EditReview(r);
+                return RedirectToAction("StoreItem", new { StoreId = StoreId, StoreItemId = StoreItemId });
+            }
+
+            return View(r);
         }
 
         public IActionResult DeleteReview(int StoreId, int StoreItemId, int ReviewId)

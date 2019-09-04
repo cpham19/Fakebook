@@ -14,15 +14,22 @@
     <div class="row">
         @foreach (var group in ViewBag.Groups)
         {
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
+            <div class="col-lg-4 col-sm-6 portfolio-item">
+                <div class="card">
                     <img src="@group.GroupPictureUrl" class="card-img-top" width="200px" height="200px" />
-                    <h1 class="text-center">@group.GroupName</h1>
-                    <p class="card-text">@group.Description</p>
-                    <a class="card-link" asp-controller="Group" asp-action="ViewGroup" asp-route-GroupId="@group.GroupId">View</a>
+                    <hr/>
+                    <div class="card-body">
+                        <h4 class="text-center card-title">@group.GroupName</h4>
+                        <p class="card-text">@group.Description</p>
+                        <a class="card-link" asp-controller="Group" asp-action="ViewGroup" asp-route-GroupId="@group.GroupId">View</a>
+                        @if (group.GroupCreatorId == ViewBag.PersonId)
+                        {
+                            <a class="card-link" asp-controller="Group" asp-action="DeleteGroup" asp-route-GroupId="@group.GroupId">Delete</a>
+                        }
+                    </div>
                 </div>
+                <br/>
             </div>
         }
     </div>
-    <hr>
 </div> <!-- /container -->

@@ -14,6 +14,7 @@
                 <input type="text" name="StoreItemId" class="form-control" value="@Model.StoreItemId" hidden />
                 <textarea class="form-control" name="Description" placeholder="Description" rows="3">@Model.Description</textarea>
             </div>
+            <span asp-validation-for="Description" class="text-danger"></span>
             <button type="submit" class="btn btn-success">Edit</button>
         </form>
     </div>

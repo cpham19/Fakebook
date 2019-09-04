@@ -11,22 +11,25 @@
         <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1">Store Name</span>
         </div>
-        <input class="form-control" type="text" name="StoreName" placeholder="Name" value="@Model.StoreName" required/>
+        <input class="form-control" type="text" name="StoreName" placeholder="Name" value="@Model.StoreName" required />
     </div>
+    <span asp-validation-for="StoreName" class="text-danger"></span>
 
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1">Store Description</span>
         </div>
-        <input class="form-control" type="text" name="StoreDescription" placeholder="Description" value="@Model.StoreDescription" required/>
+        <input class="form-control" type="text" name="StoreDescription" placeholder="Description" value="@Model.StoreDescription" required />
     </div>
+    <span asp-validation-for="StoreDescription" class="text-danger"></span>
 
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1">Store Image Url</span>
         </div>
-        <input class="form-control" type="text" name="StoreImageUrl" placeholder="Image Url" value="@Model.StoreImageUrl" required/>
+        <input class="form-control" type="text" name="StoreImageUrl" placeholder="Image Url" value="@Model.StoreImageUrl" required />
     </div>
+    <span asp-validation-for="StoreImageUrl" class="text-danger"></span>
 
     <br />
     <button>Edit</button>

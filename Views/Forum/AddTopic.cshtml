@@ -1,17 +1,25 @@
 ﻿@{
     ViewData["Title"] = "AddTopic";
 }
+@model Topic
 
 <h1>Add New Topic</h1>
 <form method="post">
-    <div class="input-group-prepend">
-        <span class="input-group-text" id="basic-addon1">Topic Name</span>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Topic Name</span>
+        </div>
+        <input class="form-control" type="text" name="TopicName" placeholder="Topic Name" required>
     </div>
-    <input class="form-control" type="text" name="TopicName" placeholder="Topic Name" required><br>
+    <span asp-validation-for="TopicName" class="text-danger"></span><br/>
 
-    <div class="input-group-prepend">
-        <span class="input-group-text" id="basic-addon1">Topic Content</span>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Topic Content</span>
+        </div>
+        <input class="form-control" type="text" name="TopicContent" placeholder="Topic Content" required>
     </div>
-    <input class="form-control" type="text" name="TopicContent" placeholder="Topic Content" required><br>
+    <span asp-validation-for="TopicContent" class="text-danger"></span>
+    <br/>
     <button>Add</button>
 </form>

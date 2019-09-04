@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "AddForum";
 }
+@model Forum
 
 <h1>Add New Forum</h1>
 <form method="post">
@@ -8,8 +9,8 @@
         <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1">Forum Name</span>
         </div>
-        <input class="form-control" type="text" name="ForumName" placeholder="Forum Name" required>
+        <input class="form-control" type="text" name="ForumName" placeholder="Forum Name" required><button>Add</button>
     </div>
-    <br/>
-    <button>Add</button>
+    <br />
+    <span asp-validation-for="ForumName" class="text-danger"></span><br/>
 </form>

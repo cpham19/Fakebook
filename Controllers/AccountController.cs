@@ -78,12 +78,12 @@ namespace Fakebook.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            else if (person.Username == null || person.Password == null || person.Name == null)
+            else if (ModelState.IsValid)
             {
-                return View();
+                accountService.AddPerson(person);
+                return RedirectToAction(nameof(Login));
             }
-            accountService.AddPerson(person);
-            return RedirectToAction(nameof(Login));
+            return View(person);
         }
 
         public IActionResult AccessDenied()

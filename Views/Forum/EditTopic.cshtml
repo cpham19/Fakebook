@@ -9,13 +9,17 @@
         <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1">Topic Name</span>
         </div>
-        <input class="form-control" type="text" name="TopicName" class="form-control" placeholder="Topic Name" value="@Model.TopicName" required />
+        <input class="form-control" type="text" name="TopicName" placeholder="Topic Name" value="@Model.TopicName" required />
     </div>
+    <span asp-validation-for="TopicName" class="text-danger"></span>
+
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1">Topic Content</span>
         </div>
-        <textarea class="form-control" type="text" name="TopicContent" class="form-control" placeholder="Topic Content" required>@Model.TopicContent</textarea>
+        <textarea class="form-control" type="text" name="TopicContent" placeholder="Topic Content" required>@Model.TopicContent</textarea>
     </div>
+    <span asp-validation-for="TopicContent" class="text-danger"></span>
+
     <button class="btn btn-lg btn-primary btn-block" type="submit">Edit</button>
 </form>

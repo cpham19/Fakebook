@@ -11,5 +11,6 @@
         </div>
         <textarea class="form-control" name="Description" class="form-control" placeholder="Description" required>@Model.Description</textarea>
     </div>
+    <span asp-validation-for="Description" class="text-danger"></span>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Edit</button>
 </form>

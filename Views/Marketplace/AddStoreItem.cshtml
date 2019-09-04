@@ -1,8 +1,10 @@
 ﻿@{
-    ViewData["Title"] = "Add Store";
+    ViewData["Title"] = "Add Store Item";
 }
 
-<h1>Add Store</h1>
+@model StoreItem
+
+<h1>Add Store Item</h1>
 
 <form method="post">
     <div class="input-group mb-3">
@@ -11,6 +13,7 @@
         </div>
         <input class="form-control" type="text" name="ItemName" placeholder="Name" required />
     </div>
+    <span asp-validation-for="ItemName" class="text-danger"></span>
 
     <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -18,6 +21,7 @@
         </div>
         <input class="form-control" type="text" name="ItemCondition" placeholder="Condition" required />
     </div>
+    <span asp-validation-for="ItemCondition" class="text-danger"></span>
 
     <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -25,6 +29,7 @@
         </div>
         <input class="form-control" type="text" name="ItemImageUrl" placeholder="Image Url" required />
     </div>
+    <span asp-validation-for="ItemImageUrl" class="text-danger"></span>
 
     <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -32,6 +37,7 @@
         </div>
         <input class="form-control" type="text" name="ItemDescription" placeholder="Description" required />
     </div>
+    <span asp-validation-for="ItemDescription" class="text-danger"></span>
 
     <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -39,6 +45,7 @@
         </div>
         <input class="form-control" type="text" name="Price" placeholder="Price" required />
     </div>
+    <span asp-validation-for="Price" class="text-danger"></span>
 
     <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -46,6 +53,7 @@
         </div>
         <input class="form-control" type="text" name="Quantity" placeholder="Quantity" required />
     </div>
+    <span asp-validation-for="Quantity" class="text-danger"></span>
 
     <br />
     <button>Post</button>

@@ -108,6 +108,19 @@ namespace Fakebook.Services
             db.GroupMembers.Remove(gm);
             db.SaveChanges();
         }
+
+        public void DeleteGroup(int GroupId)
+        {
+            Group group = db.Groups.Where(g => g.GroupId == GroupId).SingleOrDefault();
+            List<GroupMember> groupmembers = db.GroupMembers.Where(g => g.GroupId == GroupId).ToList();
+            foreach (var member in groupmembers)
+            {
+                db.GroupMembers.Remove(member);
+            }
+
+            db.Groups.Remove(group);
+            db.SaveChanges();
+        }
     }
 }
 

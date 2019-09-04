@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace Fakebook
 {
@@ -9,6 +10,8 @@ namespace Fakebook
     {
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int ForumId { get; set; }
+
+        [StringLength(20, MinimumLength = 3)]
         public string ForumName { get; set; }
         public int PosterId { get; set; }
 
@@ -31,8 +34,10 @@ namespace Fakebook
     {
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int TopicId { get; set; }
+        [StringLength(20, MinimumLength = 3)]
         public string TopicName { get; set; }
         public DateTime TopicDate { get; set; }
+        [StringLength(50, MinimumLength = 3)]
         public string TopicContent { get; set; }
         public virtual int ForumId { get; set; }
         public int PosterId { get; set; }
@@ -58,6 +63,7 @@ namespace Fakebook
     {
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int ReplyId { get; set; }
+        //[StringLength(50, MinimumLength = 3)]
         public string ReplyContent { get; set; }
         public DateTime ReplyDate { get; set; }
         public virtual int TopicId { get; set; }

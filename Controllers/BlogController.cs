@@ -48,10 +48,15 @@ namespace Fakebook.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                blog.DatePosted = DateTime.Now;
-                blog.PosterId = User.Identity.GetPersonId();
-                blogService.AddBlog(blog);
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    blog.DatePosted = DateTime.Now;
+                    blog.PosterId = User.Identity.GetPersonId();
+                    blogService.AddBlog(blog);
+                    return RedirectToAction(nameof(Index));
+                }
+
+                return View(blog);
             }
             else
             {
@@ -71,9 +76,13 @@ namespace Fakebook.Controllers
         [HttpPost("/Blogs/blog/{BlogId}/EditBlog", Name = "SubmitEditBlog")]
         public IActionResult EditBlog(int BlogId, Blog blog)
         {
-            blog.BlogId = BlogId;
-            blogService.EditBlog(blog);
-            return RedirectToAction("ReadBlog", new { BlogId = BlogId });
+            if (ModelState.IsValid)
+            {
+                blog.BlogId = BlogId;
+                blogService.EditBlog(blog);
+                return RedirectToAction("ReadBlog", new { BlogId = BlogId });
+            }
+            return View(blog);
         }
 
         [HttpGet("/Blogs/blog/{BlogId}/DeleteBlog", Name = "DeleteBlog")]
@@ -112,10 +121,15 @@ namespace Fakebook.Controllers
         [HttpPost("/Blogs/{BlogId}/EditComment/{BlogCommentId}", Name = "SubmitEditBlogComment")]
         public IActionResult EditBlogComment(int BlogId, int BlogCommentId, BlogComment bc)
         {
-            bc.BlogCommentId = BlogCommentId;
-            bc.BlogId = BlogId;
-            blogService.EditBlogComment(bc);
-            return RedirectToAction("ReadBlog", new { BlogId = BlogId });
+            if (ModelState.IsValid)
+            {
+                bc.BlogCommentId = BlogCommentId;
+                bc.BlogId = BlogId;
+                blogService.EditBlogComment(bc);
+                return RedirectToAction("ReadBlog", new { BlogId = BlogId });
+            }
+
+            return View(bc);
         }
 
         [HttpGet("/Blogs/Blog/{BlogId}/DeleteBlogComment/{BlogCommentId}", Name = "DeleteBlogComment")]

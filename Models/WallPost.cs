@@ -10,6 +10,7 @@ namespace Fakebook.Models
         public int WallPostId { get; set; }
         // Default is 0 in Database so any GroupId that is >= 1 means the wallpost belongs to a group
         public int GroupId { get; set; }
+        [StringLength(70, MinimumLength = 3)]
         public string Description { get; set; }
         public DateTime DatePosted { get; set; }
         public int PosterId { get; set; }
@@ -23,6 +24,7 @@ namespace Fakebook.Models
     public class ReplyPost
     {
         public int ReplyPostId { get; set; }
+        [StringLength(70, MinimumLength = 3)]
         public string Description { get; set; }
         public DateTime DatePosted { get; set; }
         public int WallPostId { get; set; }

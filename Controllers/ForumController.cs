@@ -50,9 +50,14 @@ namespace Fakebook.Controllers
         [HttpPost("/Forum/AddForum", Name = "AddForum")]
         public IActionResult AddForum(Forum f)
         {
-            f.PosterId = User.Identity.GetPersonId();
-            forumService.AddForum(f);
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                f.PosterId = User.Identity.GetPersonId();
+                forumService.AddForum(f);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(f);
         }
 
         [HttpGet("/Forum/{ForumName}/AddTopic", Name = "AddTopic")]
@@ -66,24 +71,34 @@ namespace Fakebook.Controllers
         [HttpPost("/Forum/{ForumName}/AddTopic", Name = "AddTopic")]
         public IActionResult AddTopic(string ForumName, Topic t)
         {
-            Forum forum = forumService.GetForumBasedOnName(ForumName);
-            t.ForumId = forum.ForumId;
-            t.TopicDate = DateTime.Now;
-            t.PosterId = User.Identity.GetPersonId();
-            t.PosterName = User.Identity.GetName();
-            forumService.AddTopic(t);
-            return RedirectToAction("ViewForum", new { ForumName = ForumName });
+            if (ModelState.IsValid)
+            {
+                Forum forum = forumService.GetForumBasedOnName(ForumName);
+                t.ForumId = forum.ForumId;
+                t.TopicDate = DateTime.Now;
+                t.PosterId = User.Identity.GetPersonId();
+                t.PosterName = User.Identity.GetName();
+                forumService.AddTopic(t);
+                return RedirectToAction("ViewForum", new { ForumName = ForumName });
+            }
+
+            return View(t);
         }
 
         [HttpPost("/Forum/{ForumName}/{TopicId}/{TopicName}", Name = "AddReply")]
         public IActionResult AddReply(string ForumName, int TopicId, string TopicName, Reply r)
         {
-            r.ReplyDate = DateTime.Now;
-            r.TopicId = TopicId;
-            r.PosterId = User.Identity.GetPersonId();
-            r.PosterName = User.Identity.GetName();
-            forumService.AddReply(r);
-            return RedirectToAction("ViewTopic", new { ForumName = ForumName , TopicId = TopicId, TopicName = TopicName});
+            if (ModelState.IsValid)
+            {
+                r.ReplyDate = DateTime.Now;
+                r.TopicId = TopicId;
+                r.PosterId = User.Identity.GetPersonId();
+                r.PosterName = User.Identity.GetName();
+                forumService.AddReply(r);
+                return RedirectToAction("ViewTopic", new { ForumName = ForumName, TopicId = TopicId, TopicName = TopicName });
+            }
+
+            return RedirectToAction("ViewTopic", new { ForumName = ForumName, TopicId = TopicId, TopicName = TopicName });
         }
 
         [HttpGet("/Forum/{ForumName}/{TopicId}/{TopicName}/Edit", Name = "EditTopic")]
@@ -98,9 +113,14 @@ namespace Fakebook.Controllers
         [HttpPost("/Forum/{ForumName}/{TopicId}/{TopicName}/Edit", Name = "SubmitEditTopic")]
         public IActionResult EditTopic(string ForumName, int TopicId, string TopicName, Topic t)
         {
-            t.TopicId = TopicId;
-            forumService.EditTopic(t);
-            return RedirectToAction("ViewTopic", new { ForumName = ForumName, TopicId = TopicId, TopicName = TopicName });
+            if (ModelState.IsValid)
+            {
+                t.TopicId = TopicId;
+                forumService.EditTopic(t);
+                return RedirectToAction("ViewTopic", new { ForumName = ForumName, TopicId = TopicId, TopicName = TopicName });
+            }
+
+            return View(t);
         }
 
         [HttpGet("/Forum/{ForumName}/{TopicId}/{TopicName}/{ReplyId}/Edit", Name = "EditReply")]
@@ -115,9 +135,14 @@ namespace Fakebook.Controllers
         [HttpPost("/Forum/{ForumName}/{TopicId}/{TopicName}/{ReplyId}/Edit", Name = "SubmitEditReply")]
         public IActionResult EditReply(string ForumName, int TopicId, string TopicName, int ReplyId, Reply r)
         {
-            r.ReplyId = ReplyId;
-            forumService.EditReply(r);
-            return RedirectToAction("ViewTopic", new { ForumName = ForumName, TopicId = TopicId, TopicName = TopicName });
+            if (ModelState.IsValid)
+            {
+                r.ReplyId = ReplyId;
+                forumService.EditReply(r);
+                return RedirectToAction("ViewTopic", new { ForumName = ForumName, TopicId = TopicId, TopicName = TopicName });
+            }
+
+            return View(r);
         }
 
         public IActionResult DeleteTopic(string ForumName, int TopicId)
