@@ -5,24 +5,35 @@
 
 <div class="jumbotron">
     <div class="container">
-        <h1 class="display-3">My Blogs</h1>
+        <h1 class="display-3">Their Blogs</h1>
     </div>
 </div>
 
-<div class="container">
-    <!-- Example row of columns -->
-    <div class="row">
-        @foreach (var blog in ViewBag.Blogs)
-        {
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <img src="@blog.PictureUrl" class="card-img-top" width="200px" height="200px" />
-                    <h1>@blog.Title</h1>
-                    <p class="card-text">@blog.Description</p>
-                    <a class="card-link" asp-controller="Blog" asp-action="ReadBlog" asp-route-BlogId="@blog.BlogId">View</a>
-                </div>
-            </div>
-        }
+@if (ViewBag.Blogs.Count == 0)
+{
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-4">They have no blogs.</h1>
+        </div>
     </div>
-    <hr>
-</div> <!-- /container -->
+}
+else
+{
+    <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+            @foreach (var blog in ViewBag.Blogs)
+            {
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <img src="@blog.PictureUrl" class="card-img-top" width="200px" height="200px" />
+                        <h1>@blog.Title</h1>
+                        <p class="card-text">@blog.Description</p>
+                        <a class="card-link" asp-controller="Blog" asp-action="ReadBlog" asp-route-BlogId="@blog.BlogId"><i class="fas fa-book-reader"></i> View</a>
+                    </div>
+                </div>
+            }
+        </div>
+        <hr>
+    </div> <!-- /container -->
+}

@@ -15,16 +15,52 @@
 
 <style type="text/css">
     .card-img-top {
-        border-style: solid;
-        border-color: blue;
+        border: 1px solid black;
+        border-color: black;
+    }
+
+    .col-md-8 {
+        border: 1px solid;
+        background-color: #f5f5dc;
+    }
+
+    .card {
+        border: 1px solid;
+        background-color: #f5f5dc;
+    }
+
+    button {
+        background: Transparent no-repeat;
+        border: none;
+        cursor: pointer;
+        overflow: hidden;
+        outline: none;
+        float: left;
+    }
+
+    .mb-4 {
+        background-color: azure;
+    }
+
+    .fa-edit {
+        color: green;
+    }
+
+    .fa-trash-alt {
+        color: red;
+    }
+
+    .fa-plus-square {
+        color: blue;
+        font-size: 2em;
     }
 </style>
 
 <div class="row">
     <!-- About Group -->
     <div class="card" style="width: 18rem;">
-        <h1 class="text-center">@ViewBag.Group.GroupName</h1>
         <img class="card-img-top" src="@ViewBag.Group.GroupPictureUrl" alt="Card image cap">
+        <h1 class="text-center">@ViewBag.Group.GroupName</h1>
         <div class="card-body">
             <h5 class="card-title">Group Info</h5>
             <p class="card-text">@ViewBag.Group.Description</p>
@@ -43,10 +79,10 @@
         <form method="post" asp-controller="Group" asp-action="AddWallPost">
             <input type="text" name="GroupId" value=@ViewBag.Group.GroupId hidden />
             <textarea type="text" name="Description" class="form-control" placeholder="New Post" required></textarea>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Add Post</button>
+            <button type="submit"><i class="fas fa-plus-square"></i></button>
         </form>
-        
-        <br/><br/>
+
+        <br /><br /><br/>
         <!-- Wall Post -->
         @foreach (var post in ViewBag.Group.WallPosts)
         {
@@ -57,11 +93,11 @@
                 <!-- Main Posts -->
                 <div class="card-footer text-muted">
                     Posted on @post.DatePosted by
-                    <a asp-controller="User" asp-action="Index" asp-route-name="@post.PosterName">@post.PosterName</a>
+                    <a asp-controller="User" asp-action="Index" asp-route-id="@post.PosterId">@post.PosterName</a>
                     @if (ViewBag.PersonId == post.PosterId)
                     {
-                        <a asp-controller="Group" asp-action="EditWallPost" asp-route-GroupId="@ViewBag.Group.GroupId" asp-route-WallPostId="@post.WallPostId">Edit</a>
-                        <a asp-controller="Group" asp-action="DeleteWallPost" asp-route-GroupId="@ViewBag.Group.GroupId" asp-route-WallPostId="@post.WallPostId">Delete</a>
+                        <a asp-controller="Group" asp-action="EditWallPost" asp-route-GroupId="@ViewBag.Group.GroupId" asp-route-WallPostId="@post.WallPostId"><i class="fas fa-edit"></i></a>
+                        <a asp-controller="Group" asp-action="DeleteWallPost" asp-route-GroupId="@ViewBag.Group.GroupId" asp-route-WallPostId="@post.WallPostId"><i class="fas fa-trash-alt"></i></a>
                     }
                 </div>
                 <!-- Replies to the Main Posts -->
@@ -75,17 +111,17 @@
                         <a asp-controller="User" asp-action="Index" asp-route-name="@reply.PosterName">@reply.PosterName</a>
                         @if (ViewBag.PersonId == reply.PosterId)
                         {
-                            <a asp-controller="Group" asp-action="EditReplyPost" asp-route-GroupId="@ViewBag.Group.GroupId" asp-route-ReplyPostId="@reply.ReplyPostId">Edit</a>
-                            <a asp-controller="Group" asp-action="DeleteReplyPost" asp-route-GroupId="@ViewBag.Group.GroupId" asp-route-ReplyPostId="@reply.ReplyPostId">Delete</a>
+                            <a asp-controller="Group" asp-action="EditReplyPost" asp-route-GroupId="@ViewBag.Group.GroupId" asp-route-ReplyPostId="@reply.ReplyPostId"><i class="fas fa-edit"></i></a>
+                            <a asp-controller="Group" asp-action="DeleteReplyPost" asp-route-GroupId="@ViewBag.Group.GroupId" asp-route-ReplyPostId="@reply.ReplyPostId"><i class="fas fa-trash-alt"></i></a>
                         }
                     </div>
                 }
-            <form method="post" asp-controller="Group" asp-action="AddReplyPost">
-                <textarea type="text" name="Description" class="form-control" placeholder="New Reply" required></textarea>
-                <input type="text" name="GroupId" class="form-control" value=@ViewBag.Group.GroupId hidden />
-                <input type="text" name="WallPostId" class="form-control" value=@post.WallPostId hidden />
-                <button class="btn btn-sm btn-primary" type="submit">Add Reply</button>
-            </form>
+                <form method="post" asp-controller="Group" asp-action="AddReplyPost">
+                    <textarea type="text" name="Description" class="form-control" placeholder="New Reply" required></textarea>
+                    <input type="text" name="GroupId" class="form-control" value=@ViewBag.Group.GroupId hidden />
+                    <input type="text" name="WallPostId" class="form-control" value=@post.WallPostId hidden />
+                    <button class="btn btn-sm btn-primary" type="submit">Add Reply</button>
+                </form>
             </div>
         }
     </div>

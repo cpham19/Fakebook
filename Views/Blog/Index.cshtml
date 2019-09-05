@@ -17,20 +17,22 @@
             <!-- Blog Entries Column -->
             @foreach (var blog in ViewBag.Blogs)
             {
-                <h1 class="my-4">@blog.Headline</h1>
                 <!-- Blog Post -->
-                <div class="card mb-4">
-                    <img class="card-img-top" src="@blog.PictureUrl" alt="Card image cap" width="200px" height="400px">
-                    <div class="card-body">
-                        <h2 class="card-title">@blog.Title</h2>
-                        <p class="card-text">@blog.Description</p>
-                        <a class="btn btn-primary" asp-controller="Blog" asp-action="ReadBlog" asp-route-BlogId="@blog.BlogId">Read More</a>
-                    </div>
-                    <div class="card-footer text-muted">
-                        Posted on @blog.DatePosted by
-                        <a asp-controller="User" asp-action="Index" asp-route-id="@blog.PosterId">@blog.PosterName</a>
-                    </div>
+            <div class="card mb-4">
+                <h1 class="my-4">@blog.Headline</h1>
+                <hr/>
+                <img class="card-img-top" src="@blog.PictureUrl" alt="Card image cap" width="200px" height="400px">
+                <hr/>
+                <div class="card-body">
+                    <h2 class="card-title">@blog.Title</h2>
+                    <p class="card-text">@blog.Description</p>
+                    <a class="btn btn-primary" asp-controller="Blog" asp-action="ReadBlog" asp-route-BlogId="@blog.BlogId">Read More</a>
                 </div>
+                <div class="card-footer text-muted">
+                    Posted on @blog.DatePosted by
+                    <a asp-controller="User" asp-action="Index" asp-route-id="@blog.PosterId">@blog.PosterName</a>
+                </div>
+            </div>
 
             }
         </div>
@@ -51,7 +53,7 @@
             </div>
 
             <!-- Categories Widget -->
-            <div class="card my-4">
+            @*<div class="card my-4">
                 <h5 class="card-header">Categories</h5>
                 <div class="card-body">
                     <div class="row">
@@ -82,7 +84,7 @@
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div>*@
             </div>
         </div>
 

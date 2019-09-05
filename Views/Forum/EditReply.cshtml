@@ -3,6 +3,13 @@
 }
 @model Reply
 
+<style>
+    .fa-edit {
+        color: green;
+        font-size: 3em;
+    }
+</style>
+
 <h1>Editting Reply #@Model.ReplyId</h1>
 <form method="post" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@ViewBag.TopicName">
     <div class="input-group mb-3">
@@ -10,8 +17,8 @@
             <span class="input-group-text" id="basic-addon1">Reply Content</span>
         </div>
         <textarea class="form-control" type="text" name="ReplyContent" placeholder="Reply Content" required>@Model.ReplyContent</textarea>
+        <button style="width:100px" type="submit"><i class="fas fa-edit"></i></button>
     </div>
 
     <span asp-validation-for="ReplyContent" class="text-danger"></span>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Edit</button>
 </form>

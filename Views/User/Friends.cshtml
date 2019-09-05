@@ -3,20 +3,40 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<div class="container">
-    <!-- Example row of columns -->
-    <div class="row">
-        @foreach (var person in ViewBag.Friends)
-        {
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <img src="https://robohash.org/@person.Name" class="card-img-top" />
-                <h1 class="text-center">@person.Name</h1>
-                <p class="card-text">@person.ProfileDescription</p>
-                <a class="card-link" asp-controller="User" asp-action="Index" asp-route-name="@person.Name">View User</a>
-            </div>
-        </div>
-        }
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-3">Their Friends</h1>
     </div>
-    <hr>
-</div> <!-- /container -->
+</div>
+
+@if (ViewBag.Friends.Count == 0)
+{
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-5">They have no friends.</h1>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+            @foreach (var person in ViewBag.Friends)
+            {
+                <div class="col-lg-4 col-sm-6 portfolio-item">
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://robohash.org/@person.Name" class="card-img-top" />
+                        <div class="card-body">
+                            <h1 class="text-center">@person.Name</h1>
+                            <p class="card-text">@person.ProfileDescription</p>
+                            <a class="card-link" asp-controller="User" asp-action="Index" asp-route-id="@person.PersonId"><i class="fas fa-book-reader"></i> View</a>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            }
+        </div>
+        <hr>
+    </div> <!-- /container -->
+}

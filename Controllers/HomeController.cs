@@ -148,6 +148,7 @@ namespace Fakebook.Controllers
         [HttpGet("/MyGroups", Name = "MyGroups")]
         public IActionResult Groups()
         {
+            ViewBag.PersonId = User.Identity.GetPersonId();
             List<Group> groups = groupService.GetGroupsOfUser(User.Identity.GetPersonId());
             ViewBag.Groups = groups;
             return View();

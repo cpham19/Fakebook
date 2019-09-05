@@ -7,6 +7,11 @@
     .table-light {
         border: solid 5px;
     }
+
+    .fa-plus-circle {
+        color: orange;
+        font-size: 24px;
+    }
 </style>
 
 <nav aria-label="breadcrumb">
@@ -22,7 +27,9 @@
     </div>
 </div>
 
-<a asp-controller="Forum" asp-action="AddTopic" asp-route-Forumname="@Model.ModifiedForumName()">Add New Topic</a><br/>
+<a style="color:orange;" asp-controller="Forum" asp-action="AddTopic" asp-route-Forumname="@Model.ModifiedForumName()"><i class="fas fa-plus-circle"></i> Add New Topic</a>
+<br />
+
 <table class="table table-striped table-light">
     <thead class="thead-dark">
         <tr>

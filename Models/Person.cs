@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fakebook.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -37,7 +38,7 @@ namespace Fakebook.Models
         [NotMapped]
         public List<Review> Reviews { get; set; } = new List<Review>();
         [NotMapped]
-        public List<StoreItem> ItemsReviewed{ get; set; } = new List<StoreItem>();
+        public List<StoreItem> ItemsReviewed { get; set; } = new List<StoreItem>();
     }
 
     public class Friend

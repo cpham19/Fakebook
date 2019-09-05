@@ -5,7 +5,14 @@
 @model Person
 @using Fakebook.Models;
 
-<h1>Editting Page for @person.Name</h1>
+<style>
+    .fa-edit {
+        color:green;
+        font-size: 3em;
+    }
+</style>
+
+<h1>Editting Profile Page for @person.Name</h1>
 
 <form method="post">
     <div class="input-group mb-3">
@@ -13,6 +20,6 @@
             <span class="input-group-text" id="basic-addon1">Profile Description</span>
         </div>
         <textarea class="form-control" type="text" name="ProfileDescription" class="form-control" placeholder="Profile Description" required>@person.ProfileDescription</textarea>
+        <button style="width:100px" type="submit"><i class="fas fa-edit"></i></button>
     </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Edit</button>
 </form>

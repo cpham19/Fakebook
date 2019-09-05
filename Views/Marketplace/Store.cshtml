@@ -1,6 +1,21 @@
 ﻿@{
     ViewData["Title"] = "Shop Page";
 }
+
+<style>
+    .fa-plus-square {
+        color: orange;
+    }
+
+    .fa-edit {
+        color: darkgreen;
+    }
+
+    .fa-trash-alt {
+        color: red;
+    }
+</style>
+
 <div class="jumbotron">
     <div class="container">
         <h1 class="display-3">@ViewBag.Store.StoreName</h1>
@@ -9,19 +24,21 @@
 
 <div>
     <a asp-controller="Marketplace" asp-action="Cart" class="btn btn-info">View Cart</a>
-    <a asp-controller="Marketplace" asp-action="SalesHistory" class="btn btn-primary">View Sales History</a>
+    <a asp-controller="Marketplace" asp-action="SalesHistory" class="btn btn-dark">View Sales History</a>
     <a asp-controller="Marketplace" asp-action="OrderHistory" class="btn btn-secondary">View Order History</a>
 </div>
 
-<br/>
+<br />
 
 @if (ViewBag.Store.StoreOwnerId == ViewBag.PersonId)
 {
-    <a asp-controller="Marketplace" asp-action="AddStoreItem" asp-route-StoreId="@ViewBag.Store.StoreId">Add Item</a>
+    <a style="color:orange;" asp-controller="Marketplace" asp-action="AddStoreItem" asp-route-StoreId="@ViewBag.Store.StoreId"><i class="fas fa-plus-square"></i> Add Item</a>
     <br />
-    <a asp-controller="Marketplace" asp-action="EditStore" asp-route-StoreId="@ViewBag.Store.StoreId">Edit Store</a>
+    <a style="color:darkgreen;" asp-controller="Marketplace" asp-action="EditStore" asp-route-StoreId="@ViewBag.Store.StoreId"><i class="fas fa-edit"></i> Edit Store</a>
     <br />
-    <a asp-controller="Marketplace" asp-action="DeleteStore" asp-route-StoreId="@ViewBag.Store.StoreId">Delete Store</a>
+    <a style="color:red;" asp-controller="Marketplace" asp-action="DeleteStore" asp-route-StoreId="@ViewBag.Store.StoreId"><i class="fas fa-trash-alt"></i> Delete Store</a>
+    <br />
+    <br />
 }
 
 <!-- Page Content -->

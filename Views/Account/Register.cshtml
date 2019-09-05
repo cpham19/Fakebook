@@ -9,16 +9,27 @@
         width: 100%;
         padding: 12px 300px;
     }
+
+    .btn-primary {
+        background-color:green;
+        color: white;
+    }
+
+    .red {
+        color:red;
+        font-size:24px;
+    }
 </style>
+
+<img src="~/img/register.jpg" class="img-responsive text-center" height="400px" />
 
 <form method="post" class="text-center">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <h1 class="display-4">Register</h1>
     <input type="text" name="Name" class="form-control" placeholder="Name" required /> <br />
     <span asp-validation-for="Name" class="text-danger"></span>
     <input type="text" name="Username" class="form-control" placeholder="Username" required /> <br />
     <span asp-validation-for="Username" class="text-danger"></span>
     <input type="password" name="Password" class="form-control" placeholder="Password" required /><br />
     <span asp-validation-for="Password" class="text-danger"></span>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button><a asp-controller="Account" asp-action="Login">Login</a>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button><a class="red" asp-controller="Account" asp-action="Login">Login</a>
 </form>

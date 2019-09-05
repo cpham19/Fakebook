@@ -1,34 +1,54 @@
 ﻿@{
     ViewData["Title"] = "Group Page";
 }
+
+<style>
+    .fa-trash-alt {
+        color:red;
+    }
+
+    .fa-plus-circle {
+        color:green;
+        font-size:24px;
+    }
+
+    .box {
+        background-color: azure;
+    }
+
+    .card-link {
+        bottom: 0;
+    }
+</style>
+
 <div class="jumbotron">
     <div class="container">
         <h1 class="display-3">Groups</h1>
     </div>
 </div>
 
-<a asp-controller="Group" asp-action="AddGroup">Add Group</a>
-
-<div class="container">
+<div class="box">
+    <a asp-controller="Group" asp-action="AddGroup"><i class="fas fa-plus-circle"></i> Add Group</a>
+    <br/><br/>
     <!-- Example row of columns -->
     <div class="row">
         @foreach (var group in ViewBag.Groups)
         {
             <div class="col-lg-4 col-sm-6 portfolio-item">
-                <div class="card">
-                    <img src="@group.GroupPictureUrl" class="card-img-top" width="200px" height="200px" />
-                    <hr/>
+                <div class="card h-100">
+                    <img src="@group.GroupPictureUrl" class="card-img-top" width="740px" height="300px" />
+                    <hr />
                     <div class="card-body">
                         <h4 class="text-center card-title">@group.GroupName</h4>
                         <p class="card-text">@group.Description</p>
-                        <a class="card-link" asp-controller="Group" asp-action="ViewGroup" asp-route-GroupId="@group.GroupId">View</a>
+                        <a class="card-link" asp-controller="Group" asp-action="ViewGroup" asp-route-GroupId="@group.GroupId"><i class="fas fa-hamburger"></i> View</a>
                         @if (group.GroupCreatorId == ViewBag.PersonId)
                         {
-                            <a class="card-link" asp-controller="Group" asp-action="DeleteGroup" asp-route-GroupId="@group.GroupId">Delete</a>
+                            <a class="card-link" style="color:red;" asp-controller="Group" asp-action="DeleteGroup" asp-route-GroupId="@group.GroupId"><i class="fas fa-trash-alt"></i> Delete</a>
                         }
                     </div>
                 </div>
-                <br/>
+                <br />
             </div>
         }
     </div>

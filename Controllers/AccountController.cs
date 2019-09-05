@@ -80,8 +80,11 @@ namespace Fakebook.Controllers
             }
             else if (ModelState.IsValid)
             {
-                accountService.AddPerson(person);
-                return RedirectToAction(nameof(Login));
+                bool successfulRegister = accountService.AddPerson(person);
+                if (successfulRegister == true)
+                {
+                    return RedirectToAction(nameof(Login));
+                }
             }
             return View(person);
         }

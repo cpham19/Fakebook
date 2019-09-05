@@ -283,7 +283,7 @@ namespace Fakebook.Services
         public List<Order> GetSalesHistory(int PersonId)
         {
             Store store = db.Stores.Where(s => s.StoreOwnerId == PersonId).SingleOrDefault();
-            List<Order> orders = null;
+            List<Order> orders = new List<Order>();
           
             if (store != null)
             {

@@ -168,6 +168,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Marketplace/store/{StoreId}/storeitem/{StoreItemId}/review/{ReviewId}/EditReview", Name = "EditReview")]
         public IActionResult EditReview(int StoreId, int StoreItemId, int ReviewId)
         {
+            ViewBag.StoreId = StoreId;
             Review review = storeService.GetReview(ReviewId);
             return View(review);
         }

@@ -12,11 +12,12 @@ GO
 CREATE TABLE [Persons] (
     [PersonId] int NOT NULL IDENTITY,
     [Name] nvarchar(max) NULL,
-    [Username] nvarchar(450) NOT NULL,
+    [Username] nvarchar(450) NOT NULL UNIQUE,
     [Password] nvarchar(max) NOT NULL,
     [IsAdmin] bit NOT NULL DEFAULT 0,
 	[ProfileDescription] nvarchar(max) NOT NULL DEFAULT 'Profile Description',
     CONSTRAINT [PK_Persons] PRIMARY KEY ([PersonId]),
+	CONSTRAINT [UC_Persons_Username] UNIQUE ([Username])
 );
 
 GO

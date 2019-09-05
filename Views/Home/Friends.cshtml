@@ -2,27 +2,47 @@
     ViewData["Title"] = "Friends";
 }
 
+<style>
+    .fa-trash-alt {
+        color:red;
+    }
+</style>
+
 <div class="jumbotron">
     <div class="container">
         <h1 class="display-3">My Friends</h1>
     </div>
 </div>
 
-<div class="container">
-    <!-- Example row of columns -->
-    <div class="row">
-        @foreach (var person in ViewBag.Friends)
-        {
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <img src="https://robohash.org/@person.Name" class="card-img-top" />
-                <h1 class="text-center">@person.Name</h1>
-                <p class="card-text">@person.ProfileDescription</p>
-                <a class="card-link" asp-controller="User" asp-action="Index" asp-route-id="@person.PersonId">View User</a>
-                <a class="card-link" asp-controller="Home" asp-action="RemoveFriend" asp-route-name="@person.Name" asp-route-PersonTwoId="@person.PersonId">Remove Friend</a>
-            </div>
+@if (ViewBag.Friends.Count == 0)
+{
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-5">You have no friends.</h1>
         </div>
-        }
     </div>
-    <hr>
-</div> <!-- /container -->
+}
+else
+{
+    <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+            @foreach (var person in ViewBag.Friends)
+            {
+                <div class="col-lg-4 col-sm-6 portfolio-item">
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://robohash.org/@person.Name" class="card-img-top" />
+                        <div class="card-body">
+                            <h1 class="text-center">@person.Name</h1>
+                            <p class="card-text">@person.ProfileDescription</p>
+                            <a class="card-link" asp-controller="User" asp-action="Index" asp-route-id="@person.PersonId"><i class="fas fa-book-reader"></i> View</a>
+                            <a class="card-link" style="color:red;" asp-controller="Home" asp-action="RemoveFriend" asp-route-name="@person.Name" asp-route-PersonTwoId="@person.PersonId"><i class="fas fa-trash-alt"></i> Remove Friend</a>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            }
+        </div>
+        <hr>
+    </div> <!-- /container -->
+}

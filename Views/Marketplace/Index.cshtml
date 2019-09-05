@@ -3,6 +3,13 @@
     ViewData["Title"] = "Marketplace";
 }
 
+<style>
+    .fa-store-alt {
+        color:green;
+        font-size:24px;
+    }
+</style>
+
 <div class="jumbotron">
     <div class="container">
         <h1 class="display-3">Marketplace</h1>
@@ -11,11 +18,11 @@
 
 @if (!ViewBag.HasStore)
 {
-    <a asp-controller="Marketplace" asp-action="AddStore">Add Store</a>
-    <br />
+    <a style="color:beige;" asp-controller="Marketplace" asp-action="AddStore"><i class="fas fa-store-alt"></i> Add Store</a>
+    <br /><br/>
 }
 <a asp-controller="Marketplace" asp-action="Cart" class="btn btn-info">View Cart</a>
-<a asp-controller="Marketplace" asp-action="SalesHistory" class="btn btn-primary">View Sales History</a>
+<a asp-controller="Marketplace" asp-action="SalesHistory" class="btn btn-dark">View Sales History</a>
 <a asp-controller="Marketplace" asp-action="OrderHistory" class="btn btn-secondary">View Order History</a>
 <br />
 <br />
@@ -28,7 +35,7 @@
         @foreach (var store in ViewBag.Stores)
         {
             <div class="col-lg-4 col-sm-6 portfolio-item">
-                <div class="card">
+                <div class="card h-100">
                     <img class="card-img-top" src="@store.StoreImageUrl" width="740px" height="300px" alt="">
                     <hr />
                     <div class="card-body">

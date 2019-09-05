@@ -6,10 +6,19 @@
 <style>
     table, th, td {
         border: solid 5px;
+        background-color: beige;
     }
 
     td {
         height: 50px;
+    }
+
+    .fa-edit {
+        color: green;
+    }
+
+    .fa-trash-alt {
+        color: red;
     }
 </style>
 
@@ -29,8 +38,8 @@
         <p>Posted by <a asp-controller="User" asp-action="Index" asp-route-id="@Model.PosterId">@Model.PosterName</a> (@Model.TopicDate)</p>
         @if (@Model.PosterId == ViewBag.PersonId)
         {
-            <a asp-controller="Forum" asp-action="EditTopic" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()">Edit</a>
-            <a asp-controller="Forum" asp-action="DeleteTopic" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()">Delete</a>
+            <a asp-controller="Forum" asp-action="EditTopic" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()"><i class="fas fa-edit"></i></a>
+            <a asp-controller="Forum" asp-action="DeleteTopic" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()"><i class="fas fa-trash-alt"></i></a>
         }
     </div>
 </div>
@@ -48,18 +57,18 @@
             <tr scope="row">
                 <td>
                     @reply.ReplyContent
-                    <br /><br /><br/><br/>
+                    <br /><br /><br /><br />
                     <hr class="my-4">
+                    Posted on @reply.ReplyDate
                     @if (reply.PosterId == ViewBag.PersonId)
                     {
-                        <a asp-controller="Forum" asp-action="EditReply" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()" asp-route-ReplyId="@reply.ReplyId">Edit</a>
-                        <a asp-controller="Forum" asp-action="DeleteReply" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()" asp-route-ReplyId="@reply.ReplyId">Delete</a>
-                        }
-                    Posted on @reply.ReplyDate
+                        <a asp-controller="Forum" asp-action="EditReply" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()" asp-route-ReplyId="@reply.ReplyId"><i class="fas fa-edit"></i></a>
+                        <a asp-controller="Forum" asp-action="DeleteReply" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()" asp-route-ReplyId="@reply.ReplyId"><i class="fas fa-trash-alt"></i></a>
+                    }
                 </td>
                 <td>
                     <div class="text-center">
-                        <img src="https://robohash.org/@reply.PosterName" width="100px" height="100px"/>
+                        <img src="https://robohash.org/@reply.PosterName" width="100px" height="100px" />
                         <br /><br />
                         <a asp-controller="User" asp-action="Index" asp-route-id="@reply.PosterId">@reply.PosterName</a>
                     </div>

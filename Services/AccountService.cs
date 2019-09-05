@@ -25,11 +25,28 @@ namespace Fakebook.Services
             return db.Persons.Where(e => e.Username.ToUpper() == username.ToUpper()).SingleOrDefault();
         }
 
-        // Adding a person to DB for registration
-        public void AddPerson(Person person)
+        public bool CheckUsernameExists(string username)
         {
-            db.Persons.Add(person);
-            db.SaveChanges();
+            Person person = db.Persons.Where(per => per.Username == username).SingleOrDefault();
+            if (person == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        // Adding a person to DB for registration
+        public bool AddPerson(Person p)
+        {
+            if (!this.CheckUsernameExists(p.Username))
+            {
+                db.Persons.Add(p);
+                db.SaveChanges();
+                return true;
+            }
+
+            return false;
         }
 
         // Authenticating user login credentials

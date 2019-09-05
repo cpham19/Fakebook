@@ -6,11 +6,22 @@
         width:100%;
         padding: 12px 300px;
     }
+
+    .btn-primary {
+        background-color:green;
+        color: white;
+    }
+
+    .red {
+        color:red;
+        font-size:24px;
+    }
 </style>
 
+<img src="~/img/login.png" class="img-responsive text-center"/>
+
 <form method="post" class="text-center">
-    <h1 class="display-4">Login</h1>
     <input type="text" name="username" class="form-control" placeholder="Username" required/> <br />
     <input type="password" name="password" class="form-control" placeholder="Password" required/><br />
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button> <a asp-controller="Account" asp-action="Register">Register</a>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button> <a class="red" asp-controller="Account" asp-action="Register">Register</a>
 </form>

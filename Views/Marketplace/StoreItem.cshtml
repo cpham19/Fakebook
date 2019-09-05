@@ -3,11 +3,21 @@
 }
 @model StoreItem
 
-    <div>
-        <a asp-controller="Marketplace" asp-action="Cart" class="btn btn-info">View Cart</a>
-        <a asp-controller="Marketplace" asp-action="SalesHistory" class="btn btn-primary">View Sales History</a>
-        <a asp-controller="Marketplace" asp-action="OrderHistory" class="btn btn-secondary">View Order History</a>
-    </div>
+<style>
+    .fa-edit {
+        color: green;
+    }
+
+    .fa-trash-alt {
+        color: red;
+    }
+</style>
+
+<div>
+    <a asp-controller="Marketplace" asp-action="Cart" class="btn btn-info">View Cart</a>
+    <a asp-controller="Marketplace" asp-action="SalesHistory" class="btn btn-dark">View Sales History</a>
+    <a asp-controller="Marketplace" asp-action="OrderHistory" class="btn btn-secondary">View Order History</a>
+</div>
 
 <!-- Page Content -->
 <div class="container">
@@ -50,8 +60,8 @@
                     @if (ViewBag.PersonId == Model.PosterId)
                     {
                         <br />
-                        <a asp-controller="Marketplace" asp-action="EditStoreItem" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@Model.StoreItemId">Edit</a>
-                        <a asp-controller="Marketplace" asp-action="DeleteStoreItem" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@Model.StoreItemId">Delete</a>
+                        <a asp-controller="Marketplace" asp-action="EditStoreItem" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@Model.StoreItemId"><i class="fas fa-edit"></i></a>
+                        <a asp-controller="Marketplace" asp-action="DeleteStoreItem" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@Model.StoreItemId"><i class="fas fa-trash-alt"></i></a>
                     }
                 </div>
             </div>
@@ -69,8 +79,8 @@
                             Posted by <a asp-controller="User" asp-action="Index" asp-route-id="@review.PosterId">@review.PosterName</a> on @review.DatePosted
                             @if (ViewBag.PersonId == review.PosterId)
                             {
-                                <a asp-controller="Marketplace" asp-action="EditReview" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@review.StoreItemId" asp-route-ReviewId="@review.ReviewId">Edit</a>
-                                <a asp-controller="Marketplace" asp-action="DeleteReview" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@review.StoreItemId" asp-route-ReviewId="@review.ReviewId">Delete</a>
+                                <a asp-controller="Marketplace" asp-action="EditReview" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@review.StoreItemId" asp-route-ReviewId="@review.ReviewId"><i class="fas fa-edit"></i></a>
+                                <a asp-controller="Marketplace" asp-action="DeleteReview" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@review.StoreItemId" asp-route-ReviewId="@review.ReviewId"><i class="fas fa-trash-alt"></i></a>
                             }
                         </small>
                         <hr>
