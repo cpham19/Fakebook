@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Fakebook</title>
+    <title>@ViewData["Title"] - FriendShip</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -30,22 +30,18 @@
             height: 100%;
         }
 
-        .wrapper {
+        .container {
             min-height: 100%;
             height: auto !important;
             height: 100%;
-            min-width: 60%;
-            width: 60%;
-            margin: 0 auto 50px
         }
 
         footer {
             bottom: 0;
             color: red;
-            height: 75px;
+            max-height:150px;
             left: 0;
             position: relative;
-            font-size: 15px;
             width: 100%;
         }
     </style>
@@ -54,7 +50,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand">Fakebook</a>
+                <a class="navbar-brand">FriendShip</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -101,14 +97,14 @@
             </div>
         </nav>
     </header>
-    <div class="wrapper">
+    <div class="container">
         <partial name="_CookieConsentPartial" />
         @RenderBody()
 
     </div>
     <footer class="bg-dark">
         <div>
-            <p class="m-0 text-center text-white">Copyright &copy; <a href="https://github.com/cpham19">Calvin Pham</a> 2019</p>
+            <p class="m-0 text-white">Copyright &copy; <a href="https://github.com/cpham19">Calvin Pham</a> 2019</p>
         </div>
         <!-- /.container -->
     </footer>

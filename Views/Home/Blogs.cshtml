@@ -3,6 +3,24 @@
     ViewData["Title"] = "Blogs";
 }
 
+<style>
+    .card-link {
+          position: absolute;
+          bottom: 0;
+          font-size: 15px;
+    }
+
+    .card {
+            width: 300px;
+    }
+
+    @@media only screen and (max-width: 600px) {
+        .card {
+            width: 500px;
+        }
+    }
+</style>
+
 <div class="jumbotron">
     <div class="container">
         <h1 class="display-3">My Blogs</h1>
@@ -24,12 +42,14 @@ else
         <div class="row">
             @foreach (var blog in ViewBag.Blogs)
             {
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <img src="@blog.PictureUrl" class="card-img-top" width="200px" height="200px" />
-                        <h1>@blog.Title</h1>
-                        <p class="card-text">@blog.Description</p>
-                        <a class="card-link" asp-controller="Blog" asp-action="ReadBlog" asp-route-BlogId="@blog.BlogId"><i class="fas fa-book-reader"></i> View</a>
+                <div class="col-sm-4 d-flex align-items-stretch portfolio-item">
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="@blog.PictureUrl" class="card-img-top" />
+                            <h1>@blog.Title</h1>
+                            <p class="card-text">@blog.Description</p>
+                            <a class="card-link" asp-controller="Blog" asp-action="ReadBlog" asp-route-BlogId="@blog.BlogId"><i class="fas fa-book-reader"></i> View</a>
+                        </div>
                     </div>
                 </div>
             }

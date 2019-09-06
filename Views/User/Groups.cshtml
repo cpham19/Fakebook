@@ -3,6 +3,14 @@
     ViewData["Title"] = "Groups";
 }
 
+<style>
+    @@media only screen and (max-width: 600px) {
+        .card {
+            width: 500px;
+        }
+    }
+</style>
+
 <div class="jumbotron">
     <div class="container">
         <h1 class="display-3">Their Groups</h1>
@@ -24,9 +32,9 @@ else
         <div class="row">
             @foreach (var group in ViewBag.Groups)
             {
-                <div class="col-lg-4 col-sm-6 portfolio-item">
+                <div class="col-sm-4 d-flex align-items-stretch portfolio-item">
                     <div class="card">
-                        <img src="@group.GroupPictureUrl" class="card-img-top" width="200px" height="200px" />
+                        <img src="@group.GroupPictureUrl" class="card-img-top" />
                         <hr />
                         <div class="card-body">
                             <h4 class="text-center card-title">@group.GroupName</h4>

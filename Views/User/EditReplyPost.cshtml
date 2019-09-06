@@ -8,16 +8,24 @@
         color: green;
         font-size: 3em;
     }
+
+    @@media only screen and (max-width: 600px) {
+        .input-group {
+            height: 300px;
+        }
+    }
 </style>
 
-<h1>Editting Reply #@Model.ReplyPostId</h1>
-<form method="post" asp-route-ReplyPostId="@Model.ReplyPostId">
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Description</span>
+<div>
+    <h1>Editting Reply #@Model.ReplyPostId</h1>
+    <form method="post" asp-route-ReplyPostId="@Model.ReplyPostId">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Description</span>
+            </div>
+            <textarea class="form-control" name="Description" placeholder="Description" required>@Model.Description</textarea>
+            <button style="width:100px" type="submit"><i class="fas fa-edit"></i></button>
         </div>
-        <textarea class="form-control" name="Description" placeholder="Description" required>@Model.Description</textarea>
-        <button style="width:100px" type="submit"><i class="fas fa-edit"></i></button>
-    </div>
-    <span asp-validation-for="Description" class="text-danger"></span>
-</form>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </form>
+</div>

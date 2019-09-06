@@ -44,7 +44,10 @@ namespace Fakebook.Models
     public class Friend
     {
         [Key]
+        [Column(Order = 1)]
         public int PersonOneId { get; set; }
+        [Key]
+        [Column(Order = 2)]
         public int PersonTwoId { get; set; }
         public int StatusCode { get; set; } = 0;
     }

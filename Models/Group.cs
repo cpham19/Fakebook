@@ -29,8 +29,11 @@ namespace Fakebook.Models
 
     public class GroupMember
     {
-        public int Id { get; set; }
+        [Key]
+        [Column(Order = 1)]
         public int GroupId { get; set; }
+        [Key]
+        [Column(Order = 2)]
         public int GroupMemberId { get; set; }
     }
 

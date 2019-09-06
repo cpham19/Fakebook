@@ -12,7 +12,11 @@ namespace Fakebook.Services
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Friend>()
+           .HasKey(rel => new { rel.PersonOneId, rel.PersonTwoId });
 
+            modelBuilder.Entity<GroupMember>()
+          .HasKey(gm => new { gm.GroupId, gm.GroupMemberId});
         }
 
         public DbSet<Person> Persons { get; set; }

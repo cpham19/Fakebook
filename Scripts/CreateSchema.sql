@@ -85,10 +85,9 @@ CREATE TABLE [Groups] (
 GO
 
 CREATE TABLE [GroupMembers] (
-	[Id] int NOT NULL IDENTITY,
     [GroupId] int NOT NULL,
     [GroupMemberId] int NOT NULL,
-    CONSTRAINT [PK_GroupMembers] PRIMARY KEY ([Id]),
+    CONSTRAINT [PK_GroupMembers] PRIMARY KEY ([GroupId], [GroupMemberId]),
 	CONSTRAINT [FK_GroupsMembers_Groups_GroupId] FOREIGN KEY ([GroupId]) REFERENCES [Groups] ([GroupId]) ON DELETE NO ACTION,
 	CONSTRAINT [FK_GroupsMembers_Persons_GroupMemberId] FOREIGN KEY ([GroupMemberId]) REFERENCES [Persons] ([PersonId]) ON DELETE NO ACTION
 );

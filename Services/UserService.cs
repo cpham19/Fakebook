@@ -95,7 +95,8 @@ namespace Fakebook.Services
 
         public Friend GetRelationshipWithTwoIds(int PersonOneId, int PersonTwoId)
         {
-            return db.Friends.Where(rel => (rel.PersonOneId == PersonOneId || rel.PersonTwoId == PersonOneId) && (rel.PersonOneId == PersonTwoId || rel.PersonTwoId == PersonTwoId)).SingleOrDefault(); ;
+            Friend friend = db.Friends.Where(rel => (rel.PersonOneId == PersonOneId && rel.PersonTwoId == PersonTwoId) || (rel.PersonOneId == PersonTwoId && rel.PersonTwoId == PersonOneId)).SingleOrDefault();
+            return friend;
         }
 
         public bool CheckFriends(int PersonOneId, int PersonTwoId)
@@ -117,8 +118,16 @@ namespace Fakebook.Services
 
         public void RemoveFriend(int PersonOneId, int PersonTwoId)
         {
-            Friend relationship = this.GetRelationshipWithTwoIds(PersonOneId, PersonTwoId);
-            db.Friends.Remove(relationship);
+            Friend relationship1 = db.Friends.Where(rel => rel.PersonOneId == PersonOneId && rel.PersonTwoId == PersonTwoId).SingleOrDefault();
+            Friend relationship2 = db.Friends.Where(rel => rel.PersonOneId == PersonTwoId && rel.PersonTwoId == PersonOneId).SingleOrDefault();
+            if (relationship1 == null)
+            {
+                db.Friends.Remove(relationship2);
+            }
+            else
+            {
+                db.Friends.Remove(relationship1);
+            }
             db.SaveChanges();
         }
 

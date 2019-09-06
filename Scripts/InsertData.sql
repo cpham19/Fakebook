@@ -51,10 +51,8 @@ SET IDENTITY_INSERT Groups OFF
 
 GO
 
-SET IDENTITY_INSERT GroupMembers ON
-INSERT INTO GroupMembers (Id, GroupId, GroupMemberId) VALUES (1, 1, 1);
-INSERT INTO GroupMembers (Id, GroupId, GroupMemberId) VALUES (2, 1, 2);
-SET IDENTITY_INSERT GroupMembers OFF
+INSERT INTO GroupMembers (GroupId, GroupMemberId) VALUES (1, 1);
+INSERT INTO GroupMembers (GroupId, GroupMemberId) VALUES (1, 2);
 
 GO
 

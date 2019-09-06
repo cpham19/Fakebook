@@ -3,6 +3,14 @@
     ViewData["Title"] = "Stores";
 }
 
+<style>
+     @@media only screen and (max-width: 600px) {
+        .card {
+            width: 500px;
+        }
+    }
+</style>
+
 <div class="jumbotron">
     <div class="container">
         <h1 class="display-3">Their Stores</h1>
@@ -24,12 +32,14 @@ else
         <div class="row">
             @foreach (var store in ViewBag.Stores)
             {
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <img src="@store.StoreImageUrl" class="card-img-top" width="200px" height="200px" />
-                        <h1>@store.StoreName</h1>
-                        <p class="card-text">@store.StoreDescription</p>
-                        <a class="card-link" asp-controller="Marketplace" asp-action="Store" asp-route-StoreId="@store.StoreId"><i class="fas fa-book-reader"></i> View</a>
+                <div class="col-sm-4 d-flex align-items-stretch portfolio-item">
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="@store.StoreImageUrl" class="card-img-top"/>
+                            <h1>@store.StoreName</h1>
+                            <p class="card-text">@store.StoreDescription</p>
+                            <a class="card-link" asp-controller="Marketplace" asp-action="Store" asp-route-StoreId="@store.StoreId"><i class="fas fa-book-reader"></i> View</a>
+                        </div>
                     </div>
                 </div>
             }

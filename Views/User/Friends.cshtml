@@ -3,6 +3,14 @@
 }
 <h1>@ViewData["Title"]</h1>
 
+<style>
+     @@media only screen and (max-width: 600px) {
+        .card {
+            width: 500px;
+        }
+    }
+</style>
+
 <div class="jumbotron">
     <div class="container">
         <h1 class="display-3">Their Friends</h1>
@@ -24,8 +32,8 @@ else
         <div class="row">
             @foreach (var person in ViewBag.Friends)
             {
-                <div class="col-lg-4 col-sm-6 portfolio-item">
-                    <div class="card" style="width: 18rem;">
+                <div class="col-sm-4 d-flex align-items-stretch portfolio-item">
+                    <div class="card">
                         <img src="https://robohash.org/@person.Name" class="card-img-top" />
                         <div class="card-body">
                             <h1 class="text-center">@person.Name</h1>

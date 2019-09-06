@@ -3,6 +3,18 @@
     ViewData["Title"] = "Reviews";
 }
 
+<style>
+    .card {
+            width: 300px;
+    }
+
+    @@media only screen and (max-width: 600px) {
+        .card {
+            width: 500px;
+        }
+    }
+</style>
+
 <div class="jumbotron">
     <div class="container">
         <h1 class="display-3">My Reviews</h1>
@@ -24,18 +36,20 @@ else
         <div class="row">
             @foreach (var itemReview in ViewBag.ItemsReviewed)
             {
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <img class="card-img-top" src="@itemReview.ItemImageUrl" width="400px" height="300px" alt="">
-                        <h1><a asp-controller="Marketplace" asp-action="StoreItem" asp-route-StoreId="@itemReview.StoreId" asp-route-StoreItemId="@itemReview.StoreItemId">@itemReview.ItemName</a></h1>
-                        @foreach (var review in itemReview.Reviews)
-                        {
-                            <p class="lead">@review.Description</p>
-                            <div class="card-footer text-muted">
-                                Reviewed on @review.DatePosted
-                            </div>
-                            <hr />
-                        }
+                <div class="col-sm-4 d-flex align-items-stretch portfolio-item">
+                    <div class="card">
+                        <div class="card-body">
+                            <img class="card-img-top" src="@itemReview.ItemImageUrl">
+                            <h1><a asp-controller="Marketplace" asp-action="StoreItem" asp-route-StoreId="@itemReview.StoreId" asp-route-StoreItemId="@itemReview.StoreItemId">@itemReview.ItemName</a></h1>
+                            @foreach (var review in itemReview.Reviews)
+                            {
+                                <p class="lead">@review.Description</p>
+                                <div class="card-footer text-muted">
+                                    Reviewed on @review.DatePosted
+                                </div>
+                                <hr />
+                            }
+                        </div>
                     </div>
                 </div>
             }

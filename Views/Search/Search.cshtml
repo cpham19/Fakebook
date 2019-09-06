@@ -20,7 +20,7 @@
     }
 
     .fa-search {
-        width:50px;
+        width: 50px;
     }
 
     .card {
@@ -49,20 +49,22 @@
 <div class="row">
     @foreach (var person in ViewBag.Persons)
     {
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <img src="https://robohash.org/@person.Name" class="card-img-top" />
-                <h1 class="text-center">@person.Name</h1>
-                <p class="card-text">@person.ProfileDescription</p>
-                <a class="card-link" asp-controller="User" asp-action="Index" asp-route-id="@person.PersonId"><i class="fas fa-book-reader"></i> View</a>
-                @if (person.IsFriend)
-                {
-                    <a class="card-link" style="color:red;" asp-controller="Search" asp-action="RemoveFriend" asp-route-name="@person.Name" asp-route-PersonTwoId="@person.PersonId"><i class="fas fa-user-minus"> Remove Friend</i></a>
-                }
-                else
-                {
-                    <a class="card-link" asp-controller="Search" asp-action="AddFriend" asp-route-name="@person.Name" asp-route-PersonTwoId="@person.PersonId"><i class="fas fa-user-plus"></i> Add Friend</a>
-                }
+        <div class="col-sm-4 d-flex align-items-stretch portfolio-item">
+            <div class="card">
+                <div class="card-body">
+                    <img src="https://robohash.org/@person.Name" class="card-img-top" />
+                    <h1 class="text-center">@person.Name</h1>
+                    <p class="card-text">@person.ProfileDescription</p>
+                    <a class="card-link" asp-controller="User" asp-action="Index" asp-route-id="@person.PersonId"><i class="fas fa-book-reader"></i> View</a>
+                    @if (person.IsFriend)
+                    {
+                        <a class="card-link" style="color:red;" asp-controller="Search" asp-action="RemoveFriend" asp-route-name="@person.Name" asp-route-PersonTwoId="@person.PersonId"><i class="fas fa-user-minus"> Remove Friend</i></a>
+                    }
+                    else if (person.PersonId != ViewBag.PersonOneId)
+                    {
+                        <a class="card-link" asp-controller="Search" asp-action="AddFriend" asp-route-name="@person.Name" asp-route-PersonTwoId="@person.PersonId"><i class="fas fa-user-plus"></i> Add Friend</a>
+                    }
+                </div>
             </div>
         </div>
     }

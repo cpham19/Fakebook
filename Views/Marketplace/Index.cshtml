@@ -34,18 +34,19 @@
     <div class="row">
         @foreach (var store in ViewBag.Stores)
         {
-            <div class="col-lg-4 col-sm-6 portfolio-item">
-                <div class="card h-100">
-                    <img class="card-img-top" src="@store.StoreImageUrl" width="740px" height="300px" alt="">
-                    <hr />
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <a asp-controller="Marketplace" asp-action="Store" asp-route-StoreId="@store.StoreId">@store.StoreName</a>
-                        </h4>
-                        <p class="card-text">@store.StoreDescription</p>
-                    </div>
+        <div class="col-lg-4 col-sm-6 portfolio-item">
+            <div class="card">
+                <img class="card-img-top" src="@store.StoreImageUrl" width="740px" height="300px" alt="">
+                <hr />
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a asp-controller="Marketplace" asp-action="Store" asp-route-StoreId="@store.StoreId">@store.StoreName</a>
+                    </h4>
+                    <p class="card-text">@store.StoreDescription</p>
                 </div>
             </div>
+            <br />
+        </div>
         }
     </div>
     <!-- /.row -->

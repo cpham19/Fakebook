@@ -22,10 +22,10 @@
     button {
         background: Transparent no-repeat;
         border: none;
-        cursor:pointer;
+        cursor: pointer;
         overflow: hidden;
-        outline:none;
-        float:left;
+        outline: none;
+        float: left;
     }
 
     .mb-4 {
@@ -33,32 +33,46 @@
     }
 
     .fa-edit {
-        color:green;
+        color: green;
     }
 
     .fa-trash-alt {
-        color:red;
+        color: red;
     }
 
     .fa-plus-square {
-        color:blue;
+        color: blue;
         font-size: 2em;
+    }
+
+
+    @@media only screen and (max-width: 600px) {
+        .col-md-4 {
+            min-width: 590x;
+            max-width: 590px;
+        }
+
+        a, p {
+            font-size: 18px;
+        }
     }
 </style>
 
 <div class="row">
     <!-- About me -->
-    <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="https://robohash.org/@Model.Name" alt="Card image cap">
-        <h1 class="text-center">@Model.Name</h1>
-        <div class="card-body">
-            <h5 class="card-title">About Me</h5>
-            <p class="card-text">@Model.ProfileDescription</p>
-            <a asp-controller="User" asp-action="Friends" asp-route-id="@Model.PersonId"><i class="fas fa-user-friends"></i> Friends (@Model.Friends.Count)</a><br />
-            <a asp-controller="User" asp-action="Groups" asp-route-id="@Model.PersonId"><i class="fas fa-layer-group"></i> Groups (@Model.Groups.Count)</a><br />
-            <a asp-controller="User" asp-action="Blogs" asp-route-id="@Model.PersonId"><i class="fab fa-blogger"></i> Blogs (@Model.Blogs.Count)</a><br />
-            <a asp-controller="User" asp-action="Stores" asp-route-id="@Model.PersonId"><i class="fas fa-store"></i> Stores (@Model.Stores.Count)</a><br />
-            <a asp-controller="User" asp-action="Reviews" asp-route-id="@Model.PersonId"><i class="fas fa-comment-dots"></i> Reviews (@Model.Reviews.Count)</a>
+    <div class="col-md-4 d-flex align-items-stretch">
+        <div class="card">
+            <img class="card-img-top" src="https://robohash.org/@Model.Name" alt="Card image cap">
+            <h1 class="text-center">@Model.Name</h1>
+            <div class="card-body">
+                <h5 class="card-title">About Me</h5>
+                <p class="card-text">@Model.ProfileDescription</p>
+                <a asp-controller="User" asp-action="Friends" asp-route-id="@Model.PersonId"><i class="fas fa-user-friends"></i> Friends (@Model.Friends.Count)</a><br />
+                <a asp-controller="User" asp-action="Groups" asp-route-id="@Model.PersonId"><i class="fas fa-layer-group"></i> Groups (@Model.Groups.Count)</a><br />
+                <a asp-controller="User" asp-action="Blogs" asp-route-id="@Model.PersonId"><i class="fab fa-blogger"></i> Blogs (@Model.Blogs.Count)</a><br />
+                <a asp-controller="User" asp-action="Stores" asp-route-id="@Model.PersonId"><i class="fas fa-store"></i> Stores (@Model.Stores.Count)</a><br />
+                <a asp-controller="User" asp-action="Reviews" asp-route-id="@Model.PersonId"><i class="fas fa-comment-dots"></i> Reviews (@Model.Reviews.Count)</a>
+            </div>
         </div>
     </div>
     <!-- Wall Entries Column -->
