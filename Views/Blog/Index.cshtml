@@ -1,38 +1,38 @@
 ﻿@{
     ViewData["Title"] = "Blog Page";
 }
-<div class="jumbotron">
-    <div class="container">
-        <h1 class="display-3">Blogs</h1>
+
+<div id="content" style="background-color:red;">
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-3">Blogs</h1>
+        </div>
     </div>
-</div>
 
-<a asp-controller="Blog" asp-action="AddBlog">Add Blog</a>
-<br/>
-<!-- Page Content -->
-<div>
-
+    <a asp-controller="Blog" asp-action="AddBlog">Add Blog</a>
+    <br />
+    <!-- Page Content -->
     <div class="row">
         <div class="col-md-8">
             <!-- Blog Entries Column -->
             @foreach (var blog in ViewBag.Blogs)
             {
                 <!-- Blog Post -->
-            <div class="card mb-4">
-                <h1 class="my-4">@blog.Headline</h1>
-                <hr/>
-                <img class="card-img-top" src="@blog.PictureUrl" alt="Card image cap" width="200" height="500">
-                <hr/>
-                <div class="card-body">
-                    <h2 class="card-title">@blog.Title</h2>
-                    <p class="card-text">@blog.Description</p>
-                    <a class="btn btn-primary" asp-controller="Blog" asp-action="ReadBlog" asp-route-BlogId="@blog.BlogId">Read More</a>
+                <div class="card mb-4">
+                    <h1 class="my-4">@blog.Headline</h1>
+                    <hr />
+                    <img class="card-img-top" src="@blog.PictureUrl" alt="Card image cap" width="200" height="500">
+                    <hr />
+                    <div class="card-body">
+                        <h2 class="card-title">@blog.Title</h2>
+                        <p class="card-text">@blog.Description</p>
+                        <a class="btn btn-primary" asp-controller="Blog" asp-action="ReadBlog" asp-route-BlogId="@blog.BlogId">Read More</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Posted on @blog.DatePosted by
+                        <a asp-controller="User" asp-action="Index" asp-route-id="@blog.PosterId">@blog.PosterName</a>
+                    </div>
                 </div>
-                <div class="card-footer text-muted">
-                    Posted on @blog.DatePosted by
-                    <a asp-controller="User" asp-action="Index" asp-route-id="@blog.PosterId">@blog.PosterName</a>
-                </div>
-            </div>
 
             }
         </div>
@@ -85,11 +85,7 @@
                         </div>
                     </div>
                 </div>*@
-            </div>
         </div>
-
     </div>
     <!-- /.row -->
-
 </div>
-<!-- /.container -->

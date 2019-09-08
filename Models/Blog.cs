@@ -18,6 +18,12 @@ namespace Fakebook.Models
         public string Description { get; set; }
         public DateTime DatePosted { get; set; }
         public int PosterId { get; set; }
+
+        public string ModifiedDescription()
+        {
+            return Description.Substring(0, 75) + "....";
+        }
+
         [NotMapped]
         public string PosterName { get; set; }
         [NotMapped]

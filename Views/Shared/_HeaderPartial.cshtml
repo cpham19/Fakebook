@@ -27,7 +27,7 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                     <li>
-                        <a class="nav-link text-light" href="/">Home</a>
+                        <a class="nav-link text-light" asp-controller="User" asp-action="RedirectToIndex">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light" asp-controller="Search" asp-action="Index">Search</a>
@@ -57,9 +57,9 @@
                 </ul>
                 @if (User.Identity.IsAuthenticated)
                 {
-                <form class="form-inline my-2 my-md-0" method="post" asp-controller="Search" asp-action="Index">
-                    <input type="text" name="name" class="form-control" placeholder="Search People" value="@ViewBag.name" required />
-                    <i class="fa fa-search"></i>
+                <form class="form-inline my-2 my-md-0" asp-controller="Search" asp-action="RedirectToSearch">
+                    <input type="text" name="name" class="form-control" style="width:450px;" placeholder="Search People" value="@ViewBag.name" required />
+                    <i class="fa fa-search text-light"></i>
                 </form>
                 }
             </div>

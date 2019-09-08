@@ -15,33 +15,35 @@
     }
 </style>
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item active">Forums</li>
-    </ol>
-</nav>
+<div id="content" style="background-color:red;">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Forums</li>
+        </ol>
+    </nav>
 
-<div class="jumbotron jumbotron-fluid">
-    <div class="container">
-        <h1 class="display-4">Forums</h1>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Forums</h1>
+        </div>
     </div>
-</div>
 
-<a style="color:orange;" asp-controller="Forum" asp-action="AddForum"><i class="fas fa-plus-circle"></i> Add New Forum</a>
-<table class="table table-striped table-light">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">Forum Name</th>
-            <th scope="col">Topics</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var forum in Model)
-        {
-            <tr scope="row">
-                <td><a asp-controller="Forum" asp-action="ViewForum" asp-route-ForumName="@forum.ModifiedForumName()">@forum.ForumName</a></td>
-                <td>@forum.Topics.Count</td>
+    <a style="color:orange;" asp-controller="Forum" asp-action="AddForum"><i class="fas fa-plus-circle"></i> Add New Forum</a>
+    <table class="table table-striped table-light">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Forum Name</th>
+                <th scope="col">Topics</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var forum in Model)
+            {
+                <tr scope="row">
+                    <td><a asp-controller="Forum" asp-action="ViewForum" asp-route-ForumName="@forum.ModifiedForumName()">@forum.ForumName</a></td>
+                    <td>@forum.Topics.Count</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

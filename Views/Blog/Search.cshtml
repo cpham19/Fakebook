@@ -1,16 +1,18 @@
 ﻿@{
     ViewData["Title"] = "Blog Page";
 }
-<div class="jumbotron">
-    <div class="container">
-        <h1 class="display-3">Blogs</h1>
+
+<style>
+</style>
+
+<div id="content" style="background-color:azure;">
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-3">Blogs</h1>
+        </div>
     </div>
-</div>
 
-<a asp-controller="Blog" asp-action="AddBlog">Add Blog</a>
-
-<!-- Page Content -->
-<div class="container">
+    <a asp-controller="Blog" asp-action="AddBlog">Add Blog</a>
 
     <div class="row">
         <div class="col-md-8">
@@ -20,7 +22,7 @@
                 <h1 class="my-4">@blog.Headline</h1>
                 <!-- Blog Post -->
                 <div class="card mb-4">
-                    <img class="card-img-top" src="@blog.PictureUrl" alt="Card image cap" width="200px" height="400px">
+                    <img class="card-img-top" src="@blog.PictureUrl" alt="Card image cap">
                     <div class="card-body">
                         <h2 class="card-title">@blog.Title</h2>
                         <p class="card-text">@blog.Description</p>
@@ -87,7 +89,5 @@
         </div>
 
     </div>
-    <!-- /.row -->
-
+    <!-- /.container -->
 </div>
-<!-- /.container -->

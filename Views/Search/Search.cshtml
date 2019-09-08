@@ -7,18 +7,6 @@
         width: 100px;
     }
 
-    .fa-trash-alt {
-        color: red;
-    }
-
-    .fa-user-plus {
-        color: blue;
-    }
-
-    .fa-user-minus {
-        color: red;
-    }
-
     .fa-search {
         width: 50px;
     }
@@ -26,47 +14,49 @@
     .card {
         border: 1px solid;
         background-color: #f5f5dc;
+        width:300px;
     }
 </style>
 
-<div class="jumbotron">
-    <div class="container">
-        <h1 class="display-3">Search for people</h1>
-    </div>
-</div>
-
-<form method="post" asp-controller="Search" asp-action="Index">
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Search People</span>
+<div id="content" style="background-color:azure;">
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-3">Search for people</h1>
         </div>
-        <input type="text" name="name" class="form-control" placeholder="Name of Person" value="@ViewBag.name" required />
-        <button type="submit"><i class="fas fa-search"></i></button>
     </div>
-</form>
 
-<!-- Example row of columns -->
-<div class="row">
-    @foreach (var person in ViewBag.Persons)
-    {
-        <div class="col-sm-4 d-flex align-items-stretch portfolio-item">
-            <div class="card">
-                <div class="card-body">
-                    <img src="https://robohash.org/@person.Name" class="card-img-top" />
-                    <h1 class="text-center">@person.Name</h1>
-                    <p class="card-text">@person.ProfileDescription</p>
-                    <a class="card-link" asp-controller="User" asp-action="Index" asp-route-id="@person.PersonId"><i class="fas fa-book-reader"></i> View</a>
-                    @if (person.IsFriend)
-                    {
-                        <a class="card-link" style="color:red;" asp-controller="Search" asp-action="RemoveFriend" asp-route-name="@person.Name" asp-route-PersonTwoId="@person.PersonId"><i class="fas fa-user-minus"> Remove Friend</i></a>
-                    }
-                    else if (person.PersonId != ViewBag.PersonOneId)
-                    {
-                        <a class="card-link" asp-controller="Search" asp-action="AddFriend" asp-route-name="@person.Name" asp-route-PersonTwoId="@person.PersonId"><i class="fas fa-user-plus"></i> Add Friend</a>
-                    }
+    <form asp-controller="Search" asp-action="RedirectToSearch">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Search People</span>
+            </div>
+            <input type="text" name="name" class="form-control" placeholder="Name of Person" value="@ViewBag.name" required />
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </div>
+    </form>
+
+    <!-- Example row of columns -->
+    <div class="row">
+        @foreach (var person in ViewBag.Persons)
+        {
+            <div class="col-sm-4 d-flex align-items-stretch portfolio-item">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="https://robohash.org/@person.Name" class="card-img-top" />
+                        <h1 class="text-center">@person.Name</h1>
+                        <a class="card-link" asp-controller="User" asp-action="Index" asp-route-id="@person.PersonId"><i class="fas fa-book-reader"></i> View</a>
+                        @if (person.IsFriend)
+                        {
+                            <a class="card-link" style="color:red;" asp-controller="Search" asp-action="RemoveFriend" asp-route-name="@person.Name" asp-route-PersonTwoId="@person.PersonId"><i class="fas fa-user-minus"> Remove Friend</i></a>
+                        }
+                        else if (person.PersonId != ViewBag.PersonOneId)
+                        {
+                            <a class="card-link" asp-controller="Search" asp-action="AddFriend" asp-route-name="@person.Name" asp-route-PersonTwoId="@person.PersonId"><i class="fas fa-user-plus"></i> Add Friend</a>
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
+    <hr>
 </div>
-<hr>

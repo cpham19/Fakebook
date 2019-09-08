@@ -12,78 +12,73 @@
     td {
         height: 50px;
     }
-
-    .fa-edit {
-        color: green;
-    }
-
-    .fa-trash-alt {
-        color: red;
-    }
 </style>
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a asp-controller="Forum" asp-action="Index">Forums</a></li>
-        <li class="breadcrumb-item"><a asp-controller="Forum" asp-action="ViewForum" asp-route-ForumName="@ViewBag.ForumName">@ViewBag.ForumName</a></li>
-        <li class="breadcrumb-item active" aria-current="page">@Model.TopicName</li>
-    </ol>
-</nav>
+<div id="content" style="background-color:red;">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Forum" asp-action="Index">Forums</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Forum" asp-action="ViewForum" asp-route-ForumName="@ViewBag.ForumName">@ViewBag.ForumName</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.TopicName</li>
+        </ol>
+    </nav>
 
-<div class="jumbotron jumbotron-fluid">
-    <div class="container">
-        <h1 class="display-4">@Model.TopicName</h1>
-        <p class="lead">@Model.TopicContent</p>
-        <hr class="my-4">
-        <p>Posted by <a asp-controller="User" asp-action="Index" asp-route-id="@Model.PosterId">@Model.PosterName</a> (@Model.TopicDate)</p>
-        @if (@Model.PosterId == ViewBag.PersonId)
-        {
-            <a asp-controller="Forum" asp-action="EditTopic" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()"><i class="fas fa-edit"></i></a>
-            <a asp-controller="Forum" asp-action="DeleteTopic" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()"><i class="fas fa-trash-alt"></i></a>
-        }
-    </div>
-</div>
-
-<table class="table table-striped">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">Reply Content</th>
-            <th scope="col">Poster</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var reply in Model.Replies)
-        {
-            <tr scope="row">
-                <td>
-                    @reply.ReplyContent
-                    <br /><br /><br /><br />
-                    <hr class="my-4">
-                    Posted on @reply.ReplyDate
-                    @if (reply.PosterId == ViewBag.PersonId)
-                    {
-                        <a asp-controller="Forum" asp-action="EditReply" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()" asp-route-ReplyId="@reply.ReplyId"><i class="fas fa-edit"></i></a>
-                        <a asp-controller="Forum" asp-action="DeleteReply" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()" asp-route-ReplyId="@reply.ReplyId"><i class="fas fa-trash-alt"></i></a>
-                    }
-                </td>
-                <td>
-                    <div class="text-center">
-                        <img src="https://robohash.org/@reply.PosterName" width="100px" height="100px" />
-                        <br /><br />
-                        <a asp-controller="User" asp-action="Index" asp-route-id="@reply.PosterId">@reply.PosterName</a>
-                    </div>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-<form method="post">
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Reply</span>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">@Model.TopicName</h1>
+            <p class="lead">@Model.TopicContent</p>
+            <hr class="my-4">
+            <p>Posted by <a asp-controller="User" asp-action="Index" asp-route-id="@Model.PosterId">@Model.PosterName</a> (@Model.TopicDate)</p>
+            @if (@Model.PosterId == ViewBag.PersonId)
+            {
+                <a asp-controller="Forum" asp-action="EditTopic" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()"><i class="fas fa-edit"></i></a>
+                <a asp-controller="Forum" asp-action="DeleteTopic" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()"><i class="fas fa-trash-alt"></i></a>
+            }
         </div>
-        <textarea name="ReplyContent" class="form-control" placeholder="Reply Content" required></textarea>
     </div>
-    <button>Add</button>
-</form>
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Reply Content</th>
+                <th scope="col">Poster</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var reply in Model.Replies)
+            {
+                <tr scope="row">
+                    <td>
+                        @reply.ReplyContent
+                        <br /><br /><br /><br />
+                        <hr class="my-4">
+                        Posted on @reply.ReplyDate
+                        @if (reply.PosterId == ViewBag.PersonId)
+                        {
+                            <a asp-controller="Forum" asp-action="EditReply" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()" asp-route-ReplyId="@reply.ReplyId"><i class="fas fa-edit"></i></a>
+                            <a asp-controller="Forum" asp-action="DeleteReply" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()" asp-route-ReplyId="@reply.ReplyId"><i class="fas fa-trash-alt"></i></a>
+                        }
+                    </td>
+                    <td>
+                        <div class="text-center">
+                            <img src="https://robohash.org/@reply.PosterName" width="100px" height="100px" />
+                            <br /><br />
+                            <a asp-controller="User" asp-action="Index" asp-route-id="@reply.PosterId">@reply.PosterName</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <form method="post">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Reply</span>
+            </div>
+            <textarea name="ReplyContent" class="form-control" placeholder="Reply Content" required></textarea>
+        </div>
+        <button>Add</button>
+    </form>
+
+</div>

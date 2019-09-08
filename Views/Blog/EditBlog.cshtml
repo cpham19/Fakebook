@@ -3,43 +3,45 @@
 }
 @model Blog
 
-<h1>Edit Blog</h1>
+<div id="content" style="background-color:azure;">
+    <h1>Edit Blog</h1>
 
-<form method="post">
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Headline</span>
+    <form method="post">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Headline</span>
+            </div>
+            <input class="form-control" type="text" name="Headline" placeholder="Headline" value="@Model.Headline" required />
         </div>
-        <input class="form-control" type="text" name="Headline" placeholder="Headline" value="@Model.Headline" required />
-    </div>
-    <span asp-validation-for="Headline" class="text-danger"></span>
+        <span asp-validation-for="Headline" class="text-danger"></span>
 
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Picture URL</span>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Picture URL</span>
+            </div>
+            <input class="form-control" type="text" name="PictureUrl" placeholder="Picture URL" value="@Model.PictureUrl" required />
         </div>
-        <input class="form-control" type="text" name="PictureUrl" placeholder="Picture URL" value="@Model.PictureUrl" required />
-    </div>
-    <span asp-validation-for="PictureUrl" class="text-danger"></span>
+        <span asp-validation-for="PictureUrl" class="text-danger"></span>
 
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Title</span>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Title</span>
+            </div>
+            <input class="form-control" type="text" name="Title" placeholder="Title" value="@Model.Title" required />
         </div>
-        <input class="form-control" type="text" name="Title" placeholder="Title" value="@Model.Title" required />
-    </div>
-    <span asp-validation-for="Title" class="text-danger"></span>
+        <span asp-validation-for="Title" class="text-danger"></span>
 
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Description</span>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Description</span>
+            </div>
+            <textarea class="form-control" type="text" name="Description" placeholder="Description" required>@Model.Description</textarea>
         </div>
-        <textarea class="form-control" type="text" name="Description" placeholder="Description" required>@Model.Description</textarea>
-    </div>
-    <span asp-validation-for="Description" class="text-danger"></span>
+        <span asp-validation-for="Description" class="text-danger"></span>
 
-    <input type="text" name="BlogId" placeholder="BlogId" value="@Model.BlogId" hidden required />
+        <input type="text" name="BlogId" placeholder="BlogId" value="@Model.BlogId" hidden required />
 
-    <br />
-    <button type="submit">Edit</button>
-</form>
+        <br />
+        <button type="submit">Edit</button>
+    </form>
+</div>

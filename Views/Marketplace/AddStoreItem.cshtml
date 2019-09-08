@@ -4,57 +4,59 @@
 
 @model StoreItem
 
-<h1>Add Store Item</h1>
+<div id="content" style="background-color:red;">
+    <h1>Add Store Item</h1>
 
-<form method="post">
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Name</span>
+    <form method="post">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Name</span>
+            </div>
+            <input class="form-control" type="text" name="ItemName" placeholder="Name" required />
         </div>
-        <input class="form-control" type="text" name="ItemName" placeholder="Name" required />
-    </div>
-    <span asp-validation-for="ItemName" class="text-danger"></span>
+        <span asp-validation-for="ItemName" class="text-danger"></span>
 
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Condition</span>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Condition</span>
+            </div>
+            <input class="form-control" type="text" name="ItemCondition" placeholder="Condition" required />
         </div>
-        <input class="form-control" type="text" name="ItemCondition" placeholder="Condition" required />
-    </div>
-    <span asp-validation-for="ItemCondition" class="text-danger"></span>
+        <span asp-validation-for="ItemCondition" class="text-danger"></span>
 
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Image Url</span>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Image Url</span>
+            </div>
+            <input class="form-control" type="text" name="ItemImageUrl" placeholder="Image Url" required />
         </div>
-        <input class="form-control" type="text" name="ItemImageUrl" placeholder="Image Url" required />
-    </div>
-    <span asp-validation-for="ItemImageUrl" class="text-danger"></span>
+        <span asp-validation-for="ItemImageUrl" class="text-danger"></span>
 
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Description</span>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Description</span>
+            </div>
+            <input class="form-control" type="text" name="ItemDescription" placeholder="Description" required />
         </div>
-        <input class="form-control" type="text" name="ItemDescription" placeholder="Description" required />
-    </div>
-    <span asp-validation-for="ItemDescription" class="text-danger"></span>
+        <span asp-validation-for="ItemDescription" class="text-danger"></span>
 
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Price</span>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Price</span>
+            </div>
+            <input class="form-control" type="text" name="Price" placeholder="Price" required />
         </div>
-        <input class="form-control" type="text" name="Price" placeholder="Price" required />
-    </div>
-    <span asp-validation-for="Price" class="text-danger"></span>
+        <span asp-validation-for="Price" class="text-danger"></span>
 
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Quantity</span>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Quantity</span>
+            </div>
+            <input class="form-control" type="text" name="Quantity" placeholder="Quantity" required />
         </div>
-        <input class="form-control" type="text" name="Quantity" placeholder="Quantity" required />
-    </div>
-    <span asp-validation-for="Quantity" class="text-danger"></span>
+        <span asp-validation-for="Quantity" class="text-danger"></span>
 
-    <br />
-    <button class="btn btn-dark">Post</button>
-</form>
+        <br />
+        <button class="btn btn-dark">Post</button>
+    </form>
+</div>

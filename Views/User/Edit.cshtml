@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Edit Profile Page";
+    var person = (Person)ViewData["Person"];
+}
+@model Person
+@using Fakebook.Models;
+
+<div id="content" style="background-color:red;">
+    <h1>Editting Profile Page for @person.Name</h1>
+
+    <form method="post">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Profile Description</span>
+            </div>
+            <textarea class="form-control" type="text" name="ProfileDescription" class="form-control" placeholder="Profile Description" required>@person.ProfileDescription</textarea>
+            <button style="width:100px" type="submit"><i class="fas fa-edit"></i></button>
+        </div>
+    </form>
+</div>

@@ -3,41 +3,43 @@
 }
 @model Blog
 
-<h1>Add Blog</h1>
+<div id="content" style="background-color:azure;">
+    <h1>Add Blog</h1>
 
-<form method="post">
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Headline</span>
+    <form method="post">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Headline</span>
+            </div>
+            <input class="form-control" type="text" name="Headline" placeholder="Headline" required />
         </div>
-        <input class="form-control" type="text" name="Headline" placeholder="Headline" required />
-    </div>
-    <span asp-validation-for="Headline" class="text-danger"></span>
+        <span asp-validation-for="Headline" class="text-danger"></span>
 
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Picture URL</span>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Picture URL</span>
+            </div>
+            <input class="form-control" type="text" name="PictureUrl" placeholder="Picture URL" required />
         </div>
-        <input class="form-control" type="text" name="PictureUrl" placeholder="Picture URL" required />
-    </div>
-    <span asp-validation-for="PictureUrl" class="text-danger"></span>
+        <span asp-validation-for="PictureUrl" class="text-danger"></span>
 
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Title</span>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Title</span>
+            </div>
+            <input class="form-control" type="text" name="Title" placeholder="Title" required />
         </div>
-        <input class="form-control" type="text" name="Title" placeholder="Title" required />
-    </div>
-    <span asp-validation-for="Title" class="text-danger"></span>
+        <span asp-validation-for="Title" class="text-danger"></span>
 
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Description</span>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Description</span>
+            </div>
+            <textarea class="form-control" type="text" name="Description" placeholder="Description" required></textarea>
         </div>
-        <textarea class="form-control" type="text" name="Description" placeholder="Description" required></textarea>
-    </div>
-    <span asp-validation-for="Description" class="text-danger"></span>
+        <span asp-validation-for="Description" class="text-danger"></span>
 
-    <br />
-    <button type="submit">Post</button>
-</form>
+        <br />
+        <button type="submit">Post</button>
+    </form>
+</div>

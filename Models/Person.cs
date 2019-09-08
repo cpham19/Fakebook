@@ -10,15 +10,15 @@ namespace Fakebook.Models
     {
         public int PersonId { get; set; }
         [Required]
-        [StringLength(20, MinimumLength = 3)]
+        [StringLength(20, MinimumLength = 3, ErrorMessage ="Must have Minimum Characters of 3.")]
         [RegularExpression(@"^[a-zA-Z""'\s-]*$")]
         public string Name { get; set; }
         [Required]
-        [StringLength(20, MinimumLength = 3)]
+        [StringLength(20, MinimumLength = 3, ErrorMessage = "Must have Minimum Characters of 3.")]
         [RegularExpression(@"^[a-zA-Z""'\s-]*$")]
         public string Username { get; set; }
         [Required]
-        [StringLength(20, MinimumLength = 3)]
+        [StringLength(20, MinimumLength = 3, ErrorMessage = "Must have Minimum Characters of 3.")]
         [RegularExpression(@"^[a-zA-Z""'\s-]*$")]
         public string Password { get; set; }
         public bool IsAdmin { get; set; } = false;

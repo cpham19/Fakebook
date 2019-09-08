@@ -14,38 +14,40 @@
     }
 </style>
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a asp-controller="Forum" asp-action="Index">Forums</a></li>
-        <li class="breadcrumb-item active" aria-current="page">@Model.ForumName</li>
-    </ol>
-</nav>
+<div id="content" style="background-color:red;">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Forum" asp-action="Index">Forums</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.ForumName</li>
+        </ol>
+    </nav>
 
-<div class="jumbotron jumbotron-fluid">
-    <div class="container">
-        <h1 class="display-4">@Model.ForumName</h1>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">@Model.ForumName</h1>
+        </div>
     </div>
-</div>
 
-<a style="color:orange;" asp-controller="Forum" asp-action="AddTopic" asp-route-Forumname="@Model.ModifiedForumName()"><i class="fas fa-plus-circle"></i> Add New Topic</a>
-<br />
+    <a style="color:orange;" asp-controller="Forum" asp-action="AddTopic" asp-route-Forumname="@Model.ModifiedForumName()"><i class="fas fa-plus-circle"></i> Add New Topic</a>
+    <br />
 
-<table class="table table-striped table-light">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">Topic Name</th>
-            <th scope="col">Poster</th>
-            <th scope="col">Replies</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var topic in Model.Topics)
-        {
-            <tr scope="row">
-                <td><a asp-controller="Forum" asp-action="ViewTopic" asp-route-ForumName="@Model.ModifiedForumName()" asp-route-TopicId="@topic.TopicId" asp-route-TopicName="@topic.ModifiedTopicName()">@topic.TopicName</a></td>
-                <td><a asp-controller="User" asp-action="Index" asp-route-id="@topic.PosterId">@topic.PosterName</a></td>
-                <td>@topic.Replies.Count</td>
+    <table class="table table-striped table-light">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Topic Name</th>
+                <th scope="col">Poster</th>
+                <th scope="col">Replies</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var topic in Model.Topics)
+            {
+                <tr scope="row">
+                    <td><a asp-controller="Forum" asp-action="ViewTopic" asp-route-ForumName="@Model.ModifiedForumName()" asp-route-TopicId="@topic.TopicId" asp-route-TopicName="@topic.ModifiedTopicName()">@topic.TopicName</a></td>
+                    <td><a asp-controller="User" asp-action="Index" asp-route-id="@topic.PosterId">@topic.PosterName</a></td>
+                    <td>@topic.Replies.Count</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

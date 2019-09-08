@@ -11,7 +11,7 @@
     }
 
     .card {
-        height: 390px;
+        height: 450px;
         margin-top: auto;
         margin-bottom: auto;
         width: 400px;
@@ -38,34 +38,49 @@
         color: white;
     }
 
-        .links a {
-            margin-left: 4px;
-        }
+    .links a {
+        margin-left: 4px;
+     }
 
+    .box {
+        min-height:100%;
+        height: auto;
+        width: 100%;
+        align-content: center;
+        background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
+     }
 
-    @@media only screen and (max-width: 600px) {
-        img {
-            width: 350px;
-            height: 350px;
-        }
+    .d-flex, .justify-content-center {
+        min-height:100%;
+        height: auto;
     }
+
+     @@media (max-width: 768px) {
+         .card {
+             height:450px;
+         }
+
+         footer {
+            display:block;
+         }
+     }
 </style>
 
-<div class="container-fluid" style="background-color:red;">
-    <div class="d-flex">
+<div class="box">
+    <div class="d-flex justify-content-center">
         <div class="card">
             <div class="card-header">
                 <h3>Register</h3>
             </div>
             <div class="card-body">
                 <form method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Name</span>
                         </div>
                         <input type="text" name="Name" class="form-control" placeholder="Name" required />
                     </div>
+                    <span asp-validation-for="Name" class="text-danger"></span>
 
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
@@ -73,6 +88,7 @@
                         </div>
                         <input type="text" name="Username" class="form-control" placeholder="Username" required />
                     </div>
+                    <span asp-validation-for="Username" class="text-danger"></span>
 
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
@@ -80,6 +96,7 @@
                         </div>
                         <input type="password" name="Password" class="form-control" placeholder="Password" required />
                     </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
 
                     <div class="form-group">
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
@@ -89,7 +106,7 @@
             <div class="card-footer">
                 <div class="d-flex justify-content-center links">
                     Already have an account?
-                    <a style="color:blue" asp-controller="Account" asp-action="Login">Login</a>
+                    <a style="color:gold" asp-controller="Account" asp-action="Login">Login</a>
                 </div>
             </div>
         </div>

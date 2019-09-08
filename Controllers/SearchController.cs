@@ -17,13 +17,13 @@ namespace Fakebook.Controllers
             this.wallService = wallService;
         }
 
-        // This is the page that when the user clicks Search button for "first time" or when they type something in the url (Search/"Name of Person")
+        // This is the page that when the user clicks Search button on the navbar
         [HttpGet("/Search", Name = "SearchIndex")]
         public IActionResult Index()
         {
-            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             if (User.Identity.IsAuthenticated)
             {
+                ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
                 return View();
             }
             else
@@ -32,18 +32,12 @@ namespace Fakebook.Controllers
             }
         }
 
-        [HttpPost]
-        public IActionResult Index(string name)
+        // This is the page that when the user clicks Search button on the navbar
+        public IActionResult RedirectToSearch(string name)
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Search", new { name = name });
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
+            return RedirectToAction("Search", new { name = name });
         }
+
 
         // This is the page that when the user uses the input box to search people
         [HttpGet("/Search/{**name}", Name = "SearchResult")]
@@ -60,8 +54,6 @@ namespace Fakebook.Controllers
         {
             int id1 = User.Identity.GetPersonId();
             int id2 = PersonTwoId;
-            Debug.WriteLine(id1);
-            Debug.WriteLine(id2);
             userService.RemoveFriend(id1, id2);
             return RedirectToAction("Search", new { name = name });
         }

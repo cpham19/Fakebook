@@ -4,17 +4,19 @@
 }
 @model Review
 
-<h1>Edit Review</h1>
+<div id="content" style="background-color:red;">
+    <h1>Edit Review</h1>
 
-<form method="post" asp-controller="Marketplace" asp-action="EditReview">
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Description</span>
+    <form method="post" asp-controller="Marketplace" asp-action="EditReview">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Description</span>
+            </div>
+            <input type="text" name="StoreId" class="form-control" value="@ViewBag.StoreId" hidden />
+            <input type="text" name="StoreItemId" class="form-control" value="@Model.StoreItemId" hidden />
+            <textarea class="form-control" name="Description" placeholder="Description" rows="3">@Model.Description</textarea>
+            <button type="submit" style="width:150px" class="btn btn-success">Edit</button>
         </div>
-        <input type="text" name="StoreId" class="form-control" value="@ViewBag.StoreId" hidden />
-        <input type="text" name="StoreItemId" class="form-control" value="@Model.StoreItemId" hidden />
-        <textarea class="form-control" name="Description" placeholder="Description" rows="3">@Model.Description</textarea>
-        <button type="submit" style="width:150px" class="btn btn-success">Edit</button>
-    </div>
-</form>
-<span asp-validation-for="Description" class="text-danger"></span>
+    </form>
+    <span asp-validation-for="Description" class="text-danger"></span>
+</div>

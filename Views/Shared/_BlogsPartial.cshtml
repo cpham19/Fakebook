@@ -12,31 +12,25 @@
     .card {
         width: 300px;
     }
-
-    @@media only screen and (max-width: 600px) {
-        .card {
-            width: 500px;
-        }
-    }
 </style>
 
-<div class="jumbotron">
-    <div class="container">
-        <h1 class="display-3">Blogs</h1>
-    </div>
-</div>
-
-@if (ViewBag.Blogs.Count == 0)
-{
+<div id="content" style="background-color:red;">
     <div class="jumbotron">
         <div class="container">
-            <h1 class="display-4">You have no blogs.</h1>
+            <h1 class="display-3">Blogs</h1>
         </div>
     </div>
-}
-else
-{
-    <div class="container">
+
+    @if (ViewBag.Blogs.Count == 0)
+    {
+        <div class="jumbotron">
+            <div class="container">
+                <h1 class="display-4">You have no blogs.</h1>
+            </div>
+        </div>
+    }
+    else
+    {
         <!-- Example row of columns -->
         <div class="row">
             @foreach (var blog in ViewBag.Blogs)
@@ -46,7 +40,7 @@ else
                         <div class="card-body">
                             <img src="@blog.PictureUrl" class="card-img-top" />
                             <h1>@blog.Title</h1>
-                            <p class="card-text">@blog.Description</p>
+                            <p class="card-text">@blog.ModifiedDescription()</p>
                             <a class="card-link" asp-controller="Blog" asp-action="ReadBlog" asp-route-BlogId="@blog.BlogId"><i class="fas fa-book-reader"></i> View</a>
                         </div>
                     </div>
@@ -54,5 +48,5 @@ else
             }
         </div>
         <hr>
-    </div> <!-- /container -->
-}
+    }
+</div>

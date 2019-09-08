@@ -2,32 +2,15 @@
     ViewData["Title"] = "Read Blog";
 }
 
-<style>
-    .media {
-        border: solid 5px;
-    }
-
-    .fa-edit {
-        color:green;
-    }
-
-    .fa-trash-alt {
-        color:red;
-    }
-
-    .mb-4 {
-        background-color:azure;
-    }
-</style>
-
 @model Blog
 
- <a asp-controller="Blog" asp-action="Index">Back</a>
+<style>
+</style>
+
 <!-- Page Content -->
-<div class="container">
-
+<div id="content" style="background-color:azure;">
+    <a asp-controller="Blog" asp-action="Index">Back</a>
     <div class="row">
-
         <!-- Post Content Column -->
         <div class="col-lg-8">
             <div class="card mb-4">
@@ -46,7 +29,7 @@
                 <hr />
                 <!-- Preview Image -->
                 <img class="img-fluid rounded" src="@Model.PictureUrl" alt="">
-                <hr/>
+                <hr />
                 <div class="card-body">
                     <p class="lead">@Model.Description</p>
                 </div>

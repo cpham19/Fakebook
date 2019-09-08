@@ -4,33 +4,35 @@
 
 @model Store
 
-<h1>Add Store</h1>
+<div id="content" style="background-color:red;">
+    <h1>Add Store</h1>
 
-<form method="post">
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Store Name</span>
+    <form method="post">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Store Name</span>
+            </div>
+            <input class="form-control" type="text" name="StoreName" placeholder="Name" required />
         </div>
-        <input class="form-control" type="text" name="StoreName" placeholder="Name" required />
-    </div>
-    <span asp-validation-for="StoreName" class="text-danger"></span>
+        <span asp-validation-for="StoreName" class="text-danger"></span>
 
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Store Description</span>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Store Description</span>
+            </div>
+            <input class="form-control" type="text" name="StoreDescription" placeholder="Description" required />
         </div>
-        <input class="form-control" type="text" name="StoreDescription" placeholder="Description" required />
-    </div>
-    <span asp-validation-for="StoreDescription" class="text-danger"></span>
+        <span asp-validation-for="StoreDescription" class="text-danger"></span>
 
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Store Image Url</span>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Store Image Url</span>
+            </div>
+            <input class="form-control" type="text" name="StoreImageUrl" placeholder="Image Url" required />
         </div>
-        <input class="form-control" type="text" name="StoreImageUrl" placeholder="Image Url" required />
-    </div>
-    <span asp-validation-for="StoreImageUrl" class="text-danger"></span>
+        <span asp-validation-for="StoreImageUrl" class="text-danger"></span>
 
-    <br />
-    <button class="btn btn-dark">Post</button>
-</form>
+        <br />
+        <button class="btn btn-dark">Post</button>
+    </form>
+</div>

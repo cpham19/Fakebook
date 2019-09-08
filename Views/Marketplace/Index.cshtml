@@ -10,45 +10,47 @@
     }
 </style>
 
-<div class="jumbotron">
-    <div class="container">
-        <h1 class="display-3">Marketplace</h1>
-    </div>
-</div>
-
-@if (!ViewBag.HasStore)
-{
-    <a style="color:beige;" asp-controller="Marketplace" asp-action="AddStore"><i class="fas fa-store-alt"></i> Add Store</a>
-    <br /><br/>
-}
-<a asp-controller="Marketplace" asp-action="Cart" class="btn btn-info">View Cart</a>
-<a asp-controller="Marketplace" asp-action="SalesHistory" class="btn btn-dark">View Sales History</a>
-<a asp-controller="Marketplace" asp-action="OrderHistory" class="btn btn-secondary">View Order History</a>
-<br />
-<br />
-<br />
-
-<!-- Page Content -->
-<div class="container">
-    <!-- Marketing Icons Section -->
-    <div class="row">
-        @foreach (var store in ViewBag.Stores)
-        {
-        <div class="col-lg-4 col-sm-6 portfolio-item">
-            <div class="card">
-                <img class="card-img-top" src="@store.StoreImageUrl" width="740px" height="300px" alt="">
-                <hr />
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <a asp-controller="Marketplace" asp-action="Store" asp-route-StoreId="@store.StoreId">@store.StoreName</a>
-                    </h4>
-                    <p class="card-text">@store.StoreDescription</p>
-                </div>
-            </div>
-            <br />
+<div id="content" style="background-color:red;">
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-3">Marketplace</h1>
         </div>
-        }
     </div>
-    <!-- /.row -->
+
+    @if (!ViewBag.HasStore)
+    {
+        <a style="color:beige;" asp-controller="Marketplace" asp-action="AddStore"><i class="fas fa-store-alt"></i> Add Store</a>
+        <br /><br />
+    }
+    <a asp-controller="Marketplace" asp-action="Cart" class="btn btn-info">View Cart</a>
+    <a asp-controller="Marketplace" asp-action="SalesHistory" class="btn btn-dark">View Sales History</a>
+    <a asp-controller="Marketplace" asp-action="OrderHistory" class="btn btn-secondary">View Order History</a>
+    <br />
+    <br />
+    <br />
+
+    <!-- Page Content -->
+    <div class="container">
+        <!-- Marketing Icons Section -->
+        <div class="row">
+            @foreach (var store in ViewBag.Stores)
+            {
+                <div class="col-lg-4 col-sm-6 portfolio-item">
+                    <div class="card">
+                        <img class="card-img-top" src="@store.StoreImageUrl" width="740px" height="300px" alt="">
+                        <hr />
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a asp-controller="Marketplace" asp-action="Store" asp-route-StoreId="@store.StoreId">@store.StoreName</a>
+                            </h4>
+                            <p class="card-text">@store.StoreDescription</p>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            }
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
 </div>
-<!-- /.container -->

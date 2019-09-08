@@ -23,6 +23,11 @@ namespace Fakebook.Controllers
             this.storeService = storeService;
         }
 
+        public IActionResult RedirectToIndex()
+        {
+            return RedirectToAction("Index", new { id = User.Identity.GetPersonId() });
+        }
+
         [HttpGet("/User/{id}", Name = "ViewUser")]
         public IActionResult Index(int id)
         {

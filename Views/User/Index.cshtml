@@ -3,27 +3,38 @@
     ViewData["Title"] = "User Page";
 }
 
-<partial name="_StyleForIndexPartial" />
+<style>
+    .btn-group {
+        padding-top: 2em;
+        padding-left: 37em;
+    }
 
-<div class="row">
-    <!-- About me -->
-    <div class="col-md-4 d-flex align-items-stretch">
-        <div class="card">
-            <img class="card-img-top" src="https://robohash.org/@Model.Name" alt="Card image cap">
-            <h1 class="text-center">@Model.Name</h1>
-            <div class="card-body">
-                <h5 class="card-title">About Me</h5>
-                <p class="card-text">@Model.ProfileDescription</p>
-                <a asp-controller="User" asp-action="Friends" asp-route-id="@Model.PersonId"><i class="fas fa-user-friends"></i> Friends (@Model.Friends.Count)</a><br />
-                <a asp-controller="User" asp-action="Groups" asp-route-id="@Model.PersonId"><i class="fas fa-layer-group"></i> Groups (@Model.Groups.Count)</a><br />
-                <a asp-controller="User" asp-action="Blogs" asp-route-id="@Model.PersonId"><i class="fab fa-blogger"></i> Blogs (@Model.Blogs.Count)</a><br />
-                <a asp-controller="User" asp-action="Stores" asp-route-id="@Model.PersonId"><i class="fas fa-store"></i> Stores (@Model.Stores.Count)</a><br />
-                <a asp-controller="User" asp-action="Reviews" asp-route-id="@Model.PersonId"><i class="fas fa-comment-dots"></i> Reviews (@Model.Reviews.Count)</a>
-            </div>
+    .btn-group a {
+        padding:5px;
+    }
+</style>
+
+<div id="content" style="background-color:red;">
+    <!-- Header - set the background image for the header in the line below -->
+    <header class="py-1 bg-image-full" style="background-color:white;">
+        <h1 class="text-center">@Model.Name</h1>
+        <img class="img-fluid d-block mx-auto" src="https://robohash.org/@Model.Name" alt="">
+        <p class="text-center">
+            @Model.ProfileDescription
+            @if (Model.PersonId == ViewBag.PersonId)
+            {
+                <a asp-controller="User" asp-action="Edit"><i class="fas fa-edit"></i> Edit</a>
+            }
+        </p>
+        <div class="btn-group">
+            <a asp-controller="User" asp-action="Friends" asp-route-id="@Model.PersonId"><i class="fas fa-user-friends"></i> Friends</a>
+            <a asp-controller="User" asp-action="Groups" asp-route-id="@Model.PersonId"><i class="fas fa-layer-group"></i> Groups</a>
+            <a asp-controller="User" asp-action="Blogs" asp-route-id="@Model.PersonId"><i class="fab fa-blogger"></i> Blogs</a>
+            <a asp-controller="User" asp-action="Stores" asp-route-id="@Model.PersonId"><i class="fas fa-store"></i> Stores</a>
+            <a asp-controller="User" asp-action="Reviews" asp-route-id="@Model.PersonId"><i class="fas fa-comment-dots"></i> Reviews</a>
         </div>
-    </div>
-    <!-- Wall Entries Column -->
-    <div class="col-md-8">
+    </header>
+
         <h1 class="my-4 text-center">My Wall</h1>
         <div class="card">
             <form method="post" asp-controller="User" asp-action="AddWallPost">
@@ -33,7 +44,7 @@
                 <button type="submit"><i class="fas fa-plus-square"></i></button>
             </form>
         </div>
-        <br /><br /><br/>
+        <br /><br /><br />
         <!-- Wall Post -->
         @foreach (var post in Model.WallPosts)
         {
@@ -75,5 +86,4 @@
                 </form>
             </div>
         }
-    </div>
 </div>

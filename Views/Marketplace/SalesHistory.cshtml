@@ -11,60 +11,62 @@
     }
 </style>
 
-<div class="jumbotron">
-    <div class="container">
-        <h1 class="display-3">Sales History</h1>
-    </div>
-</div>
-
-@if (Model.Count == 0)
-{
+<div id="content" style="background-color:red;">
     <div class="jumbotron">
         <div class="container">
-            <h1 class="display-3">Empty</h1>
+            <h1 class="display-3">Sales History</h1>
         </div>
     </div>
-}
-else
-{
-    @foreach (var order in Model)
+
+    @if (Model.Count == 0)
     {
-        <h1>Order #@order.OrderId</h1>
-        <div class="box">
-            <div class="row">
-                <div class="col-md-2">
-                    @order.OrderDate
-                </div>
+        <div class="jumbotron">
+            <div class="container">
+                <h1 class="display-3">Empty</h1>
             </div>
-            @foreach (var item in order.OrderItems)
-            {
+        </div>
+    }
+    else
+    {
+        @foreach (var order in Model)
+        {
+            <h1>Order #@order.OrderId</h1>
+            <div class="box">
                 <div class="row">
                     <div class="col-md-2">
-                        <img src="@item.OrderItemImageUrl" width="150px" height="150px">
+                        @order.OrderDate
                     </div>
-                    <div class="col-md-9">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <span class="label label-info">
-                                    <a asp-controller="Marketplace" asp-action="StoreItem" asp-route-StoreId="@order.StoreId" asp-route-StoreItemId="@item.StoreItemId">@item.OrderItemName</a>
-                                </span><br>
-                                Quantity: @item.OrderItemQuantity<br />
-                                $@item.OrderItemPrice<br>
-                            </div>
-                            <div class="col-md-12">
-                                Bought by <a asp-controller="User" asp-action="Index" asp-route-PersonId="@order.PersonId">@order.PersonName</a>
+                </div>
+                @foreach (var item in order.OrderItems)
+                {
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img src="@item.OrderItemImageUrl" width="150px" height="150px">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <span class="label label-info">
+                                        <a asp-controller="Marketplace" asp-action="StoreItem" asp-route-StoreId="@order.StoreId" asp-route-StoreItemId="@item.StoreItemId">@item.OrderItemName</a>
+                                    </span><br>
+                                    Quantity: @item.OrderItemQuantity<br />
+                                    $@item.OrderItemPrice<br>
+                                </div>
+                                <div class="col-md-12">
+                                    Bought by <a asp-controller="User" asp-action="Index" asp-route-PersonId="@order.PersonId">@order.PersonName</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <br />
-            }
-            <div class="row">
-                <div class="col-md-2">
-                    Total: $@order.Total
+                    <br />
+                }
+                <div class="row">
+                    <div class="col-md-2">
+                        Total: $@order.Total
+                    </div>
                 </div>
             </div>
-        </div>
-        <br />
+            <br />
+        }
     }
-}
+</div>

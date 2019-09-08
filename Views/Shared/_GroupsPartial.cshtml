@@ -3,31 +3,28 @@
 }
 
 <style>
-    @@media only screen and (max-width: 600px) {
-        .card {
-            width: 500px;
-        }
+    .card {
+        width: 300px;
     }
 </style>
 
-
-<div class="jumbotron">
-    <div class="container">
-        <h1 class="display-3">My Groups</h1>
-    </div>
-</div>
-
-@if (ViewBag.Groups.Count == 0)
-{
+<div id="content" style="background-color:red;">
     <div class="jumbotron">
         <div class="container">
-            <h1 class="display-5">You have no reviews.</h1>
+            <h1 class="display-3">My Groups</h1>
         </div>
     </div>
-}
-else
-{
-    <div class="container">
+
+    @if (ViewBag.Groups.Count == 0)
+    {
+        <div class="jumbotron">
+            <div class="container">
+                <h1 class="display-5">You have no reviews.</h1>
+            </div>
+        </div>
+    }
+    else
+    {
         <!-- Example row of columns -->
         <div class="row">
             @foreach (var group in ViewBag.Groups)
@@ -51,5 +48,5 @@ else
             }
         </div>
         <hr>
-    </div> <!-- /container -->
-}
+    }
+</div>

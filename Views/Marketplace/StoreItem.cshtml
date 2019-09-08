@@ -3,107 +3,99 @@
 }
 @model StoreItem
 
-<style>
-    .fa-edit {
-        color: green;
-    }
-
-    .fa-trash-alt {
-        color: red;
-    }
-</style>
-
-<div>
-    <a asp-controller="Marketplace" asp-action="Cart" class="btn btn-info">View Cart</a>
-    <a asp-controller="Marketplace" asp-action="SalesHistory" class="btn btn-dark">View Sales History</a>
-    <a asp-controller="Marketplace" asp-action="OrderHistory" class="btn btn-secondary">View Order History</a>
-</div>
-
-<!-- Page Content -->
-<div class="container">
-
-    <div class="row">
-
-        <div class="col-lg-8">
-
-            <div class="card mt-4">
-                <img class="card-img-top img-fluid" src="@Model.ItemImageUrl" width="600px" height="400px" alt="">
-                <div class="card-body">
-                    <h1 class="card-title">@Model.ItemName</h1>
-                    <h4>Condition: @Model.ItemCondition</h4>
-                    <h4>Price: $@Model.Price</h4>
-                    @if (Model.Quantity != 0)
-                    {
-                        <h4>Quantity: @Model.Quantity</h4>
-                    }
-                    else
-                    {
-                        <h4>OUT OF STOCK</h4>
-                    }
-                    <p class="card-text">@Model.ItemDescription</p>
-                    @if (!ViewBag.IsOwner && Model.Quantity != 0)
-                    {
-                        <form>
-                            <select class="selectpicker" name="Quantity">
-                                @for (int i = 1; i <= Model.Quantity; i++)
-                                {
-                                    <option>@i</option>
-                                }
-                            </select>
-                            <input name="StoreId" value="@Model.StoreId" hidden />
-                            <input name="StoreItemId" value="@Model.StoreItemId" hidden />
-                            <input name="OrderItemPrice" value="@Model.Price" hidden />
-                            <button type="submit" class="btn bg-success" asp-controller="Marketplace" asp-action="AddToCart">Add To Cart</button>
-
-                        </form>
-                    }
-                    @if (ViewBag.PersonId == Model.PosterId)
-                    {
-                        <br />
-                        <a asp-controller="Marketplace" asp-action="EditStoreItem" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@Model.StoreItemId"><i class="fas fa-edit"></i></a>
-                        <a asp-controller="Marketplace" asp-action="DeleteStoreItem" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@Model.StoreItemId"><i class="fas fa-trash-alt"></i></a>
-                    }
-                </div>
-            </div>
-            <!-- /.card -->
-            <!-- Comments/Reviews -->
-            <div class="card card-outline-secondary my-4">
-                <div class="card-header">
-                    Product Reviews
-                </div>
-                <div class="card-body">
-                    @foreach (var review in Model.Reviews)
-                    {
-                        <p>@review.Description</p>
-                        <small class="text-muted">
-                            Posted by <a asp-controller="User" asp-action="Index" asp-route-id="@review.PosterId">@review.PosterName</a> on @review.DatePosted
-                            @if (ViewBag.PersonId == review.PosterId)
-                            {
-                                <a asp-controller="Marketplace" asp-action="EditReview" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@review.StoreItemId" asp-route-ReviewId="@review.ReviewId"><i class="fas fa-edit"></i></a>
-                                <a asp-controller="Marketplace" asp-action="DeleteReview" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@review.StoreItemId" asp-route-ReviewId="@review.ReviewId"><i class="fas fa-trash-alt"></i></a>
-                            }
-                        </small>
-                        <hr>
-                    }
-                </div>
-            </div>
-            <div class="card card-outline-secondary my-4">
-                <div class="card-body">
-                    <form method="post" asp-controller="Marketplace" asp-action="AddReview">
-                        <div class="form-group">
-                            <input type="text" name="StoreId" class="form-control" value="@Model.StoreId" hidden />
-                            <input type="text" name="StoreItemId" class="form-control" value="@Model.StoreItemId" hidden />
-                            <textarea class="form-control" name="Description" placeholder="Description" rows="3"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-success">Leave a review</button>
-                    </form>
-                </div>
-            </div>
-            <!-- /.card -->
-
-        </div>
-        <!-- /.col-lg-9 -->
+<div id="content" style="background-color:red;">
+    <div>
+        <a asp-controller="Marketplace" asp-action="Cart" class="btn btn-info">View Cart</a>
+        <a asp-controller="Marketplace" asp-action="SalesHistory" class="btn btn-dark">View Sales History</a>
+        <a asp-controller="Marketplace" asp-action="OrderHistory" class="btn btn-secondary">View Order History</a>
     </div>
 
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-8">
+
+                <div class="card mt-4">
+                    <img class="card-img-top img-fluid" src="@Model.ItemImageUrl" width="600px" height="400px" alt="">
+                    <div class="card-body">
+                        <h1 class="card-title">@Model.ItemName</h1>
+                        <h4>Condition: @Model.ItemCondition</h4>
+                        <h4>Price: $@Model.Price</h4>
+                        @if (Model.Quantity != 0)
+                        {
+                            <h4>Quantity: @Model.Quantity</h4>
+                        }
+                        else
+                        {
+                            <h4>OUT OF STOCK</h4>
+                        }
+                        <p class="card-text">@Model.ItemDescription</p>
+                        @if (!ViewBag.IsOwner && Model.Quantity != 0)
+                        {
+                            <form>
+                                <select class="selectpicker" name="Quantity">
+                                    @for (int i = 1; i <= Model.Quantity; i++)
+                                    {
+                                        <option>@i</option>
+                                    }
+                                </select>
+                                <input name="StoreId" value="@Model.StoreId" hidden />
+                                <input name="StoreItemId" value="@Model.StoreItemId" hidden />
+                                <input name="OrderItemPrice" value="@Model.Price" hidden />
+                                <button type="submit" class="btn bg-success" asp-controller="Marketplace" asp-action="AddToCart">Add To Cart</button>
+
+                            </form>
+                        }
+                        @if (ViewBag.PersonId == Model.PosterId)
+                        {
+                            <br />
+                            <a asp-controller="Marketplace" asp-action="EditStoreItem" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@Model.StoreItemId"><i class="fas fa-edit"></i></a>
+                            <a asp-controller="Marketplace" asp-action="DeleteStoreItem" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@Model.StoreItemId"><i class="fas fa-trash-alt"></i></a>
+                        }
+                    </div>
+                </div>
+                <!-- /.card -->
+                <!-- Comments/Reviews -->
+                <div class="card card-outline-secondary my-4">
+                    <div class="card-header">
+                        Product Reviews
+                    </div>
+                    <div class="card-body">
+                        @foreach (var review in Model.Reviews)
+                        {
+                            <p>@review.Description</p>
+                            <small class="text-muted">
+                                Posted by <a asp-controller="User" asp-action="Index" asp-route-id="@review.PosterId">@review.PosterName</a> on @review.DatePosted
+                                @if (ViewBag.PersonId == review.PosterId)
+                                {
+                                    <a asp-controller="Marketplace" asp-action="EditReview" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@review.StoreItemId" asp-route-ReviewId="@review.ReviewId"><i class="fas fa-edit"></i></a>
+                                    <a asp-controller="Marketplace" asp-action="DeleteReview" asp-route-StoreId="@Model.StoreId" asp-route-StoreItemId="@review.StoreItemId" asp-route-ReviewId="@review.ReviewId"><i class="fas fa-trash-alt"></i></a>
+                                }
+                            </small>
+                            <hr>
+                        }
+                    </div>
+                </div>
+                <div class="card card-outline-secondary my-4">
+                    <div class="card-body">
+                        <form method="post" asp-controller="Marketplace" asp-action="AddReview">
+                            <div class="form-group">
+                                <input type="text" name="StoreId" class="form-control" value="@Model.StoreId" hidden />
+                                <input type="text" name="StoreItemId" class="form-control" value="@Model.StoreItemId" hidden />
+                                <textarea class="form-control" name="Description" placeholder="Description" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success">Leave a review</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- /.card -->
+
+            </div>
+            <!-- /.col-lg-9 -->
+        </div>
+
+    </div>
+    <!-- /.container -->
 </div>
-<!-- /.container -->

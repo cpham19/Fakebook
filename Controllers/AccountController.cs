@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using System.Threading;
+using System.Security.Principal;
+using Fakebook.Services;
 
 namespace Fakebook.Controllers
 {
@@ -21,12 +23,12 @@ namespace Fakebook.Controllers
         }
 
         // Used for directing to login page
-        [HttpGet("/Login", Name = "Login")]
+        [HttpGet("/Account/Login", Name = "Login")]
         public IActionResult Login()
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "User", new { id = User.Identity.GetPersonId() });
             }
             else
             {
@@ -35,7 +37,7 @@ namespace Fakebook.Controllers
         }
 
         // Used for logging into the site
-        [HttpPost("/Login", Name = "LoginPost")]
+        [HttpPost("/Account/Login", Name = "LoginPost")]
         public async Task<IActionResult> Login(string username, string password, string returnUrl)
         {
             var identity = accountService.Authenticate(username, password);
@@ -46,7 +48,7 @@ namespace Fakebook.Controllers
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, new AuthenticationProperties());
 
-            return string.IsNullOrWhiteSpace(returnUrl) ? RedirectToAction("Index", "Home") : (IActionResult)LocalRedirect(returnUrl);
+            return string.IsNullOrWhiteSpace(returnUrl) ? RedirectToAction("RedirectToIndex", "User") : (IActionResult)LocalRedirect(returnUrl);
         }
 
         // Used for logging out and clearing cookies
@@ -57,12 +59,12 @@ namespace Fakebook.Controllers
         }
 
         // Used for directing to register page
-        [HttpGet("/Register", Name = "Register")]
+        [HttpGet("/Account/Register", Name = "Register")]
         public IActionResult Register()
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "User", new { id = User.Identity.GetPersonId()});
             }
             else
             {
@@ -71,12 +73,12 @@ namespace Fakebook.Controllers
         }
 
         // Used for registering the user and directing to login page afterwards
-        [HttpPost("/Register", Name = "RegisterPost")]
+        [HttpPost("/Account/Register", Name = "RegisterPost")]
         public IActionResult Register(Person person)
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "User", new { id = User.Identity.GetPersonId() });
             }
             else if (ModelState.IsValid)
             {
