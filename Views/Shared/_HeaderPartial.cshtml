@@ -1,0 +1,68 @@
+﻿<style>
+    .navbar-brand {
+        font-size:20px;
+    }
+
+    .header {
+        position:fixed;
+    }
+</style>
+
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            @if (User.Identity.IsAuthenticated) {
+                <button type="button" id="sidebarCollapse" class="btn">
+                    <i class="fas fa-align-left text-light"></i>
+                </button>
+            }
+            <a class="navbar-brand text-light">FriendShip</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav flex-grow-1">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                    <li>
+                        <a class="nav-link text-light" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-controller="Search" asp-action="Index">Search</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-controller="Group" asp-action="Index">Groups</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-controller="Forum" asp-action="Index">Forums</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-controller="Blog" asp-action="Index">Blogs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-controller="Marketplace" asp-action="Index">Marketplace</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-controller="Account" asp-action="Logout">Logout</a>
+                    </li>
+                    }
+                    else
+                    {
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-controller="Account" asp-action="Login">Login</a>
+                    </li>
+                    }
+                </ul>
+                @if (User.Identity.IsAuthenticated)
+                {
+                <form class="form-inline my-2 my-md-0" method="post" asp-controller="Search" asp-action="Index">
+                    <input type="text" name="name" class="form-control" placeholder="Search People" value="@ViewBag.name" required />
+                    <i class="fa fa-search"></i>
+                </form>
+                }
+            </div>
+        </div>
+    </nav>
+</header>

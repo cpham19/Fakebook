@@ -9,7 +9,6 @@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
         <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
- 
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -18,96 +17,88 @@
               crossorigin="anonymous"
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
         <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+        <!-- Scrollbar Custom CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
     </environment>
 
     <style>
-        html, body {
-            background-color: #037ffc;
-            font-size: 0.75 em;
-            font-family: Verdana, Helvetica, Sans-Serif;
-            margin: 0;
-            padding: 0;
-            height: 100%;
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #fafafa;
         }
 
-        .container {
-            min-height: 100%;
-            height: auto !important;
-            height: 100%;
+        p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1em;
+            font-weight: 300;
+            line-height: 1.7em;
+            color: #999;
         }
 
-        footer {
-            bottom: 0;
-            color: red;
-            max-height:150px;
-            left: 0;
-            position: relative;
+        .wrapper {
+            display: flex;
             width: 100%;
+        }
+
+        #content {
+            width: calc(100% - 250px);
+            padding: 40px;
+            padding-top: 5em;
+            min-height: 100vh;
+            transition: all 0.3s;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+            #content.active {
+                width: 100%;
+            }
+
+        /* MEDIAQUERIES */
+
+        @@media (max-width: 768px) {
+            #content {
+                width: 100%;
+            }
+
+            #content.active {
+               width: calc(100% - 250px);
+            }
+
+            footer {
+                display: none;
+            }
+        }
+
+        .fa-edit {
+            color: green;
+        }
+
+        .fa-trash-alt {
+            color: red;
+        }
+
+        .fa-plus-square {
+            color: blue;
+            font-size: 2em;
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand">FriendShip</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <form method="post" asp-controller="Search" asp-action="Index">
-                                    <input type="text" name="name" class="form-control" placeholder="Name of Person" value="@ViewBag.name" required />
-                                </form>
-                            </li>
-                            <li>
-                                <a class="nav-link text-dark" href="/">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Search" asp-action="Index">Search</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Group" asp-action="Index">Groups</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Forum" asp-action="Index">Forums</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Blog" asp-action="Index">Blogs</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Marketplace" asp-action="Index">Marketplace</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Logout">Logout</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <partial name="_CookieConsentPartial" />
-        @RenderBody()
+    <partial name="_HeaderPartial" />
 
-    </div>
-    <footer class="bg-dark">
-        <div>
-            <p class="m-0 text-white">Copyright &copy; <a href="https://github.com/cpham19">Calvin Pham</a> 2019</p>
+    <div class="wrapper">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <partial name="_AboutMePartial" />
+        }
+        <div id="content">
+            @RenderBody()
         </div>
-        <!-- /.container -->
-    </footer>
+    </div>
+
+    <partial name="_FooterPartial" />
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -126,9 +117,25 @@
                 crossorigin="anonymous"
                 integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
         </script>
+        <!-- jQuery Custom Scroller CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar, #content').toggleClass('active');
+            });
+
+            $("#sidebar").mCustomScrollbar({
+                theme: "minimal"
+            });
+
+        });
+    </script>
+
     @RenderSection("Scripts", required: false)
+
 </body>
 </html>

@@ -10,10 +10,38 @@
         color: white;
     }
 
-    .red {
-        color: red;
-        font-size: 24px;
+    .card {
+        height: 390px;
+        margin-top: auto;
+        margin-bottom: auto;
+        width: 400px;
+        background-color: rgba(0,0,0,0.5) !important;
     }
+
+    .card-header h3 {
+        color: white;
+    }
+
+    .input-group-prepend span {
+        width: 90px;
+        background-color: #FFC312;
+        color: black;
+        border: 0 !important;
+    }
+
+    input:focus {
+        outline: 0 0 0 0 !important;
+        box-shadow: 0 0 0 0 !important;
+    }
+
+    .links {
+        color: white;
+    }
+
+        .links a {
+            margin-left: 4px;
+        }
+
 
     @@media only screen and (max-width: 600px) {
         img {
@@ -23,19 +51,47 @@
     }
 </style>
 
-<div class="container">
-    <p class="text-center">
-        <img src="~/img/register.png" class="img-responsive" />
-    </p>
-    <br />
-    <form method="post">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="text" name="Name" class="form-control" placeholder="Name" required /> <br />
-        <span asp-validation-for="Name" class="text-danger"></span>
-        <input type="text" name="Username" class="form-control" placeholder="Username" required /> <br />
-        <span asp-validation-for="Username" class="text-danger"></span>
-        <input type="password" name="Password" class="form-control" placeholder="Password" required /><br />
-        <span asp-validation-for="Password" class="text-danger"></span>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button><a class="red" asp-controller="Account" asp-action="Login">Login</a>
-    </form>
+<div class="container-fluid" style="background-color:red;">
+    <div class="d-flex">
+        <div class="card">
+            <div class="card-header">
+                <h3>Register</h3>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Name</span>
+                        </div>
+                        <input type="text" name="Name" class="form-control" placeholder="Name" required />
+                    </div>
+
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Username</span>
+                        </div>
+                        <input type="text" name="Username" class="form-control" placeholder="Username" required />
+                    </div>
+
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Password</span>
+                        </div>
+                        <input type="password" name="Password" class="form-control" placeholder="Password" required />
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-center links">
+                    Already have an account?
+                    <a style="color:blue" asp-controller="Account" asp-action="Login">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

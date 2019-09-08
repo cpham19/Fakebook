@@ -12,16 +12,19 @@ namespace Fakebook.Controllers
     {
         private readonly GroupService groupService;
         private readonly WallService wallService;
+        private readonly UserService userService;
 
-        public GroupController(GroupService groupService, WallService wallService)
+        public GroupController(GroupService groupService, WallService wallService, UserService userService)
         {
             this.groupService = groupService;
             this.wallService = wallService;
+            this.userService = userService;
         }
 
         [HttpGet("/Groups", Name = "Groups")]
         public IActionResult Index()
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             ViewBag.PersonId = User.Identity.GetPersonId();
             ViewBag.Groups = groupService.GetGroups(User.Identity.GetPersonId());
             return View();
@@ -35,12 +38,14 @@ namespace Fakebook.Controllers
         [HttpGet("/Group/AddGroup", Name = "AddGroup")]
         public IActionResult AddGroup()
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             return View();
         }
 
         [HttpPost("/Group/AddGroup", Name = "AddGroup")]
         public IActionResult AddGroup(Group g)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             if (ModelState.IsValid)
             {
                 g.GroupCreatorId = User.Identity.GetPersonId();
@@ -55,6 +60,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Group/{GroupId}", Name = "ViewGroup")]
         public IActionResult ViewGroup(int GroupId)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             Group g = groupService.GetGroup(User.Identity.GetPersonId(), GroupId);
             ViewBag.Group = g;
             ViewBag.PersonId = User.Identity.GetPersonId();
@@ -80,13 +86,13 @@ namespace Fakebook.Controllers
 
         // Used for adding wall post
         [HttpPost]
-        public IActionResult AddWallPost(int GroupId, WallPost tp)
+        public IActionResult AddWallPost(int GroupId, WallPost wp)
         {
-            tp.PosterName = User.Identity.GetName();
-            tp.PosterId = User.Identity.GetPersonId();
-            tp.GroupId = GroupId;
-            tp.DatePosted = DateTime.Now;
-            wallService.AddWallPost(tp);
+            wp.PosterName = User.Identity.GetName();
+            wp.PosterId = User.Identity.GetPersonId();
+            wp.GroupId = GroupId;
+            wp.DatePosted = DateTime.Now;
+            wallService.AddWallPost(wp);
 
             return RedirectToAction(nameof(ViewGroup), new { GroupId = GroupId });
         }
@@ -107,38 +113,42 @@ namespace Fakebook.Controllers
         [HttpGet("Group/{GroupId}/EditPost/{WallPostId}", Name = "GroupEditWallPost")]
         public IActionResult EditWallPost(int GroupId, int WallPostId)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             ViewBag.GroupId = GroupId;
-            WallPost tp = wallService.GetWallPost(WallPostId);
-            return View(tp);
+            WallPost wp = wallService.GetWallPost(WallPostId);
+            return View("_EditWallPostPartial", wp);
         }
 
         // USed for editting a wall post
         [HttpPost("Group/{GroupId}/EditPost/{WallPostId}", Name = "GroupSubmitEditWallPost")]
-        public IActionResult EditWallPost(int GroupId, int WallPostId, WallPost tp)
+        public IActionResult EditWallPost(int GroupId, int WallPostId, WallPost wp)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             if (ModelState.IsValid)
             {
-                tp.WallPostId = WallPostId;
-                wallService.EditWallPost(tp);
+                wp.WallPostId = WallPostId;
+                wallService.EditWallPost(wp);
                 return RedirectToAction(nameof(ViewGroup), new { GroupId = GroupId });
             }
 
-            return View(tp);
+            return View("_EditWallPostPartial", wp);
         }
 
         // USed for editting a reply post
         [HttpGet("Group/{GroupId}/EditReplyPost/{ReplyPostId}", Name = "GroupEditReplyPost")]
         public IActionResult EditReplyPost(int GroupId, int ReplyPostId)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             ViewBag.GroupId = GroupId;
             ReplyPost rp = wallService.GetReplyPost(ReplyPostId);
-            return View(rp);
+            return View("_EditReplyPostPartial", rp);
         }
 
         // USed for editting a reply post
         [HttpPost("Group/{GroupId}/EditReplyPost/{ReplyPostId}", Name = "GroupSubmitEditReplyPost")]
         public IActionResult EditReplyPost(int GroupId, int ReplyPostId, ReplyPost rp)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             if (ModelState.IsValid)
             {
                 rp.ReplyPostId = ReplyPostId;
@@ -146,7 +156,7 @@ namespace Fakebook.Controllers
                 return RedirectToAction(nameof(ViewGroup), new { GroupId = GroupId });
             }
 
-            return View(rp);
+            return View("_EditReplyPostPartial", rp);
         }
 
         // Doesn't work if you put a HttpDelete tag on this. Otherwise this works fine

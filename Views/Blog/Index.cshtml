@@ -8,9 +8,9 @@
 </div>
 
 <a asp-controller="Blog" asp-action="AddBlog">Add Blog</a>
-
+<br/>
 <!-- Page Content -->
-<div class="container">
+<div>
 
     <div class="row">
         <div class="col-md-8">
@@ -21,7 +21,7 @@
             <div class="card mb-4">
                 <h1 class="my-4">@blog.Headline</h1>
                 <hr/>
-                <img class="card-img-top" src="@blog.PictureUrl" alt="Card image cap" width="200px" height="400px">
+                <img class="card-img-top" src="@blog.PictureUrl" alt="Card image cap" width="200" height="500">
                 <hr/>
                 <div class="card-body">
                     <h2 class="card-title">@blog.Title</h2>
@@ -40,7 +40,7 @@
         <!-- Sidebar Widgets Column -->
         <div class="col-md-4">
             <!-- Search Widget -->
-            <div class="card my-4">
+            <div class="card">
                 <h5 class="card-header">Search</h5>
                 <div class="card-body">
                     <form class="input-group" asp-controller="Blog" asp-action="SearchQuery">

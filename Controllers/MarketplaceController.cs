@@ -12,16 +12,19 @@ namespace Fakebook.Controllers
     public class MarketplaceController : Controller
     {
         private readonly StoreService storeService;
+        private readonly UserService userService;
 
-        public MarketplaceController(StoreService storeService)
+        public MarketplaceController(StoreService storeService, UserService userService)
         {
             this.storeService = storeService;
+            this.userService = userService;
         }
 
         // Get all stores
         [HttpGet("/Marketplace", Name = "MarketplaceIndex")]
         public IActionResult Index()
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             ViewBag.HasStore = storeService.CheckUserHasStore(User.Identity.GetPersonId());
             ViewBag.Cart = storeService.GetCart(User.Identity.GetPersonId());
             ViewBag.Stores = storeService.GetStores();
@@ -32,6 +35,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Marketplace/store/{StoreId}", Name = "StoreIndex")]
         public IActionResult Store(int StoreId)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             ViewBag.Cart = storeService.GetCart(User.Identity.GetPersonId());
             ViewBag.PersonId = User.Identity.GetPersonId();
             ViewBag.Store = storeService.GetStore(StoreId);
@@ -42,6 +46,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Marketplace/AddStore", Name = "AddStore")]
         public IActionResult AddStore()
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             return View();
         }
 
@@ -49,6 +54,7 @@ namespace Fakebook.Controllers
         [HttpPost("/Marketplace/AddStore", Name = "SubmitAddStore")]
         public IActionResult AddStore(Store store)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             if (ModelState.IsValid)
             {
                 store.StoreOwnerId = User.Identity.GetPersonId();
@@ -64,6 +70,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Marketplace/store/{StoreId}/EditStore", Name = "EditStore")]
         public IActionResult EditStore(int StoreId)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             Store store = storeService.GetStore(StoreId);
             return View(store);
         }
@@ -72,6 +79,7 @@ namespace Fakebook.Controllers
         [HttpPost("/Marketplace/store/{StoreId}/EditStore", Name = "SubmitEditStore")]
         public IActionResult EditStore(int StoreId, Store store)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             if (ModelState.IsValid)
             {
                 storeService.EditStore(store);
@@ -92,6 +100,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Marketplace/store/{StoreId}/storeitem/{StoreItemId}", Name = "ViewStoreItem")]
         public IActionResult StoreItem(int StoreId, int StoreItemId)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             ViewBag.Cart = storeService.GetCart(User.Identity.GetPersonId());
             ViewBag.IsOwner = storeService.checkStoreOwner(StoreId, User.Identity.GetPersonId());
             ViewBag.PersonId = User.Identity.GetPersonId();
@@ -103,6 +112,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Marketplace/store/{StoreId}/AddItem", Name = "AddStoreItem")]
         public IActionResult AddStoreItem(int StoreId)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             ViewBag.StoreId = StoreId;
             return View();
         }
@@ -111,6 +121,7 @@ namespace Fakebook.Controllers
         [HttpPost("/Marketplace/store/{StoreId}/AddItem", Name = "SubmitAddStoreItem")]
         public IActionResult AddStoreItem(int StoreId, StoreItem storeItem)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             if (ModelState.IsValid)
             {
                 storeItem.StoreId = StoreId;
@@ -125,6 +136,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Marketplace/store/{StoreId}/storeitem/{StoreItemId}/EditItem", Name = "EditStoreItem")]
         public IActionResult EditStoreItem(int StoreId, int StoreItemId)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             StoreItem si = storeService.GetStoreItem(StoreItemId);
             return View(si);
         }
@@ -133,6 +145,7 @@ namespace Fakebook.Controllers
         [HttpPost("/Marketplace/store/{StoreId}/storeitem/{StoreItemId}/EditItem", Name = "SubmitEditStoreItem")]
         public IActionResult EditStoreItem(int StoreId, int StoreItemId, StoreItem si)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             if (ModelState.IsValid)
             {
                 si.StoreId = StoreId;
@@ -168,6 +181,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Marketplace/store/{StoreId}/storeitem/{StoreItemId}/review/{ReviewId}/EditReview", Name = "EditReview")]
         public IActionResult EditReview(int StoreId, int StoreItemId, int ReviewId)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             ViewBag.StoreId = StoreId;
             Review review = storeService.GetReview(ReviewId);
             return View(review);
@@ -177,6 +191,7 @@ namespace Fakebook.Controllers
         [HttpPost("/Marketplace/store/{StoreId}/storeitem/{StoreItemId}/review/{ReviewId}/EditReview", Name = "SubmitEditReview")]
         public IActionResult EditReview(int StoreId, int StoreItemId, int ReviewId, Review r)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             if (ModelState.IsValid)
             {
                 storeService.EditReview(r);
@@ -196,6 +211,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Marketplace/cart", Name = "Cart")]
         public IActionResult Cart()
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             List<Order> cart = storeService.GetCart(User.Identity.GetPersonId());
             return View(cart);
         }
@@ -204,6 +220,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Marketplace/orderhistory", Name = "OrderHistory")]
         public IActionResult OrderHistory()
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             List<Order> orderhistory = storeService.GetOrderHistory(User.Identity.GetPersonId());
             return View(orderhistory);
         }
@@ -212,6 +229,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Marketplace/saleshistory", Name = "SalesHistory")]
         public IActionResult SalesHistory()
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             List<Order> saleshistory = storeService.GetSalesHistory(User.Identity.GetPersonId());
             return View(saleshistory);
         }

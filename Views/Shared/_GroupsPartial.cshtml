@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Groups";
 }
 
@@ -11,9 +10,10 @@
     }
 </style>
 
+
 <div class="jumbotron">
     <div class="container">
-        <h1 class="display-3">Their Groups</h1>
+        <h1 class="display-3">My Groups</h1>
     </div>
 </div>
 
@@ -21,7 +21,7 @@
 {
     <div class="jumbotron">
         <div class="container">
-            <h1 class="display-5">They have no reviews.</h1>
+            <h1 class="display-5">You have no reviews.</h1>
         </div>
     </div>
 }
@@ -37,9 +37,13 @@ else
                         <img src="@group.GroupPictureUrl" class="card-img-top" />
                         <hr />
                         <div class="card-body">
-                            <h4 class="text-center card-title">@group.GroupName</h4>
+                            <h1 class="text-center card-title">@group.GroupName</h1>
                             <p class="card-text">@group.Description</p>
                             <a class="card-link" asp-controller="Group" asp-action="ViewGroup" asp-route-GroupId="@group.GroupId"><i class="fas fa-book-reader"></i> View</a>
+                            @if (group.GroupCreatorId == ViewBag.PersonId && ViewBag.Controller == "Home")
+                            {
+                                <a class="card-link" style="color:red;" asp-controller="Group" asp-action="DeleteGroup" asp-route-GroupId="@group.GroupId"><i class="fas fa-trash-alt"></i> Delete</a>
+                            }
                         </div>
                     </div>
                     <br />

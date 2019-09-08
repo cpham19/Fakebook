@@ -26,6 +26,7 @@ namespace Fakebook.Controllers
         [HttpGet("/User/{id}", Name = "ViewUser")]
         public IActionResult Index(int id)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             if (User.Identity.IsAuthenticated)
             {
                 // Show the user
@@ -48,12 +49,12 @@ namespace Fakebook.Controllers
 
         // Used for adding wall post
         [HttpPost]
-        public IActionResult AddWallPost(int id, WallPost tp)
+        public IActionResult AddWallPost(int id, WallPost wp)
         {
-            tp.PosterName = User.Identity.GetName();
-            tp.PosterId = User.Identity.GetPersonId();
-            tp.DatePosted = DateTime.Now;
-            wallService.AddWallPost(tp);
+            wp.PosterName = User.Identity.GetName();
+            wp.PosterId = User.Identity.GetPersonId();
+            wp.DatePosted = DateTime.Now;
+            wallService.AddWallPost(wp);
 
             return RedirectToAction(nameof(Index), new { id = id });
         }
@@ -74,37 +75,41 @@ namespace Fakebook.Controllers
         [HttpGet("User/{id}/EditPost/{WallPostId}", Name = "UserEditWallPost")]
         public IActionResult EditWallPost(int id, int WallPostId)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             ViewBag.Id = id;
-            WallPost tp = wallService.GetWallPost(WallPostId);
-            return View(tp);
+            WallPost wp = wallService.GetWallPost(WallPostId);
+            return View("_EditWallPostPartial", wp);
         }
 
         // USed for editting a wall post
         [HttpPost("User/{id}/EditPost/{WallPostId}", Name = "UserSubmitEditWallPost")]
-        public IActionResult EditWallPost(int id, int WallPostId, WallPost tp)
+        public IActionResult EditWallPost(int id, int WallPostId, WallPost wp)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             if (ModelState.IsValid)
             {
-                tp.WallPostId = WallPostId;
-                wallService.EditWallPost(tp);
+                wp.WallPostId = WallPostId;
+                wallService.EditWallPost(wp);
                 return RedirectToAction(nameof(Index), new { id = id });
             }
-            return View(tp);
+            return View("_EditWallPostPartial", wp);
         }
 
         // USed for editting a reply post
         [HttpGet("User/{id}/EditReplyPost/{ReplyPostId}", Name = "UserEditReplyPost")]
         public IActionResult EditReplyPost(int id, int ReplyPostId)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             ViewBag.Id = id;
             ReplyPost rp = wallService.GetReplyPost(ReplyPostId);
-            return View(rp);
+            return View("_EditReplyPostPartial", rp);
         }
 
         // USed for editting a reply post
         [HttpPost("User/{id}/EditReplyPost/{ReplyPostId}", Name = "UserSubmitEditReplyPost")]
         public IActionResult EditReplyPost(int id, int ReplyPostId, ReplyPost rp)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             if (ModelState.IsValid)
             {
                 rp.ReplyPostId = ReplyPostId;
@@ -112,7 +117,7 @@ namespace Fakebook.Controllers
                 return RedirectToAction(nameof(Index), new { id = id });
             }
 
-            return View(rp);
+            return View("_EditReplyPostPartial", rp);
         }
 
         // Doesn't work if you put a HttpDelete tag on this. Otherwise this works fine
@@ -133,42 +138,49 @@ namespace Fakebook.Controllers
         [HttpGet("/User/{id}/Friends", Name = "UserFriends")]
         public IActionResult Friends(int id)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
+            ViewBag.Controller = "User";
             List<Person> friends = userService.GetFriends(id);
             ViewBag.ViewerId = User.Identity.GetPersonId();
             ViewBag.Friends = friends;
-            return View();
+            return View("_FriendsPartial");
         }
 
         [HttpGet("/User/{id}/MyGroups", Name = "UserGroups")]
         public IActionResult Groups(int id)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
+            ViewBag.Controller = "User";
             List<Group> groups = groupService.GetGroupsOfUser(id);
             ViewBag.Groups = groups;
-            return View();
+            return View("_GroupsPartial");
         }
 
         [HttpGet("/User/{id}/MyBlogs", Name = "UserBlogs")]
         public IActionResult Blogs(int id)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             List<Blog> blogs = blogService.GetBlogsOfUser(id);
             ViewBag.Blogs = blogs;
-            return View();
+            return View("_BlogsPartial");
         }
 
         [HttpGet("/User/{id}/MyStores", Name = "UserStores")]
         public IActionResult Stores(int id)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             List<Store> stores = storeService.GetStoresOfUser(id);
             ViewBag.Stores = stores;
-            return View();
+            return View("_StoresPartial");
         }
 
         [HttpGet("/User/{id}/MyReviews", Name = "UserReviews")]
         public IActionResult Reviews(int id)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             List<StoreItem> itemsReviewed = storeService.GetReviewsOfUser(id);
             ViewBag.ItemsReviewed = itemsReviewed;
-            return View();
+            return View("_ReviewsPartial");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

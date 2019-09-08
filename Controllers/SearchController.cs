@@ -21,6 +21,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Search", Name = "SearchIndex")]
         public IActionResult Index()
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             if (User.Identity.IsAuthenticated)
             {
                 return View();
@@ -48,6 +49,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Search/{**name}", Name = "SearchResult")]
         public IActionResult Search(string name)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             ViewBag.name = name;
             ViewBag.PersonOneId = User.Identity.GetPersonId();
             ViewBag.Persons = userService.GetPersonsBasedOnName(User.Identity.GetPersonId(), name);

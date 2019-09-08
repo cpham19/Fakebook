@@ -2,87 +2,50 @@
     ViewData["Title"] = "View Group";
 }
 
+<partial name="_StyleForIndexPartial" />
+
 <h1>
     @if (ViewBag.Group.UserJoined)
     {
-        <a class="card-link" asp-controller="Group" asp-action="LeaveGroup" asp-route-GroupId="@ViewBag.Group.GroupId">Leave</a>
+        <a class="card-link" style="color:red;" asp-controller="Group" asp-action="LeaveGroup" asp-route-GroupId="@ViewBag.Group.GroupId">Leave</a>
     }
     else
     {
-        <a class="card-link" asp-controller="Group" asp-action="JoinGroup" asp-route-GroupId="@ViewBag.Group.GroupId">Join</a>
+        <a class="card-link" style="color:green;" asp-controller="Group" asp-action="JoinGroup" asp-route-GroupId="@ViewBag.Group.GroupId">Join</a>
     }
 </h1>
 
-<style type="text/css">
-    .card-img-top {
-        border: 1px solid black;
-        border-color: black;
-    }
-
-    .col-md-8 {
-        border: 1px solid;
-        background-color: #f5f5dc;
-    }
-
-    .card {
-        border: 1px solid;
-        background-color: #f5f5dc;
-    }
-
-    button {
-        background: Transparent no-repeat;
-        border: none;
-        cursor: pointer;
-        overflow: hidden;
-        outline: none;
-        float: left;
-    }
-
-    .mb-4 {
-        background-color: azure;
-    }
-
-    .fa-edit {
-        color: green;
-    }
-
-    .fa-trash-alt {
-        color: red;
-    }
-
-    .fa-plus-square {
-        color: blue;
-        font-size: 2em;
-    }
-</style>
-
 <div class="row">
-    <!-- About Group -->
-    <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="@ViewBag.Group.GroupPictureUrl" alt="Card image cap">
-        <h1 class="text-center">@ViewBag.Group.GroupName</h1>
-        <div class="card-body">
-            <h5 class="card-title">Group Info</h5>
-            <p class="card-text">@ViewBag.Group.Description</p>
-            <br /><br />
-            <p>Members</p>
-            <hr class="my-4">
-            @foreach (var member in ViewBag.Group.Members)
-            {
-                <a asp-controller="User" asp-action="Index" asp-route-id="@member.PersonId">@member.Name</a><br />
-            }
+    <!-- About me-->
+    <div class="col-md-4 d-flex align-items-stretch">
+        <!-- About Group -->
+        <div class="card">
+            <img class="card-img-top" src="@ViewBag.Group.GroupPictureUrl" alt="Card image cap">
+            <h1 class="text-center">@ViewBag.Group.GroupName</h1>
+            <div class="card-body">
+                <h5 class="card-title">Group Info</h5>
+                <p class="card-text">@ViewBag.Group.Description</p>
+                <br /><br />
+                <p>Members</p>
+                <hr class="my-4">
+                @foreach (var member in ViewBag.Group.Members)
+                {
+                    <a asp-controller="User" asp-action="Index" asp-route-id="@member.PersonId">@member.Name</a><br />
+                }
+            </div>
         </div>
     </div>
     <!-- Wall Entries Column -->
     <div class="col-md-8">
-        <h1 class="my-4">Wall Posts</h1>
-        <form method="post" asp-controller="Group" asp-action="AddWallPost">
-            <input type="text" name="GroupId" value=@ViewBag.Group.GroupId hidden />
-            <textarea type="text" name="Description" class="form-control" placeholder="New Post" required></textarea>
-            <button type="submit"><i class="fas fa-plus-square"></i></button>
-        </form>
-
-        <br /><br /><br/>
+        <h1 class="my-4 text-center">Group Wall</h1>
+        <div class="card">
+            <form method="post" asp-controller="Group" asp-action="AddWallPost">
+                <input type="text" name="GroupId" value=@ViewBag.Group.GroupId hidden />
+                <textarea type="text" name="Description" class="form-control" placeholder="New Post" required></textarea>
+                <button type="submit"><i class="fas fa-plus-square"></i></button>
+            </form>
+        </div>
+        <br /><br /><br />
         <!-- Wall Post -->
         @foreach (var post in ViewBag.Group.WallPosts)
         {

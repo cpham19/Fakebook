@@ -7,10 +7,38 @@
         color: white;
     }
 
-    .red {
-        color: red;
-        font-size: 24px;
+    .card {
+        height: 340px;
+        margin-top: auto;
+        margin-bottom: auto;
+        width: 400px;
+        background-color: rgba(0,0,0,0.5) !important;
     }
+
+    .card-header h3 {
+        color: white;
+    }
+
+    .input-group-prepend span {
+        width: 50px;
+        background-color: #FFC312;
+        color: black;
+        border: 0 !important;
+    }
+
+    input:focus {
+        outline: 0 0 0 0 !important;
+        box-shadow: 0 0 0 0 !important;
+    }
+
+    .links {
+        color: white;
+    }
+
+     .links a {
+        margin-left: 4px;
+     }
+
 
     @@media only screen and (max-width: 600px) {
         img {
@@ -20,15 +48,38 @@
     }
 </style>
 
-<div class="container">
-    <p class="text-center">
-        <img src="~/img/login.png" class="img-responsive" />
-    </p>
-    <br />
-    <form method="post">
-        <input type="text" name="username" class="form-control" placeholder="Username" required /> <br />
-        <input type="password" name="password" class="form-control" placeholder="Password" required /><br />
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-        <a class="red" asp-controller="Account" asp-action="Register">Register</a>
-    </form>
+<div id="content">
+    <div class="card">
+        <div class="card-header">
+            <h3>Sign In</h3>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    </div>
+                    <input type="text" name="username" class="form-control" placeholder="Username" required />
+
+                </div>
+
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input type="password" name="password" class="form-control" placeholder="Password" required />
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex justify-content-center links">
+                Don't have an account?
+                <a style="color:blue" asp-controller="Account" asp-action="Register">Register</a>
+            </div>
+        </div>
+    </div>
 </div>

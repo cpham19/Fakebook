@@ -10,14 +10,18 @@ namespace Fakebook.Controllers
     public class BlogController : Controller
     {
         private readonly BlogService blogService;
-        public BlogController(BlogService blogService)
+        private readonly UserService userService;
+
+        public BlogController(BlogService blogService, UserService userService)
         {
             this.blogService = blogService;
+            this.userService = userService;
         }
 
         [HttpGet("/Blogs", Name = "BlogIndex")]
         public IActionResult Index()
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             if (User.Identity.IsAuthenticated)
             {
                 ViewBag.PersonId = User.Identity.GetPersonId();
@@ -33,6 +37,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Blogs/AddBlog", Name = "AddBlog")]
         public IActionResult AddBlog()
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             if (User.Identity.IsAuthenticated)
             {
                 return View();
@@ -46,6 +51,7 @@ namespace Fakebook.Controllers
         [HttpPost("/Blogs/AddBlog", Name = "AddBlog")]
         public IActionResult AddBlog(Blog blog)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             if (User.Identity.IsAuthenticated)
             {
                 if (ModelState.IsValid)
@@ -68,6 +74,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Blogs/blog/{BlogId}/EditBlog", Name = "EditBlog")]
         public IActionResult EditBlog(int BlogId)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             Blog blog = blogService.GetBlog(BlogId);
             return View(blog);
         }
@@ -76,6 +83,7 @@ namespace Fakebook.Controllers
         [HttpPost("/Blogs/blog/{BlogId}/EditBlog", Name = "SubmitEditBlog")]
         public IActionResult EditBlog(int BlogId, Blog blog)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             if (ModelState.IsValid)
             {
                 blog.BlogId = BlogId;
@@ -95,6 +103,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Blogs/blog/{BlogId}", Name = "ReadBlog")]
         public IActionResult ReadBlog(int BlogId)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             ViewBag.PersonId = User.Identity.GetPersonId();
             Blog blog = blogService.GetBlog(BlogId);
             return View(blog);
@@ -113,6 +122,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Blogs/{BlogId}/EditComment/{BlogCommentId}", Name = "EditBlogComment")]
         public IActionResult EditBlogComment(int BlogId, int BlogCommentId)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             BlogComment blogComment = blogService.GetBlogComment(BlogCommentId);
             return View(blogComment);
         }
@@ -121,6 +131,7 @@ namespace Fakebook.Controllers
         [HttpPost("/Blogs/{BlogId}/EditComment/{BlogCommentId}", Name = "SubmitEditBlogComment")]
         public IActionResult EditBlogComment(int BlogId, int BlogCommentId, BlogComment bc)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             if (ModelState.IsValid)
             {
                 bc.BlogCommentId = BlogCommentId;
@@ -135,6 +146,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Blogs/Blog/{BlogId}/DeleteBlogComment/{BlogCommentId}", Name = "DeleteBlogComment")]
         public IActionResult DeleteBlogComment(int BlogId, int BlogCommentId)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             blogService.DeleteBlogComment(BlogCommentId);
             return RedirectToAction("ReadBlog", new { BlogId = BlogId });
         }
@@ -147,6 +159,7 @@ namespace Fakebook.Controllers
         [HttpGet("/Blogs/search/{s}", Name = "SearchBlog")]
         public IActionResult Search(string s)
         {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             ViewBag.Query = s;
 
             string[] words = s.Split(" ");

@@ -3,60 +3,7 @@
     ViewData["Title"] = "User Page";
 }
 
-<style type="text/css">
-    .card-img-top {
-        border: 1px solid black;
-        border-color: black;
-    }
-
-    .col-md-8 {
-        border: 1px solid;
-        background-color: #f5f5dc;
-    }
-
-    .card {
-        border: 1px solid;
-        background-color: #f5f5dc;
-    }
-
-    button {
-        background: Transparent no-repeat;
-        border: none;
-        cursor: pointer;
-        overflow: hidden;
-        outline: none;
-        float: left;
-    }
-
-    .mb-4 {
-        background-color: azure;
-    }
-
-    .fa-edit {
-        color: green;
-    }
-
-    .fa-trash-alt {
-        color: red;
-    }
-
-    .fa-plus-square {
-        color: blue;
-        font-size: 2em;
-    }
-
-
-    @@media only screen and (max-width: 600px) {
-        .col-md-4 {
-            min-width: 590x;
-            max-width: 590px;
-        }
-
-        a, p {
-            font-size: 18px;
-        }
-    }
-</style>
+<partial name="_StyleForIndexPartial" />
 
 <div class="row">
     <!-- About me -->
@@ -77,14 +24,16 @@
     </div>
     <!-- Wall Entries Column -->
     <div class="col-md-8">
-        <h1 class="my-4">My Wall</h1>
-        <form method="post" asp-controller="User" asp-action="AddWallPost">
-            <input type="text" name="id" value=@Model.PersonId hidden />
-            <input type="text" name="UserIdOfProfile" class="form-control" value=@Model.PersonId hidden />
-            <textarea type="text" name="Description" class="form-control" placeholder="New Post" required></textarea>
-            <button type="submit"><i class="fas fa-plus-square"></i></button>
-        </form>
-        <br /><br />
+        <h1 class="my-4 text-center">My Wall</h1>
+        <div class="card">
+            <form method="post" asp-controller="User" asp-action="AddWallPost">
+                <input type="text" name="id" value=@Model.PersonId hidden />
+                <input type="text" name="UserIdOfProfile" class="form-control" value=@Model.PersonId hidden />
+                <textarea type="text" name="Description" class="form-control" placeholder="New Post" required></textarea>
+                <button type="submit"><i class="fas fa-plus-square"></i></button>
+            </form>
+        </div>
+        <br /><br /><br/>
         <!-- Wall Post -->
         @foreach (var post in Model.WallPosts)
         {

@@ -12,10 +12,6 @@
         font-size:24px;
     }
 
-    .box {
-        background-color: azure;
-    }
-
     .card-link {
         bottom: 0;
     }
@@ -27,15 +23,15 @@
     </div>
 </div>
 
-<div class="box">
+<div>
     <a asp-controller="Group" asp-action="AddGroup"><i class="fas fa-plus-circle"></i> Add Group</a>
     <br/><br/>
     <!-- Example row of columns -->
     <div class="row">
         @foreach (var group in ViewBag.Groups)
         {
-            <div class="col-lg-4 col-sm-6 portfolio-item">
-                <div class="card h-100">
+            <div class="col-sm-4 d-flex align-items-stretch portfolio-item">
+                <div class="card">
                     <img src="@group.GroupPictureUrl" class="card-img-top" width="740px" height="300px" />
                     <hr />
                     <div class="card-body">
