@@ -31,12 +31,16 @@ namespace Fakebook.Services
 
         public List<WallPost> GetGroupWallPosts(int GroupId)
         {
-            List<WallPost> wallPosts = db.WallPosts.Where(tp => tp.GroupId == GroupId).OrderByDescending(tp => tp.DatePosted).ToList();
-            foreach (var tp in wallPosts)
+            List<WallPost> wallPosts = db.WallPosts.Where(wp => wp.GroupId == GroupId).OrderByDescending(wp => wp.DatePosted).ToList();
+            foreach (var wp in wallPosts)
             {
-                tp.Replies = db.ReplyPosts.Where(reply => reply.WallPostId == tp.WallPostId).OrderBy(reply => reply.DatePosted).ToList();
+                wp.PosterName = db.Persons.Where(p => p.PersonId == wp.PosterId).SingleOrDefault().Name;
+                wp.Replies = db.ReplyPosts.Where(reply => reply.WallPostId == wp.WallPostId).OrderBy(reply => reply.DatePosted).ToList();
+                foreach (var rp in wp.Replies)
+                {
+                    rp.PosterName = db.Persons.Where(p => p.PersonId == rp.PosterId).SingleOrDefault().Name;
+                }
             }
-
             return wallPosts;
         }
 

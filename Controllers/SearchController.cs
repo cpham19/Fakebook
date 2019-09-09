@@ -24,6 +24,8 @@ namespace Fakebook.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
+                ViewBag.PersonId = User.Identity.GetPersonId();
+                ViewBag.Persons = userService.GetPeople(User.Identity.GetPersonId());
                 return View();
             }
             else
@@ -32,7 +34,7 @@ namespace Fakebook.Controllers
             }
         }
 
-        // This is the page that when the user clicks Search button on the navbar
+        // This is the page that when the user enters a name in the searchbar (in the navbar or in Search page)
         public IActionResult RedirectToSearch(string name)
         {
             return RedirectToAction("Search", new { name = name });
@@ -55,6 +57,10 @@ namespace Fakebook.Controllers
             int id1 = User.Identity.GetPersonId();
             int id2 = PersonTwoId;
             userService.RemoveFriend(id1, id2);
+            if (name == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
             return RedirectToAction("Search", new { name = name });
         }
 
@@ -65,6 +71,10 @@ namespace Fakebook.Controllers
             relationship.PersonTwoId = PersonTwoId;
             relationship.StatusCode = 1;
             userService.AddFriend(relationship);
+            if (name == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
             return RedirectToAction("Search", new { name = name });
         }
 

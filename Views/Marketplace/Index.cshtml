@@ -37,14 +37,14 @@
             {
                 <div class="col-lg-4 col-sm-6 portfolio-item">
                     <div class="card">
-                        <img class="card-img-top" src="@store.StoreImageUrl" width="740px" height="300px" alt="">
-                        <hr />
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                <a asp-controller="Marketplace" asp-action="Store" asp-route-StoreId="@store.StoreId">@store.StoreName</a>
-                            </h4>
-                            <p class="card-text">@store.StoreDescription</p>
-                        </div>
+                        <a asp-controller="Marketplace" asp-action="Store" asp-route-StoreId="@store.StoreId">
+                            <img class="card-img-top" src="@store.StoreImageUrl" width="740px" height="300px" alt="">
+                            <hr />
+                            <div class="card-body">
+                                <h4 class="card-title">@store.StoreName</h4>
+                                <p class="card-text">@store.StoreDescription</p>
+                            </div>
+                         </a>
                     </div>
                     <br />
                 </div>

@@ -5,20 +5,31 @@
 <style>
     .card {
         width: 300px;
+        border: 2px solid;
+    }
+
+    .col-sm-2 {
+        padding-bottom: 5px;
+    }
+
+    @@media (max-width: 768px) {
+        .card {
+            width: 500px;
+        }
     }
 </style>
 
 <div id="content" style="background-color:red;">
     <div class="jumbotron">
-        <div class="container">
-            <h1 class="display-3">My Stores</h1>
+        <div class="container-fluid">
+            <h1 class="display-3 text-center">Stores</h1>
         </div>
     </div>
 
     @if (ViewBag.Stores.Count == 0)
     {
         <div class="jumbotron">
-            <div class="container">
+            <div class="container-fluid">
                 <h1 class="display-5">No stores.</h1>
             </div>
         </div>
@@ -29,11 +40,11 @@
         <div class="row">
             @foreach (var store in ViewBag.Stores)
             {
-                <div class="col-sm-4 d-flex align-items-stretch align-content-stretch portfolio-item">
+                <div class="col-sm-2 d-flex portfolio-item">
                     <div class="card">
                         <div class="card-body">
                             <img src="@store.StoreImageUrl" class="card-img-top" />
-                            <h1>@store.StoreName</h1>
+                            <h1 class="text-center card-title">@store.StoreName</h1>
                             <p class="card-text">@store.StoreDescription</p>
                             <a class="card-link" asp-controller="Marketplace" asp-action="Store" asp-route-StoreId="@store.StoreId"><i class="fas fa-book-reader"></i> View</a>
                         </div>

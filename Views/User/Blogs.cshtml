@@ -3,28 +3,33 @@
 }
 
 <style>
-    .card-link {
-        position: absolute;
-        bottom: 0;
-        font-size: 15px;
-    }
-
     .card {
         width: 300px;
+        border: 2px solid;
+    }
+
+    .col-sm-2 {
+        padding-bottom: 5px;
+    }
+
+    @@media (max-width: 768px) {
+        .card {
+            width: 500px;
+        }
     }
 </style>
 
 <div id="content" style="background-color:red;">
     <div class="jumbotron">
-        <div class="container">
-            <h1 class="display-3">Blogs</h1>
+        <div class="container-fluid">
+            <h1 class="display-3 text-center">Blogs</h1>
         </div>
     </div>
 
     @if (ViewBag.Blogs.Count == 0)
     {
         <div class="jumbotron">
-            <div class="container">
+            <div class="container-fluid">
                 <h1 class="display-4">You have no blogs.</h1>
             </div>
         </div>
@@ -35,13 +40,17 @@
         <div class="row">
             @foreach (var blog in ViewBag.Blogs)
             {
-                <div class="col-sm-4 d-flex align-items-stretch portfolio-item">
+                <div class="col-sm-2 d-flex portfolio-item">
                     <div class="card">
                         <div class="card-body">
                             <img src="@blog.PictureUrl" class="card-img-top" />
                             <h1>@blog.Title</h1>
                             <p class="card-text">@blog.ModifiedDescription()</p>
-                            <a class="card-link" asp-controller="Blog" asp-action="ReadBlog" asp-route-BlogId="@blog.BlogId"><i class="fas fa-book-reader"></i> View</a>
+                        </div>
+                        <div class="card-footer">
+                            <small>
+                                <a class="card-link" asp-controller="Blog" asp-action="ReadBlog" asp-route-BlogId="@blog.BlogId"><i class="fas fa-book-reader"></i> View</a>
+                            </small>
                         </div>
                     </div>
                 </div>

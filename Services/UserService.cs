@@ -26,11 +26,6 @@ namespace Fakebook.Services
             person.Friends = this.GetFriends(id);
             List<GroupMember> gms = db.GroupMembers.Where(gm => gm.GroupMemberId == id).ToList();
 
-            foreach(var gm in gms)
-            {
-                Debug.WriteLine(gm.GroupId);
-            }
-
             List<Group> groups = new List<Group>();
             foreach (var gm in gms)
             {
@@ -64,6 +59,22 @@ namespace Fakebook.Services
             }
 
             return friends;
+        }
+
+        // Getting a list of people
+        public List<Person> GetPeople(int id)
+        {
+            List<Person> people = db.Persons.ToList();
+            foreach (var person in people)
+            {
+                var check = CheckFriends(id, person.PersonId);
+                if (check == true)
+                {
+                    person.IsFriend = true;
+                }
+            }
+
+            return people;
         }
 
         // Getting a list of people excluding user

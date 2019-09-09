@@ -86,42 +86,42 @@
             transition: all 0.3s;
         }
 
-        #sidebar.active {
-            margin-left: -250px;
-        }
+            #sidebar.active {
+                margin-left: -250px;
+            }
 
-        #sidebar .sidebar-header {
-            padding: 20px;
-            padding-top: 5em;
-            background: #6d7fcc;
-        }
+            #sidebar .sidebar-header {
+                padding: 20px;
+                padding-top: 5em;
+                background: #6d7fcc;
+            }
 
-        #sidebar ul.components {
-            padding: 20px 0;
-            border-bottom: 1px solid #47748b;
-        }
+            #sidebar ul.components {
+                padding: 20px 0;
+                border-bottom: 1px solid #47748b;
+            }
 
-        #sidebar ul p {
-            color: #fff;
-            padding: 10px;
-        }
+            #sidebar ul p {
+                color: #fff;
+                padding: 10px;
+            }
 
-        #sidebar ul li a {
-            padding: 10px;
-            font-size: 1.1em;
-            display: block;
-        }
+            #sidebar ul li a {
+                padding: 10px;
+                font-size: 1.1em;
+                display: block;
+            }
 
-        #sidebar ul li a:hover {
-            color: #7386D5;
-            background: #fff;
-        }
+                #sidebar ul li a:hover {
+                    color: #7386D5;
+                    background: #fff;
+                }
 
-        #sidebar ul li.active > a,
-        a[aria-expanded="true"] {
-            color: #fff;
-            background: #6d7fcc;
-        }
+            #sidebar ul li.active > a,
+            a[aria-expanded="true"] {
+                color: #fff;
+                background: #6d7fcc;
+            }
 
         a[data-toggle="collapse"] {
             position: relative;
@@ -177,32 +177,57 @@
             right: 0;
         }
 
-        #content.active {
-            width: 100%;
-        }
+            #content.active {
+                width: 100%;
+            }
 
         /* Mediaqueries */
 
         @@media (max-width: 768px) {
             #sidebar {
-                margin-left: -250px;
+                margin-left: -500px;
+                width: 100%;
             }
 
-            #sidebar.active {
-                margin-left: 0;
-            }
+                #sidebar.active {
+                    margin-left: 0;
+                }
 
             #content {
                 width: 100%;
             }
 
-            #content.active {
-                width: calc(100% - 250px);
-            }
+                #content.active {
+                    width: calc(100% - 250px);
+                }
 
             #sidebarCollapse span {
                 display: none;
             }
+
+            footer {
+                display: none;
+            }
+
+            #sidebar .sidebar-header {
+                padding: 20px;
+                padding-top: 7em;
+                background: #6d7fcc;
+            }
+
+            #sidebar ul li a {
+                padding: 10px;
+                font-size: 1.5em;
+                display: block;
+            }
+        }
+
+        .fa-edit {
+            color: green;
+        }
+
+        .fa-trash-alt {
+            color: red;
         }
     </style>
 </head>
@@ -247,10 +272,30 @@
                 $('#sidebar, #content').toggleClass('active');
             });
 
+            $(".flip-card").hover(
+                function () {
+                    $(this).addClass('shadow-lg').css('cursor', 'pointer');
+                },
+
+                function () {
+                    $(this).removeClass('shadow-lg');
+                }
+            );
+
+            $(".card").hover(
+                function () {
+                    $(this).addClass('shadow-lg').css('cursor', 'pointer');
+                },
+
+                function () {
+                    $(this).removeClass('shadow-lg');
+                }
+            );
+
+            // For some reason, putting new scripts after this one makes them not work. put scripts before this one and they will work
             $("#sidebar").mCustomScrollbar({
                 theme: "minimal"
             });
-
         });
     </script>
 

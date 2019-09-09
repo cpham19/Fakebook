@@ -70,7 +70,7 @@
                         </div>
                         <div class="card-footer text-muted">
                             Posted on @reply.DatePosted by
-                            <a asp-controller="User" asp-action="Index" asp-route-name="@reply.PosterName">@reply.PosterName</a>
+                            <a asp-controller="User" asp-action="Index" asp-route-id="@reply.PosterId">@reply.PosterName</a>
                             @if (ViewBag.PersonId == reply.PosterId)
                             {
                                 <a asp-controller="Group" asp-action="EditReplyPost" asp-route-GroupId="@ViewBag.Group.GroupId" asp-route-ReplyPostId="@reply.ReplyPostId"><i class="fas fa-edit"></i></a>

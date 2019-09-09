@@ -21,7 +21,14 @@ namespace Fakebook.Models
 
         public string ModifiedDescription()
         {
-            return Description.Substring(0, 75) + "....";
+            if (Description.Length > 40)
+            {
+                return Description.Substring(0, 40) + "....";
+            }
+            else
+            {
+                return Description;
+            }
         }
 
         [NotMapped]

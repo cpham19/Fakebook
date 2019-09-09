@@ -31,16 +31,11 @@ namespace Fakebook.Controllers
         [HttpGet("/User/{id}", Name = "ViewUser")]
         public IActionResult Index(int id)
         {
-            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             if (User.Identity.IsAuthenticated)
             {
                 // Show the user
                 var person = userService.GetPersonBasedOnId(id);
-                //if (person.PersonId == User.Identity.GetPersonId())
-                //{
-                //    return RedirectToAction("Index", "Home");
-                //}
-
+                ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
                 person.WallPosts = wallService.GetWallPosts(person.PersonId);
                 ViewBag.PersonId = User.Identity.GetPersonId();
                 return View(person);
@@ -90,9 +85,9 @@ namespace Fakebook.Controllers
         [HttpPost("User/{id}/EditPost/{WallPostId}", Name = "UserSubmitEditWallPost")]
         public IActionResult EditWallPost(int id, int WallPostId, WallPost wp)
         {
-            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             if (ModelState.IsValid)
             {
+                ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
                 wp.WallPostId = WallPostId;
                 wallService.EditWallPost(wp);
                 return RedirectToAction(nameof(Index), new { id = id });
@@ -114,9 +109,9 @@ namespace Fakebook.Controllers
         [HttpPost("User/{id}/EditReplyPost/{ReplyPostId}", Name = "UserSubmitEditReplyPost")]
         public IActionResult EditReplyPost(int id, int ReplyPostId, ReplyPost rp)
         {
-            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             if (ModelState.IsValid)
             {
+                ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
                 rp.ReplyPostId = ReplyPostId;
                 wallService.EditReplyPost(rp);
                 return RedirectToAction(nameof(Index), new { id = id });
@@ -144,48 +139,94 @@ namespace Fakebook.Controllers
         public IActionResult Friends(int id)
         {
             ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
-            ViewBag.Controller = "User";
+            int ViewerId = User.Identity.GetPersonId();
             List<Person> friends = userService.GetFriends(id);
-            ViewBag.ViewerId = User.Identity.GetPersonId();
+            foreach (var friend in friends)
+            {
+                // Check if people's friends are friends of the user (You) so that you can remove them on your User page or from their user page
+                if (userService.CheckFriends(friend.PersonId, User.Identity.GetPersonId()))
+                {
+                    friend.IsFriend = true;
+                }
+            }
+
             ViewBag.Friends = friends;
-            return View("_FriendsPartial");
+            return View("Friends");
         }
 
-        [HttpGet("/User/{id}/MyGroups", Name = "UserGroups")]
+        [HttpGet("/User/{id}/Groups", Name = "UserGroups")]
         public IActionResult Groups(int id)
         {
             ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
-            ViewBag.Controller = "User";
             List<Group> groups = groupService.GetGroupsOfUser(id);
             ViewBag.Groups = groups;
-            return View("_GroupsPartial");
+            return View("Groups");
         }
 
-        [HttpGet("/User/{id}/MyBlogs", Name = "UserBlogs")]
+        [HttpGet("/User/{id}/Blogs", Name = "UserBlogs")]
         public IActionResult Blogs(int id)
         {
             ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             List<Blog> blogs = blogService.GetBlogsOfUser(id);
             ViewBag.Blogs = blogs;
-            return View("_BlogsPartial");
+            return View("Blogs");
         }
 
-        [HttpGet("/User/{id}/MyStores", Name = "UserStores")]
+        [HttpGet("/User/{id}/Stores", Name = "UserStores")]
         public IActionResult Stores(int id)
         {
             ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             List<Store> stores = storeService.GetStoresOfUser(id);
             ViewBag.Stores = stores;
-            return View("_StoresPartial");
+            return View("Stores");
         }
 
-        [HttpGet("/User/{id}/MyReviews", Name = "UserReviews")]
+        [HttpGet("/User/{id}/Reviews", Name = "UserReviews")]
         public IActionResult Reviews(int id)
         {
             ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             List<StoreItem> itemsReviewed = storeService.GetReviewsOfUser(id);
             ViewBag.ItemsReviewed = itemsReviewed;
-            return View("_ReviewsPartial");
+            return View("Reviews");
+        }
+
+        [HttpGet("/User/{id}/Edit", Name = "Edit")]
+        public IActionResult Edit(int id)
+        {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
+            Person person = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
+            ViewData["Person"] = person;
+            return View();
+        }
+
+        [HttpPost("/User/{id}/Edit", Name = "SubmitEdit")]
+        public IActionResult Edit(Person person)
+        {
+            ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
+            person.PersonId = User.Identity.GetPersonId();
+            userService.Edit(person);
+            return RedirectToAction(nameof(Index), new { id = person.PersonId });
+        }
+
+        [HttpGet("/User/{id}/RemoveFriend/{PersonTwoId}", Name = "RemoveFriend")]
+        public IActionResult RemoveFriend(int PersonTwoId)
+        {
+            int id1 = User.Identity.GetPersonId();
+            int id2 = PersonTwoId;
+            userService.RemoveFriend(id1, id2);
+            return RedirectToAction(nameof(Friends), new { id = User.Identity.GetPersonId() });
+        }
+
+        public IActionResult LeaveGroup(int GroupId)
+        {
+            groupService.LeaveGroup(User.Identity.GetPersonId(), GroupId);
+            return RedirectToAction(nameof(Index), new { id = User.Identity.GetPersonId() });
+        }
+
+        public IActionResult DeleteGroup(int GroupId)
+        {
+            groupService.LeaveGroup(User.Identity.GetPersonId(), GroupId);
+            return RedirectToAction(nameof(Index), new { id = User.Identity.GetPersonId()});
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

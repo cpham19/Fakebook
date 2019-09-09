@@ -6,13 +6,27 @@
     .fa-search {
         width:50px;
     }
+
+    .fa-book-reader {
+        color: green;
+    }
+
+    .fa-user-plus {
+        color: blue;
+    }
+
+    .fa-user-minus {
+        color: red;
+    }
+
+
 </style>
 
 
-<div id="content" style="background-color:azure;">
+<div id="content">
     <div class="jumbotron">
-        <div class="container">
-            <h1 class="display-3">Search for people</h1>
+        <div class="container-fluid">
+            <h1 class="display-3 text-center">Search for people</h1>
         </div>
     </div>
 
@@ -25,4 +39,29 @@
             <button type="submit"><i class="fas fa-search"></i></button>
         </div>
     </form>
+
+    <!-- Example row of columns -->
+    <div class="row">
+        @foreach (var person in ViewBag.Persons)
+        {
+            <div class="col-sm-4 d-flex align-items-stretch portfolio-item">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <img src="https://robohash.org/@person.Name" class="card-img-top" />
+                        <h1 class="text-center">@person.Name</h1>
+                        <a style="color:green;"class="card-link" asp-controller="User" asp-action="Index" asp-route-id="@person.PersonId"><i class="fas fa-book-reader"></i> View</a>
+                        @if (person.IsFriend && person.PersonId != ViewBag.PersonId)
+                        {
+                            <a class="card-link" style="color:red;" asp-controller="Search" asp-action="RemoveFriend" asp-route-PersonTwoId="@person.PersonId"><i class="fas fa-user-minus"> Remove Friend</i></a>
+                        }
+                        else if (person.PersonId != ViewBag.PersonId)
+                        {
+                            <a style="color:blue;" class="card-link" asp-controller="Search" asp-action="AddFriend" asp-route-PersonTwoId="@person.PersonId"><i class="fas fa-user-plus"></i> Add Friend</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <hr>
 </div>

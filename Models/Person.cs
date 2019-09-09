@@ -25,6 +25,19 @@ namespace Fakebook.Models
         [NotMapped]
         public bool IsFriend { get; set; } = false;
         public string ProfileDescription { get; set; } = "Profile Description";
+
+        public string ModifiedProfileDescription()
+        {
+            if (ProfileDescription.Length > 40)
+            {
+                return ProfileDescription.Substring(0, 40) + "....";
+            }
+            else
+            {
+                return ProfileDescription;
+            }
+        }
+
         [NotMapped]
         public List<WallPost> WallPosts { get; set; } = new List<WallPost>();
         [NotMapped]

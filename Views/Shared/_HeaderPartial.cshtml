@@ -1,17 +1,18 @@
 ﻿<style>
     .navbar-brand {
-        font-size:20px;
+        font-size: 20px;
     }
 
     .header {
-        position:fixed;
+        position: fixed;
     }
 </style>
 
 <header>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-            @if (User.Identity.IsAuthenticated) {
+            @if (User.Identity.IsAuthenticated)
+            {
                 <button type="button" id="sidebarCollapse" class="btn">
                     <i class="fas fa-align-left text-light"></i>
                 </button>
@@ -26,43 +27,48 @@
                 <ul class="navbar-nav flex-grow-1">
                     @if (User.Identity.IsAuthenticated)
                     {
-                    <li>
-                        <a class="nav-link text-light" asp-controller="User" asp-action="RedirectToIndex">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" asp-controller="Search" asp-action="Index">Search</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" asp-controller="Group" asp-action="Index">Groups</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" asp-controller="Forum" asp-action="Index">Forums</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" asp-controller="Blog" asp-action="Index">Blogs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" asp-controller="Marketplace" asp-action="Index">Marketplace</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" asp-controller="Account" asp-action="Logout">Logout</a>
-                    </li>
+                        <li>
+                            <a class="nav-link text-light" asp-controller="User" asp-action="RedirectToIndex">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-controller="Search" asp-action="Index">Search</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-controller="Group" asp-action="Index">Groups</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-controller="Forum" asp-action="Index">Forums</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-controller="Blog" asp-action="Index">Blogs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-controller="Marketplace" asp-action="Index">Marketplace</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-controller="Account" asp-action="Logout">Logout</a>
+                        </li>
                     }
                     else
                     {
-                    <li class="nav-item">
-                        <a class="nav-link text-light" asp-controller="Account" asp-action="Login">Login</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-controller="Account" asp-action="Login">Login</a>
+                        </li>
                     }
                 </ul>
                 @if (User.Identity.IsAuthenticated)
                 {
-                <form class="form-inline my-2 my-md-0" asp-controller="Search" asp-action="RedirectToSearch">
-                    <input type="text" name="name" class="form-control" style="width:450px;" placeholder="Search People" value="@ViewBag.name" required />
-                    <i class="fa fa-search text-light"></i>
-                </form>
+                    <form class="form-inline my-2 my-md-0" asp-controller="Search" asp-action="RedirectToSearch">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <i class="fa fa-search text-dark"></i>
+                                </span>
+                            </div>
+                            <input type="text" name="name" class="form-control" style="width:450px;" placeholder="Search People" value="@ViewBag.name" required />
+                        </div>
+                    </form>
                 }
             </div>
-        </div>
     </nav>
 </header>
