@@ -5,7 +5,7 @@
 <style>
     /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
     .flip-card {
-        background-color: transparent;
+        border: 1px solid white;
         width: 400px;
         height: 300px;
         perspective: 1000px; /* Remove this if you don't want the 3D effect */
@@ -36,15 +36,31 @@
 
     /* Style the front side (fallback if image is missing) */
     .flip-card-front {
-        background-color: white;
-        color: black;
+        background: rgba(71, 71, 71, 0.5);
+        color: white;
     }
 
     /* Style the back side */
     .flip-card-back {
-        background-color: white;
-        color: black;
+        background: rgba(71, 71, 71, 0.3);
         transform: rotateY(180deg);
+    }
+
+    .flip-card-back p {
+        padding-top: 25%;
+    }
+
+    .btn-group {
+        margin: auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .btn-group a {
+        padding: 10px;
+        padding-top: 50px;
+        font-size: 24px;
     }
 
     @@media (max-width: 768px) {
@@ -54,7 +70,9 @@
     }
 </style>
 
-<div id="content" style="background-color:cornflowerblue;">
+
+
+<div id="content">
     <div class="jumbotron">
         <div class="container-fluid">
             <h1 class="display-3 text-center">Friends</h1>
@@ -75,21 +93,26 @@
         <div class="row">
             @foreach (var person in ViewBag.Friends)
             {
-                <div class="col mb-5">
-                    <a asp-controller="User" asp-action="Index" asp-route-id="@person.PersonId">
-                        <div class="flip-card">
-                            <div class="flip-card-inner">
-                                <div class="flip-card-front">
-                                    <img src="https://robohash.org/@person.Name" width="300" height="200" />
-                                    <h1>@person.Name</h1>
-                                </div>
-                                <div class="flip-card-back">
-                                    <p>@person.ModifiedProfileDescription()</p>
+                <div class="col mb-4">
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <img src="https://robohash.org/@person.Name" width="300" height="200" />
+                                <h1>@person.Name</h1>
+                            </div>
+                            <div class="flip-card-back">
+                                <p class="text-light">@person.ModifiedProfileDescription()</p>
+                                <div class="btn-group">
+                                    <a asp-controller="User" asp-action="Index" asp-route-id="@person.PersonId"><i class="fas fa-book-reader"></i>View </a>
                                 </div>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 </div>
+            }
+            @if (ViewBag.Friends.Count % 3 != 0)
+            {
+                <div class="col mb-4"></div>
             }
         </div>
         <hr>

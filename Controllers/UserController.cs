@@ -38,6 +38,11 @@ namespace Fakebook.Controllers
                 ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
                 person.WallPosts = wallService.GetWallPosts(person.PersonId);
                 ViewBag.PersonId = User.Identity.GetPersonId();
+                if(person.PersonId != ViewBag.PersonId && userService.CheckFriends(person.PersonId, ViewBag.PersonId))
+                {
+                    person.IsFriend = true;
+                }
+
                 return View(person);
 
             }
@@ -56,7 +61,7 @@ namespace Fakebook.Controllers
             wp.DatePosted = DateTime.Now;
             wallService.AddWallPost(wp);
 
-            return RedirectToAction(nameof(Index), new { id = id });
+            return RedirectToAction(nameof(Index), new { id = wp.PosterId });
         }
 
         // Used for replying to posts
@@ -68,7 +73,7 @@ namespace Fakebook.Controllers
             rp.DatePosted = DateTime.Now;
             wallService.AddReplyPost(rp);
 
-            return RedirectToAction(nameof(Index), new { id = id });
+            return RedirectToAction(nameof(Index), new { id = rp.PosterId });
         }
 
         // USed for editting a wall post
@@ -139,7 +144,6 @@ namespace Fakebook.Controllers
         public IActionResult Friends(int id)
         {
             ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
-            int ViewerId = User.Identity.GetPersonId();
             List<Person> friends = userService.GetFriends(id);
             foreach (var friend in friends)
             {
@@ -208,25 +212,35 @@ namespace Fakebook.Controllers
             return RedirectToAction(nameof(Index), new { id = person.PersonId });
         }
 
-        [HttpGet("/User/{id}/RemoveFriend/{PersonTwoId}", Name = "RemoveFriend")]
+        public IActionResult AddFriend(int PersonTwoId)
+        {
+            int id1 = User.Identity.GetPersonId();
+            int id2 = PersonTwoId;
+            Friend rel = new Friend();
+            rel.PersonOneId = id1;
+            rel.PersonTwoId = id2;
+            userService.AddFriend(rel);
+            return RedirectToAction(nameof(Index), new { id = id2 });
+        }
+
         public IActionResult RemoveFriend(int PersonTwoId)
         {
             int id1 = User.Identity.GetPersonId();
             int id2 = PersonTwoId;
             userService.RemoveFriend(id1, id2);
-            return RedirectToAction(nameof(Friends), new { id = User.Identity.GetPersonId() });
+            return RedirectToAction(nameof(Index), new { id = id2 });
         }
 
         public IActionResult LeaveGroup(int GroupId)
         {
             groupService.LeaveGroup(User.Identity.GetPersonId(), GroupId);
-            return RedirectToAction(nameof(Index), new { id = User.Identity.GetPersonId() });
+            return RedirectToAction(nameof(Groups), new { id = User.Identity.GetPersonId() });
         }
 
         public IActionResult DeleteGroup(int GroupId)
         {
             groupService.LeaveGroup(User.Identity.GetPersonId(), GroupId);
-            return RedirectToAction(nameof(Index), new { id = User.Identity.GetPersonId()});
+            return RedirectToAction(nameof(Groups), new { id = User.Identity.GetPersonId()});
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

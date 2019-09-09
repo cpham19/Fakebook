@@ -5,7 +5,8 @@
 
 <style>
     .card {
-        border: 1px solid;
+        border: 1px solid white;
+        background: rgba(71, 71, 71, 0.7);
     }
 
     .btn-group {
@@ -19,14 +20,39 @@
         padding: 10px;
     }
 
+    .py-1 {
+        background: rgba(71, 71, 71, 0.5);
+        color:white; 
+        border: 1px solid
+    }
+
+    a {
+        color:red;
+    }
+
+    a:hover {
+        color:white;
+    }
 </style>
 
 <div id="content">
     <!-- Header - set the background image for the header in the line below -->
-    <header class="py-1 bg-image-full" style="background-color:white; border: 1px solid;">
-        <h1 class="text-center">@Model.Name</h1>
+    <header class="py-1 bg-image-full">
+        <h1 class="text-center">
+            @Model.Name<br />
+        </h1>
+        <h5 class="text-center">
+            @if (Model.PersonId != ViewBag.PersonId && Model.IsFriend)
+            {
+                <a style="color:red;" asp-controller="User" asp-action="RemoveFriend" asp-route-PersonTwoId="@Model.PersonId"><i class="fas fa-trash-alt"></i> Remove Friend</a>
+            }
+            else if (Model.PersonId != ViewBag.PersonId && !Model.IsFriend)
+            {
+                <a style="color:deepskyblue;" asp-controller="User" asp-action="AddFriend" asp-route-PersonTwoId="@Model.PersonId"><i class="fas fa-user-plus"></i> Add Friend</a>
+            }
+        </h5>
         <img class="img-fluid d-block mx-auto" src="https://robohash.org/@Model.Name" alt="">
-        <p class="text-center">
+        <p class="text-center text-light">
             @Model.ProfileDescription
             @if (Model.PersonId == ViewBag.PersonId)
             {
@@ -34,7 +60,7 @@
             }
 
             <div class="btn-group">
-                <a style="color:blue;" asp-controller="User" asp-action="Friends" asp-route-id="@Model.PersonId"><i class="fas fa-user-friends"></i> Friends</a>
+                <a style="color:deeppink;" asp-controller="User" asp-action="Friends" asp-route-id="@Model.PersonId"><i class="fas fa-user-friends"></i> Friends</a>
                 <a style="color:darkgreen;" asp-controller="User" asp-action="Groups" asp-route-id="@Model.PersonId"><i class="fas fa-layer-group"></i> Groups</a>
                 <a style="color:orange;" asp-controller="User" asp-action="Blogs" asp-route-id="@Model.PersonId"><i class="fab fa-blogger"></i> Blogs</a>
                 <a style="color:red;" asp-controller="User" asp-action="Stores" asp-route-id="@Model.PersonId"><i class="fas fa-store"></i> Stores</a>
@@ -43,7 +69,7 @@
         </p>
     </header>
 
-    <h1 class="my-4 text-center">My Wall</h1>
+    <h1 class="my-4 text-center text-light">My Wall</h1>
     <div class="card">
         <form method="post" asp-controller="User" asp-action="AddWallPost">
             <input type="text" name="id" value=@Model.PersonId hidden />
@@ -58,7 +84,7 @@
     {
         <div class="card mb-4">
             <div class="card-body">
-                <p class="card-text">@post.Description</p>
+                <p class="card-text text-light">@post.Description</p>
             </div>
             <!-- Main Posts -->
             <div class="card-footer text-muted">
@@ -74,7 +100,7 @@
             @foreach (var reply in post.Replies)
             {
                 <div class="card-body">
-                    <p class="card-text">@reply.Description</p>
+                    <p class="card-text text-light">@reply.Description</p>
                 </div>
                 <div class="card-footer text-muted">
                     Posted on @reply.DatePosted by

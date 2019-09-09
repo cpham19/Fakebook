@@ -19,7 +19,7 @@
     }
 </style>
 
-<div id="content" style="background-color:red;">
+<div id="content">
     <div class="jumbotron">
         <div class="container-fluid">
             <h1 class="display-3 text-center">Blogs</h1>
@@ -42,11 +42,13 @@
             {
                 <div class="col-sm-2 d-flex portfolio-item">
                     <div class="card">
-                        <div class="card-body">
-                            <img src="@blog.PictureUrl" class="card-img-top" />
-                            <h1>@blog.Title</h1>
-                            <p class="card-text">@blog.ModifiedDescription()</p>
-                        </div>
+                        <a asp-controller="Blog" asp-action="ReadBlog" asp-route-BlogId="@blog.BlogId">
+                            <div class="card-body">
+                                <img src="@blog.PictureUrl" class="card-img-top" />
+                                <h1>@blog.Title</h1>
+                                <p class="card-text">@blog.ModifiedDescription()</p>
+                            </div>
+                        </a>
                         <div class="card-footer">
                             <small>
                                 <a class="card-link" asp-controller="Blog" asp-action="ReadBlog" asp-route-BlogId="@blog.BlogId"><i class="fas fa-book-reader"></i> View</a>

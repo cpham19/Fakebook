@@ -5,7 +5,12 @@
 <style>
     .card {
         width: 300px;
+        height: 500px;
         border: 2px solid;
+    }
+
+    .card a:hover {
+        text-decoration: underline;
     }
 
     .col-sm-2 {
@@ -19,7 +24,7 @@
     }
 </style>
 
-<div id="content" style="background-color:red;">
+<div id="content">
     <div class="jumbotron">
         <div class="container-fluid">
             <h1 class="display-3 text-center">Stores</h1>
@@ -42,12 +47,13 @@
             {
                 <div class="col-sm-2 d-flex portfolio-item">
                     <div class="card">
-                        <div class="card-body">
-                            <img src="@store.StoreImageUrl" class="card-img-top" />
-                            <h1 class="text-center card-title">@store.StoreName</h1>
-                            <p class="card-text">@store.StoreDescription</p>
-                            <a class="card-link" asp-controller="Marketplace" asp-action="Store" asp-route-StoreId="@store.StoreId"><i class="fas fa-book-reader"></i> View</a>
-                        </div>
+                        <a asp-controller="Marketplace" asp-action="Store" asp-route-StoreId="@store.StoreId">
+                            <div class="card-body">
+                                <img src="@store.StoreImageUrl" class="card-img-top" />
+                                <h1 class="text-center card-title">@store.StoreName</h1>
+                                <p class="card-text">@store.StoreDescription</p>
+                            </div>
+                        </a>
                     </div>
                 </div>
             }
