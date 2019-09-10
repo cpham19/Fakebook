@@ -3,11 +3,6 @@
 }
 
 <style>
-    .card {
-        width: 300px;
-        border: 2px solid;
-    }
-
     a {
         text-decoration: none;
         color:white;
@@ -26,8 +21,9 @@
     }
 
     @@media (max-width: 768px) {
-        .card {
-            width: 500px;
+        .thumbnail {
+            width: 400px;
+            height: 300px;
         }
     }
 </style>
@@ -35,7 +31,7 @@
 <div id="content">
     <div class="jumbotron">
         <div class="container-fluid">
-            <h1 class="display-3 text-center">Groups</h1>
+            <h1 class="display-3">Groups</h1>
         </div>
     </div>
 
@@ -56,22 +52,22 @@
                 <div class="row mb-4" style="background: rgba(71, 71, 71, 0.5);">
                     <div class="col-md-2" style="padding: 20px;">
                         <a asp-controller="Group" asp-action="ViewGroup" asp-route-GroupId="@group.GroupId">
-                            <img src="@group.GroupPictureUrl" class="rounded-0 img-thumbnail" style="border: solid 1px;" />
+                            <img src="@group.GroupPictureUrl" class="rounded-0 img-thumbnail thumbnail" style="border: solid 5px green;" />
                         </a>
                     </div>
                     <div class="col-md-9" style="padding: 20px;">
                         <div class="row">
                             <div class="col-md-12">
                                 <h1>
-                                    <a asp-controller="Group" asp-action="ViewGroup" asp-route-GroupId="@group.GroupId">@group.GroupName</a>
+                                    <a style="font-size:50px;" asp-controller="Group" asp-action="ViewGroup" asp-route-GroupId="@group.GroupId">@group.GroupName</a>
                                 </h1><br>
-                                <h3 style="color:white;">
+                                <h4 style="color:white;">
                                     @group.Description
-                                </h3>
+                                </h4>
                             </div>
                             <div class="col-md-12" style="padding-top: 50px;">
-                                <a class="card-link" asp-controller="User" asp-action="LeaveGroup" asp-route-GroupId="@group.GroupId"><i class="fas fa-sign-out-alt"></i> Leave</a>
-                                <a class="card-link" asp-controller="User" asp-action="DeleteGroup" asp-route-GroupId="@group.GroupId"><i class="fas fa-trash-alt"></i> Delete</a>
+                                <a style="font-size:25px;" class="card-link" asp-controller="User" asp-action="LeaveGroup" asp-route-GroupId="@group.GroupId"><i class="fas fa-sign-out-alt"></i> Leave</a>
+                                <a style="font-size:25px;" class="card-link" asp-controller="User" asp-action="DeleteGroup" asp-route-GroupId="@group.GroupId"><i class="fas fa-trash-alt"></i> Delete</a>
                             </div>
                         </div>
                     </div>

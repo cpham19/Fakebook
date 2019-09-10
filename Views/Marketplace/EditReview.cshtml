@@ -4,8 +4,16 @@
 }
 @model Review
 
-<div id="content" style="background-color:red;">
-    <h1>Edit Review</h1>
+<style>
+    .input-group-prepend span {
+        width: 120px;
+        color: black;
+        border: 0 !important;
+    }
+</style>
+
+<div id="content">
+    <h1 class="text-light">Edit Review</h1>
 
     <form method="post" asp-controller="Marketplace" asp-action="EditReview">
         <div class="input-group mb-3">

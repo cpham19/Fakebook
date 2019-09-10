@@ -189,8 +189,8 @@ namespace Fakebook.Controllers
         public IActionResult Reviews(int id)
         {
             ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
-            List<StoreItem> itemsReviewed = storeService.GetReviewsOfUser(id);
-            ViewBag.ItemsReviewed = itemsReviewed;
+            ViewBag.Person = userService.GetPersonBasedOnId(id);
+            ViewBag.Reviews = storeService.GetReviewsOfUser(id);
             return View("Reviews");
         }
 

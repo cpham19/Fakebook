@@ -3,8 +3,16 @@
 }
 @model Topic
 
-<div id="content" style="background-color:red;">
-    <h1>Add New Topic</h1>
+<style>
+    .input-group-prepend span {
+        width: 120px;
+        color: black;
+        border: 0 !important;
+    }
+</style>
+
+<div id="content">
+    <h1 class="text-light">Add New Topic</h1>
     <form method="post">
         <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -25,4 +33,3 @@
         <button>Add</button>
     </form>
 </div>
-    </div>

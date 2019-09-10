@@ -2,14 +2,14 @@
     ViewData["Title"] = "Blog Page";
 }
 
-<div id="content" style="background-color:red;">
+<div id="content">
     <div class="jumbotron">
         <div class="container">
             <h1 class="display-3">Blogs</h1>
         </div>
     </div>
 
-    <a asp-controller="Blog" asp-action="AddBlog">Add Blog</a>
+    <a style="font-size:28px;" asp-controller="Blog" asp-action="AddBlog"><i class="fas fa-plus-square"></i> Add Blog</a>
     <br />
     <!-- Page Content -->
     <div class="row">
@@ -36,7 +36,6 @@
 
             }
         </div>
-
         <!-- Sidebar Widgets Column -->
         <div class="col-md-4">
             <!-- Search Widget -->
@@ -51,40 +50,6 @@
                     </form>
                 </div>
             </div>
-
-            <!-- Categories Widget -->
-            @*<div class="card my-4">
-                <h5 class="card-header">Categories</h5>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="#">Web Design</a>
-                                </li>
-                                <li>
-                                    <a href="#">HTML</a>
-                                </li>
-                                <li>
-                                    <a href="#">Freebies</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-6">
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="#">JavaScript</a>
-                                </li>
-                                <li>
-                                    <a href="#">CSS</a>
-                                </li>
-                                <li>
-                                    <a href="#">Tutorials</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>*@
         </div>
     </div>
     <!-- /.row -->

@@ -1,11 +1,5 @@
 ﻿<style>
     /* Sidebar */
-
-    .wrapper {
-        display: flex;
-        width: 100%;
-    }
-
     #sidebar {
         width: 250px;
         position: fixed;
@@ -13,24 +7,31 @@
         left: 0;
         height: 100vh;
         z-index: 999;
-        background: rgba(29, 31, 36, 0.7);
+        background: rgba(29, 31, 36, 0.9);
         color: #fff;
         transition: all 0.3s;
     }
 
         #sidebar.active {
-            margin-left: -250px;
+            min-width: 80px;
+            max-width: 80px;
+            text-align: center;
+        }
+
+        /* Name in the header*/
+        #sidebar.active span {
+            display:none;
         }
 
         #sidebar .sidebar-header {
             padding: 20px;
             padding-top: 7em;
-            background: rgba(29, 31, 36, 0.7);
+            background: rgba(29, 31, 36, 0.8);
         }
 
         #sidebar ul.components {
             padding: 20px 0;
-            border-bottom: 1px solid #47748b;
+            border-bottom: 1px solid white;
         }
 
         #sidebar ul p {
@@ -101,11 +102,17 @@
     @@media (max-width: 768px) {
         #sidebar {
             margin-left: -500px;
-            width: 100%;
+            width: 80px;
+        }
+
+        /* Name in the header*/
+        #sidebar span {
+            display:none;
         }
 
         #sidebar.active {
             margin-left: 0;
+            background: rgba(29, 31, 36, 1);
         }
  
         #sidebarCollapse span {
@@ -115,12 +122,12 @@
         #sidebar .sidebar-header {
             padding: 20px;
             padding-top: 8em;
-            background: #6d7fcc;
+            background: rgba(29, 31, 36, 0.7);
         }
 
         #sidebar ul li a {
-            padding: 10px;
-            font-size: 1.5em;
+            padding: 15px;
+            font-size: 1em;
             display: block;
         }
     }
@@ -131,7 +138,7 @@
     <div class="sidebar-header">
         <h2>
             <img class="rounded img-thumbnail" src="https://robohash.org/@ViewBag.Me.Name" width="50" height="50" />
-            @ViewBag.Me.Name
+            <span>@ViewBag.Me.Name</span>
         </h2>
     </div>
     <ul class="list-unstyled components">

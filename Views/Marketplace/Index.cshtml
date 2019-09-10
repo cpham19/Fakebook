@@ -4,16 +4,23 @@
 }
 
 <style>
-    .fa-store-alt {
-        color:green;
-        font-size:24px;
+    .btn-group a {
+        padding: 20px;
+        width: 200px;
+    }
+
+    @@media (max-width: 768px) {
+        .btn-group a {
+            padding: 20px;
+            width: 100%;
+        }
     }
 </style>
 
-<div id="content" style="background-color:red;">
+<div id="content">
     <div class="jumbotron">
-        <div class="container">
-            <h1 class="display-3">Marketplace</h1>
+        <div class="container-fluid">
+            <h1 class="display-3 text-light">Marketplace</h1>
         </div>
     </div>
 
@@ -22,15 +29,16 @@
         <a style="color:beige;" asp-controller="Marketplace" asp-action="AddStore"><i class="fas fa-store-alt"></i> Add Store</a>
         <br /><br />
     }
-    <a asp-controller="Marketplace" asp-action="Cart" class="btn btn-info">View Cart</a>
-    <a asp-controller="Marketplace" asp-action="SalesHistory" class="btn btn-dark">View Sales History</a>
-    <a asp-controller="Marketplace" asp-action="OrderHistory" class="btn btn-secondary">View Order History</a>
+    <div class="btn-group">
+        <a asp-controller="Marketplace" asp-action="Cart" class="btn btn-info">View Cart</a>
+        <a asp-controller="Marketplace" asp-action="SalesHistory" class="btn btn-dark">View Sales History</a>
+        <a asp-controller="Marketplace" asp-action="OrderHistory" class="btn btn-secondary">View Order History</a>
+    </div>
     <br />
     <br />
     <br />
-
     <!-- Page Content -->
-    <div class="container">
+    <div class="container-fluid">
         <!-- Marketing Icons Section -->
         <div class="row">
             @foreach (var store in ViewBag.Stores)
@@ -44,7 +52,7 @@
                                 <h4 class="card-title">@store.StoreName</h4>
                                 <p class="card-text">@store.StoreDescription</p>
                             </div>
-                         </a>
+                        </a>
                     </div>
                     <br />
                 </div>

@@ -3,8 +3,16 @@
 }
 @model Reply
 
-<div id="content" style="background-color:red;">
-    <h1>Editting Reply #@Model.ReplyId</h1>
+<style>
+    .input-group-prepend span {
+        width: 120px;
+        color: black;
+        border: 0 !important;
+    }
+</style>
+
+<div id="content">
+    <h1 class="text-light">Editting Reply #@Model.ReplyId</h1>
     <form method="post" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@ViewBag.TopicName">
         <div class="input-group mb-3">
             <div class="input-group-prepend">

@@ -29,7 +29,7 @@ namespace Fakebook.Models
         [ValidUrl]
         public string ItemImageUrl { get; set; }
         [StringLength(30, MinimumLength = 3)]
-        public string ItemName { get; set;}
+        public string ItemName { get; set; }
         public string ItemCondition { get; set; }
         [StringLength(60)]
         public string ItemDescription { get; set; }
@@ -51,9 +51,24 @@ namespace Fakebook.Models
         public int PosterId { get; set; }
         //[StringLength(60, MinimumLength = 3)]
         public string Description { get; set; }
+
+        public string ModifiedDescription()
+        {
+            if (Description.Length > 40) {
+                return Description.Substring(0, 40) + "...";
+            }
+            else {
+                return Description;
+            }
+        }
+
         public DateTime DatePosted { get; set; }
         [NotMapped]
+        public int StoreId { get; set; }
+        [NotMapped]
         public string PosterName { get; set; }
+        [NotMapped]
+        public string ItemName { get; set; }
     }
 
     public class OrderItem

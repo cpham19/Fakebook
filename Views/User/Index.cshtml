@@ -10,28 +10,47 @@
     }
 
     .btn-group {
-          margin: auto;
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
+        margin: auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
     }
 
-    .btn-group a {
-        padding: 10px;
-    }
+        .btn-group a {
+            padding: 10px;
+        }
 
     .py-1 {
         background: rgba(71, 71, 71, 0.5);
-        color:white; 
+        color: white;
         border: 1px solid
     }
 
     a {
-        color:red;
+        color: white;
     }
 
-    a:hover {
-        color:white;
+        a:hover {
+            color: red;
+        }
+
+    .add {
+        font-size: 18px;
+    }
+
+    .card-footer {
+        background: rgba(71, 71, 71, 1);
+    }
+
+    @@media (max-width: 768px) {
+        .add {
+            width: 100%;
+            font-size: 18px;
+        }
+
+        .action, .card-footer {
+            font-size: 18px;
+        }
     }
 </style>
 
@@ -69,16 +88,17 @@
         </p>
     </header>
 
-    <h1 class="my-4 text-center text-light">My Wall</h1>
+    <br/>
     <div class="card">
         <form method="post" asp-controller="User" asp-action="AddWallPost">
             <input type="text" name="id" value=@Model.PersonId hidden />
             <input type="text" name="UserIdOfProfile" class="form-control" value=@Model.PersonId hidden />
             <textarea type="text" name="Description" class="form-control" placeholder="New Post" required></textarea>
-            <button type="submit"><i class="fas fa-plus-square"></i></button>
+            <button class="add" type="submit"><i class="fas fa-plus-square"></i></button>
         </form>
     </div>
-    <br /><br /><br />
+
+    <br/>
     <!-- Wall Post -->
     @foreach (var post in Model.WallPosts)
     {
@@ -92,8 +112,10 @@
                 <a asp-controller="User" asp-action="Index" asp-route-id="@post.PosterId">@post.PosterName</a>
                 @if (ViewBag.PersonId == post.PosterId)
                 {
-                    <a asp-controller="User" asp-action="EditWallPost" asp-route-id="@Model.PersonId" asp-route-WallPostId="@post.WallPostId"><i class="fas fa-edit"></i></a>
-                    <a asp-controller="User" asp-action="DeleteWallPost" asp-route-id="@Model.PersonId" asp-route-WallPostId="@post.WallPostId"><i class="fas fa-trash-alt"></i></a>
+                    <div class="btn-group-sm">
+                        <a class="action" asp-controller="User" asp-action="EditWallPost" asp-route-id="@Model.PersonId" asp-route-WallPostId="@post.WallPostId"><i class="fas fa-edit"></i></a>
+                        <a class="action" asp-controller="User" asp-action="DeleteWallPost" asp-route-id="@Model.PersonId" asp-route-WallPostId="@post.WallPostId"><i class="fas fa-trash-alt"></i></a>
+                    </div>
                 }
             </div>
             <!-- Replies to the Main Posts -->
@@ -107,8 +129,10 @@
                     <a asp-controller="User" asp-action="Index" asp-route-id="@reply.PosterId">@reply.PosterName</a>
                     @if (ViewBag.PersonId == reply.PosterId)
                     {
-                        <a asp-controller="User" asp-action="EditReplyPost" asp-route-id="@Model.PersonId" asp-route-ReplyPostId="@reply.ReplyPostId"><i class="fas fa-edit"></i></a>
-                        <a asp-controller="User" asp-action="DeleteReplyPost" asp-route-id="@Model.PersonId" asp-route-ReplyPostId="@reply.ReplyPostId"><i class="fas fa-trash-alt"></i></a>
+                        <div class="btn-group-sm">
+                            <a class="action" asp-controller="User" asp-action="EditReplyPost" asp-route-id="@Model.PersonId" asp-route-ReplyPostId="@reply.ReplyPostId"><i class="fas fa-edit"></i></a>
+                            <a class="action" asp-controller="User" asp-action="DeleteReplyPost" asp-route-id="@Model.PersonId" asp-route-ReplyPostId="@reply.ReplyPostId"><i class="fas fa-trash-alt"></i></a>
+                        </div>
                     }
                 </div>
             }
@@ -116,7 +140,7 @@
                 <textarea type="text" name="Description" class="form-control" placeholder="New Reply" required></textarea>
                 <input type="text" name="WallPostId" class="form-control" value=@post.WallPostId hidden />
                 <input type="text" name="n" value=@Model.Name hidden />
-                <button type="submit"><i class="fas fa-plus-square"></i></button>
+                <button class="add" type="submit"><i class="fas fa-plus-square"></i></button>
             </form>
         </div>
     }

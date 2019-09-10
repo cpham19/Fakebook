@@ -6,15 +6,31 @@
 <style>
     table, th, td {
         border: solid 5px;
-        background-color: beige;
+        background: rgb(255, 255, 255);
     }
 
     td {
         height: 50px;
     }
+
+    .btn-group {
+        margin: auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+    }
+
+        .btn-group a {
+            padding-right: 5px;
+        }
+
+    @@media (max-width: 768px) {
+    }
 </style>
 
-<div id="content" style="background-color:red;">
+
+
+<div id="content">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a asp-controller="Forum" asp-action="Index">Forums</a></li>
@@ -31,8 +47,10 @@
             <p>Posted by <a asp-controller="User" asp-action="Index" asp-route-id="@Model.PosterId">@Model.PosterName</a> (@Model.TopicDate)</p>
             @if (@Model.PosterId == ViewBag.PersonId)
             {
-                <a asp-controller="Forum" asp-action="EditTopic" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()"><i class="fas fa-edit"></i></a>
-                <a asp-controller="Forum" asp-action="DeleteTopic" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()"><i class="fas fa-trash-alt"></i></a>
+                <div class="btn-group">
+                    <a style="font-size:25px;" asp-controller="Forum" asp-action="EditTopic" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()"><i class="fas fa-edit"></i></a>
+                    <a style="font-size:25px;" asp-controller="Forum" asp-action="DeleteTopic" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()"><i class="fas fa-trash-alt"></i></a>
+                </div>
             }
         </div>
     </div>
@@ -55,8 +73,10 @@
                         Posted on @reply.ReplyDate
                         @if (reply.PosterId == ViewBag.PersonId)
                         {
-                            <a asp-controller="Forum" asp-action="EditReply" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()" asp-route-ReplyId="@reply.ReplyId"><i class="fas fa-edit"></i></a>
-                            <a asp-controller="Forum" asp-action="DeleteReply" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()" asp-route-ReplyId="@reply.ReplyId"><i class="fas fa-trash-alt"></i></a>
+                            <div class="btn-group">
+                                <a style="font-size:25px;" asp-controller="Forum" asp-action="EditReply" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()" asp-route-ReplyId="@reply.ReplyId"><i class="fas fa-edit"></i></a>
+                                <a style="font-size:25px;" asp-controller="Forum" asp-action="DeleteReply" asp-route-ForumName="@ViewBag.ForumName" asp-route-TopicId="@Model.TopicId" asp-route-TopicName="@Model.ModifiedTopicName()" asp-route-ReplyId="@reply.ReplyId"><i class="fas fa-trash-alt"></i></a>
+                            </div>
                         }
                     </td>
                     <td>

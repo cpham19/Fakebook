@@ -153,25 +153,17 @@ namespace Fakebook.Services
             return db.Reviews.Where(r => r.ReviewId == ReviewId).SingleOrDefault();
         }
 
-        public List<StoreItem> GetReviewsOfUser(int PersonId)
+        public List<Review> GetReviewsOfUser(int PersonId)
         {
             List<Review> reviews = db.Reviews.Where(review => review.PosterId == PersonId).ToList();
-            List<StoreItem> itemsReviewed = new List<StoreItem>();
             foreach (var review in reviews)
             {
-                StoreItem si = db.StoreItems.Where(item => item.StoreItemId == review.StoreItemId).SingleOrDefault();
-                if (!itemsReviewed.Contains(si))
-                {
-                    itemsReviewed.Add(si);
-                }
+                StoreItem item = db.StoreItems.Where(si => si.StoreItemId == review.StoreItemId).SingleOrDefault();
+                review.ItemName = item.ItemName;
+                review.StoreId = item.StoreId;
             }
 
-            foreach (var itemReview in itemsReviewed)
-            {
-                itemReview.Reviews = db.Reviews.Where(review => review.PosterId == PersonId).ToList();
-            }
-
-            return itemsReviewed;
+            return reviews;
         }
 
         public void AddReview(Review review)

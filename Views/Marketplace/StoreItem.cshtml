@@ -3,22 +3,33 @@
 }
 @model StoreItem
 
-<div id="content" style="background-color:red;">
-    <div>
+<style>
+    .btn-group a {
+        padding: 20px;
+        width: 200px;
+    }
+
+    @@media (max-width: 768px) {
+        .btn-group a {
+            padding: 20px;
+            width: 100%;
+        }
+    }
+</style>
+
+<div id="content">
+    <div class="btn-group">
         <a asp-controller="Marketplace" asp-action="Cart" class="btn btn-info">View Cart</a>
         <a asp-controller="Marketplace" asp-action="SalesHistory" class="btn btn-dark">View Sales History</a>
         <a asp-controller="Marketplace" asp-action="OrderHistory" class="btn btn-secondary">View Order History</a>
     </div>
 
     <!-- Page Content -->
-    <div class="container">
-
+    <div class="container-fluid">
         <div class="row">
-
             <div class="col-lg-8">
-
                 <div class="card mt-4">
-                    <img class="card-img-top img-fluid" src="@Model.ItemImageUrl" width="600px" height="400px" alt="">
+                    <img class="card-img-top" src="@Model.ItemImageUrl" width="300" height="600" alt="">
                     <div class="card-body">
                         <h1 class="card-title">@Model.ItemName</h1>
                         <h4>Condition: @Model.ItemCondition</h4>

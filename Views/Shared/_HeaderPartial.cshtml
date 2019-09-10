@@ -6,6 +6,16 @@
     .header {
         position: fixed;
     }
+
+    @@media (max-width: 768px) {
+        .nav-link {
+            font-size: 24px;
+        }
+
+        .navbar-collapse {
+            background: rgba(29, 31, 36, 0.7);
+        }
+    }
 </style>
 
 <header>
@@ -18,7 +28,7 @@
                 </button>
             }
             <a class="navbar-brand text-light" style="padding-left: 5px;">
-                <img src="~/img/logo.jpg"class="img-thumbnail" width="50" height="50"/>
+                <img src="~/img/logo.png" class="img-thumbnail" width="50" height="50" />
                 FriendShip
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -68,7 +78,7 @@
                                     <i class="fa fa-search text-dark"></i>
                                 </span>
                             </div>
-                            <input type="text" name="name" class="form-control" style="width:450px;" placeholder="Search People" value="@ViewBag.name" required />
+                            <input type="text" name="name" class="form-control search-bar" placeholder="Search People" value="@ViewBag.name" required />
                         </div>
                     </form>
                 }

@@ -30,24 +30,19 @@ namespace Fakebook.Controllers
             return View();
         }
 
-        public IActionResult Group()
-        {
-            return View();
-        }
-
-        [HttpGet("/Group/AddGroup", Name = "AddGroup")]
+        [HttpGet("/Groups/AddGroup", Name = "AddGroup")]
         public IActionResult AddGroup()
         {
             ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             return View();
         }
 
-        [HttpPost("/Group/AddGroup", Name = "AddGroup")]
+        [HttpPost("/Groups/AddGroup", Name = "SubmitAddGroup")]
         public IActionResult AddGroup(Group g)
         {
             ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
             if (ModelState.IsValid)
-            {
+            {   
                 g.GroupCreatorId = User.Identity.GetPersonId();
                 g.DateCreated = DateTime.Now;
                 groupService.AddGroup(g);
@@ -61,10 +56,9 @@ namespace Fakebook.Controllers
         public IActionResult ViewGroup(int GroupId)
         {
             ViewBag.Me = userService.GetPersonBasedOnId(User.Identity.GetPersonId());
-            Group g = groupService.GetGroup(User.Identity.GetPersonId(), GroupId);
-            ViewBag.Group = g;
+            Group group = groupService.GetGroup(User.Identity.GetPersonId(), GroupId);
             ViewBag.PersonId = User.Identity.GetPersonId();
-            return View();
+            return View(group);
         }
 
         public IActionResult JoinGroup(int GroupId)

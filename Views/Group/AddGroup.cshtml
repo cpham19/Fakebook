@@ -4,35 +4,45 @@
 
 @model Group
 
-<h1>Add New Group</h1>
+<style>
+    .input-group-prepend span {
+        width: 120px;
+        color: black;
+        border: 0 !important;
+    }
+</style>
 
-<form method="post">
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Group Name</span>
+<div id="content">
+    <h1 class="text-light">Add New Group</h1>
+
+    <form method="post">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Group Name</span>
+            </div>
+            <input type="text" name="GroupName" class="form-control" placeholder="Group Name" required><br>
         </div>
-        <input type="text" name="GroupName" class="form-control" placeholder="Group Name" required><br>
-    </div>
 
-    <span asp-validation-for="GroupName" class="text-danger"></span>
+        <span asp-validation-for="GroupName" class="text-danger"></span>
 
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Description</span>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Description</span>
+            </div>
+            <textarea type="text" name="Description" class="form-control" placeholder="Description" required></textarea>
         </div>
-        <textarea type="text" name="Description" class="form-control" placeholder="Description" required></textarea>
-    </div>
 
-    <span asp-validation-for="Description" class="text-danger"></span>
+        <span asp-validation-for="Description" class="text-danger"></span>
 
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Image Url</span>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Image Url</span>
+            </div>
+            <input type="text" name="GroupPictureUrl" class="form-control" placeholder="Group Picture Url" required />
         </div>
-        <input type="text" name="GroupPictureUrl" class="form-control" placeholder="Group Picture Url" required />
-    </div>
 
-    <span asp-validation-for="GroupPictureUrl" class="text-danger"></span>
+        <span asp-validation-for="GroupPictureUrl" class="text-danger"></span>
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
-</form>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
+    </form>
+</div>

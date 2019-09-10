@@ -46,9 +46,9 @@
         transform: rotateY(180deg);
     }
 
-    .flip-card-back p {
-        padding-top: 25%;
-    }
+        .flip-card-back p {
+            padding-top: 25%;
+        }
 
     .btn-group {
         margin: auto;
@@ -57,10 +57,14 @@
         justify-content: center;
     }
 
-    .btn-group a {
-        padding: 10px;
-        padding-top: 50px;
-        font-size: 24px;
+        .btn-group a {
+            padding: 10px;
+            padding-top: 50px;
+            font-size: 24px;
+        }
+
+    .mb-5 {
+        padding-top: 10px;
     }
 
     @@media (max-width: 768px) {
@@ -75,7 +79,7 @@
 <div id="content">
     <div class="jumbotron">
         <div class="container-fluid">
-            <h1 class="display-3 text-center">Friends</h1>
+            <h1 class="display-3">Friends</h1>
         </div>
     </div>
 
@@ -90,23 +94,24 @@
     else
     {
         <!-- Example row of columns -->
-        <div class="row">
+        <div class="row mx-auto">
             @foreach (var person in ViewBag.Friends)
             {
-                <div class="col mb-4">
+                <div class="col-sm-4 mb-5">
                     <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <img src="https://robohash.org/@person.Name" width="300" height="200" />
-                                <h1>@person.Name</h1>
-                            </div>
-                            <div class="flip-card-back">
-                                <p class="text-light">@person.ModifiedProfileDescription()</p>
-                                <div class="btn-group">
-                                    <a asp-controller="User" asp-action="Index" asp-route-id="@person.PersonId"><i class="fas fa-book-reader"></i>View </a>
+                        <a asp-controller="User" asp-action="Index" asp-route-id="@person.PersonId">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <img src="https://robohash.org/@person.Name" width="300" height="200" />
+                                    <h1>@person.Name</h1>
+                                </div>
+                                <div class="flip-card-back">
+                                    <p class="text-light">@person.ModifiedProfileDescription()</p>
+                                    <div class="btn-group">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             }

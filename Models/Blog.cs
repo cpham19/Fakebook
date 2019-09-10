@@ -21,9 +21,9 @@ namespace Fakebook.Models
 
         public string ModifiedDescription()
         {
-            if (Description.Length > 40)
+            if (Description.Length > 80)
             {
-                return Description.Substring(0, 40) + "....";
+                return Description.Substring(0, 80) + "....";
             }
             else
             {

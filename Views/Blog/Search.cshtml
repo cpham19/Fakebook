@@ -5,24 +5,25 @@
 <style>
 </style>
 
-<div id="content" style="background-color:azure;">
+<div id="content">
     <div class="jumbotron">
         <div class="container">
             <h1 class="display-3">Blogs</h1>
         </div>
     </div>
 
-    <a asp-controller="Blog" asp-action="AddBlog">Add Blog</a>
-
+    <a style="font-size:28px;" asp-controller="Blog" asp-action="AddBlog"><i class="fas fa-plus-square"></i> Add Blog</a>
     <div class="row">
         <div class="col-md-8">
             <!-- Blog Entries Column -->
             @foreach (var blog in ViewBag.Blogs)
             {
-                <h1 class="my-4">@blog.Headline</h1>
                 <!-- Blog Post -->
                 <div class="card mb-4">
+                    <h1 class="my-4">@blog.Headline</h1>
+                    <hr />
                     <img class="card-img-top" src="@blog.PictureUrl" alt="Card image cap">
+                    <hr />
                     <div class="card-body">
                         <h2 class="card-title">@blog.Title</h2>
                         <p class="card-text">@blog.Description</p>
@@ -36,11 +37,10 @@
 
             }
         </div>
-
         <!-- Sidebar Widgets Column -->
         <div class="col-md-4">
             <!-- Search Widget -->
-            <div class="card my-4">
+            <div class="card">
                 <h5 class="card-header">Search</h5>
                 <div class="card-body">
                     <form class="input-group" asp-controller="Blog" asp-action="SearchQuery">
@@ -51,43 +51,7 @@
                     </form>
                 </div>
             </div>
-
-            <!-- Categories Widget -->
-            <div class="card my-4">
-                <h5 class="card-header">Categories</h5>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="#">Web Design</a>
-                                </li>
-                                <li>
-                                    <a href="#">HTML</a>
-                                </li>
-                                <li>
-                                    <a href="#">Freebies</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-6">
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="#">JavaScript</a>
-                                </li>
-                                <li>
-                                    <a href="#">CSS</a>
-                                </li>
-                                <li>
-                                    <a href="#">Tutorials</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-
     </div>
     <!-- /.container -->
 </div>
