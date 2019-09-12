@@ -44,7 +44,14 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Search People</span>
             </div>
-            <input type="text" name="name" class="form-control" placeholder="Name of Person" required />
+            @if (ViewBag.name != null)
+            {
+                <input type="text" name="name" class="form-control" placeholder="Name of Person" value="@ViewBag.name" required />
+            }
+            else
+            {
+                <input type="text" name="name" class="form-control" placeholder="Name of Person" required />
+            }
             <button type="submit"><i class="fas fa-search"></i></button>
         </div>
     </form>
@@ -57,7 +64,7 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <img src="https://robohash.org/@person.Name" class="card-img-top" />
-                        <h1 class="text-center">@person.Name</h1>
+                        <h1 class="text-center text-light">@person.Name</h1>
                         <a style="color:green;" class="card-link" asp-controller="User" asp-action="Index" asp-route-id="@person.PersonId"><i class="fas fa-book-reader"></i> View</a>
                         @if (person.IsFriend && person.PersonId != ViewBag.PersonId)
                         {

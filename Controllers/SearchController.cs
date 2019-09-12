@@ -49,7 +49,7 @@ namespace Fakebook.Controllers
             ViewBag.name = name;
             ViewBag.PersonOneId = User.Identity.GetPersonId();
             ViewBag.Persons = userService.GetPersonsBasedOnName(User.Identity.GetPersonId(), name);
-            return View();
+            return View("Index");
         }
 
         public IActionResult RemoveFriend(string name, int PersonTwoId)
