@@ -19,39 +19,27 @@
         border: solid 3px;
     }
 
-    .btn-group a {
-        padding: 20px;
-        width: 200px;
-    }
-
-    @@media (max-width: 768px) {
-        .btn-group a {
-            padding: 20px;
-            width: 100%;
-        }
+    .jumbotron {
+        background: rgba(71, 71, 71, 0.5);
+        color: white;
     }
 </style>
 
 <div id="content">
     <div class="jumbotron">
         <div class="container-fluid">
-            <h1 class="display-3 text-light">Shopping Cart</h1>
+            <h1 class="display-3">Shopping Cart</h1>
         </div>
     </div>
 
-    <div class="btn-group">
-        <a asp-controller="Marketplace" asp-action="Cart" class="btn btn-info">View Cart</a>
-        <a asp-controller="Marketplace" asp-action="SalesHistory" class="btn btn-dark">View Sales History</a>
-        <a asp-controller="Marketplace" asp-action="OrderHistory" class="btn btn-secondary">View Order History</a>
-    </div>
-
+    <partial name="_MarketplaceBarPartial" />
     <br/><br/>
 
     @if (Model.Count == 0)
     {
         <div class="jumbotron">
             <div class="container-fluid">
-                <h1 class="display-3 text-light">Empty</h1>
+                <h1 class="display-3">Empty</h1>
             </div>
         </div>
     }

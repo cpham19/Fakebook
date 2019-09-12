@@ -41,7 +41,7 @@ namespace Fakebook.Controllers
         public async Task<IActionResult> Login(string username, string password, string returnUrl)
         {
             var identity = accountService.Authenticate(username, password);
-            if (identity == null)
+            if (identity == null)   
                 return RedirectToAction(nameof(Login));
 
             var claimsPrincipal = new ClaimsPrincipal(identity);

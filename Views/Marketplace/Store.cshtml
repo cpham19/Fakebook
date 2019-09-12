@@ -3,20 +3,14 @@
 }
 
 <style>
-    .btn-group a {
-        padding: 20px;
-        width: 200px;
-    }
-
     .fa-plus-square {
         color: orange;
     }
 
-    @@media (max-width: 768px) {
-        .btn-group a {
-            padding: 20px;
-            width: 100%;
-        }
+    .card {
+        width: 300px;
+        height: 500px;
+        border: 2px solid;
     }
 </style>
 
@@ -28,11 +22,7 @@
     </div>
 
     <div>
-        <div class="btn-group">
-            <a asp-controller="Marketplace" asp-action="Cart" class="btn btn-info">View Cart</a>
-            <a asp-controller="Marketplace" asp-action="SalesHistory" class="btn btn-dark">View Sales History</a>
-            <a asp-controller="Marketplace" asp-action="OrderHistory" class="btn btn-secondary">View Order History</a>
-        </div>
+        <partial name="_MarketplaceBarPartial" />
         @if (ViewBag.Store.StoreOwnerId == ViewBag.PersonId)
         {
             <br /> <br />
@@ -49,27 +39,21 @@
     <!-- Page Content -->
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-9">
-                <div class="row">
-                    @foreach (var item in ViewBag.Store.Items)
-                    {
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card">
-                                <img class="card-img-top" src="@item.ItemImageUrl" alt="">
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a asp-controller="Marketplace" asp-action="StoreItem" asp-route-StoreId="@item.StoreId" asp-route-StoreItemId="@item.StoreItemId">@item.ItemName</a>
-                                    </h4>
-                                    <h5></h5>
-                                    <p class="card-text">@item.ItemDescription</p>
-                                </div>
-                            </div>
+            @foreach (var item in ViewBag.Store.Items)
+            {
+                <div class="col-sm-2 portfolio-item">
+                    <div class="card">
+                        <img class="card-img-top" src="@item.ItemImageUrl" width="740px" height="300px" alt="">
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a asp-controller="Marketplace" asp-action="StoreItem" asp-route-StoreId="@item.StoreId" asp-route-StoreItemId="@item.StoreItemId">@item.ItemName</a>
+                            </h4>
+                            <h5></h5>
+                            <p class="card-text">@item.ItemDescription</p>
                         </div>
-                    }
+                    </div>
                 </div>
-                <!-- /.row -->
-            </div>
-            <!-- /.col-lg-9 -->
+            }
         </div>
         <!-- /.row -->
     </div>

@@ -29,9 +29,9 @@ INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES
 INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (2, N'Yes... Very nice updates...', '2019-07-03', 1, 3);
 INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (3, N'Keep up on the good updates...', '2019-07-03', 2, 4);
 INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (4, N'Great work....', '2019-07-03', 2, 5);
-INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (5, N'How much for the dirt?', '2019-07-03', 3, 2);
-INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (6, N'$20', '2019-07-03', 3, 1);
-INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (7, N'Deal....', '2019-07-03', 3, 2);
+INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (5, N'How much for the dirt?', '2019-07-03', 3, 1);
+INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (6, N'$20', '2019-07-03', 3, 2);
+INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (7, N'Deal....', '2019-07-03', 3, 1);
 INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (8, N'How much for the car??', '2019-07-03', 4, 4);
 INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (9, N'For you, $10.', '2019-07-03', 4, 1);
 INSERT INTO Replies (ReplyId, ReplyContent, ReplyDate, TopicId, PosterId) VALUES (10, N'Nah, too expensive.', '2019-07-03', 4, 4);

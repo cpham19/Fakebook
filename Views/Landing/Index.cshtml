@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    .box {
+        position: relative;
+        width: 100%;
+        height: 110vh;
+        min-height: 35rem;
+        padding: 15rem 0;
+        background: -webkit-gradient(linear, left top, left bottom, from(rgba(22, 22, 22, 0.3)), color-stop(75%, rgba(22, 22, 22, 0.7)), to(#161616)), url("../img/bg-masthead.jpg");
+        background: linear-gradient(to bottom, rgba(22, 22, 22, 0.3) 0%, rgba(22, 22, 22, 0.7) 75%, #161616 100%), url("../img/bg-masthead.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: scroll;
+        background-size: cover;
+        background: url(/img/landing.jpg);
+    }
+
+        .box h1 {
+            font-family: 'Varela Round';
+            font-size: 5rem;
+            line-height: 2.5rem;
+            letter-spacing: 0.8rem;
+            color: white;
+        }
+
+        .box h2 {
+            max-width: 23rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+    .btn {
+        -webkit-box-shadow: 0 0.1875rem 0.1875rem 0 rgba(0, 0, 0, 0.1) !important;
+        box-shadow: 0 0.1875rem 0.1875rem 0 rgba(0, 0, 0, 0.1) !important;
+        padding: 1.25rem 2rem;
+        font-family: 'Varela Round';
+        font-size: 80%;
+        text-transform: uppercase;
+        letter-spacing: .15rem;
+        border: 0;
+    }
+
+    .btn-primary {
+        background-color: black;
+    }
+
+        .btn-primary:hover {
+            background-color: gray;
+        }
+
+        .btn-primary:focus {
+            background-color: #4f837f;
+            color: white;
+        }
+
+        .btn-primary:active {
+            background-color: #467370 !important;
+        }
+
+    @@media (max-width: 768px) {
+        .box h1 {
+            font-size: 3rem;
+            line-height: 3.5rem;
+            letter-spacing: 0.8rem;
+        }
+
+        .box h2 {
+            max-width: 20rem;
+            font-size: 1.25rem;
+        }
+    }
+</style>
+
+<div class="box">
+    <div class="container d-flex h-100 align-items-center">
+        <div class="mx-auto text-center">
+            <img src="~/img/fslogo.png" style="color:white;" />
+            <br/><br/>
+            <h1 class="mx-auto my-0">FriendShip</h1>
+            <br/>
+            <h2 class="mx-auto mt-2 mb-5">A website where people can make connections and meet friends.</h2>
+            <br />
+            <a asp-controller="Account" asp-action="Login" class="btn btn-primary">Login</a>
+            <a asp-controller="Account" asp-action="Register" class="btn btn-primary">Register</a>
+        </div>
+    </div>
+</div>

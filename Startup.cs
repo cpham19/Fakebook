@@ -66,16 +66,8 @@ namespace Fakebook
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Account}/{action=Login}");
+                    template: "{controller=Landing}/{action=Index}");
             });
-
-            // This suppose to add different environment files for Azure deployment but this doesnt work.
-            //var builder = new ConfigurationBuilder()
-            //.SetBasePath(env.ContentRootPath)
-            //.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-            //.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-            //.AddEnvironmentVariables();
-            //builder.Build();
         }
     }
 }
